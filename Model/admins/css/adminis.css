@@ -1,0 +1,118 @@
+body{
+	background-color: rgb(178, 220, 241);
+    color: black;
+	padding: 1rem;
+}
+
+h1{
+	margin-top: -42px;
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 3rem;
+}
+
+.btn__group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+	margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+	text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+.all-products{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.product{
+	overflow: hidden;
+	background: #070707;
+	color: #fbf9f9;
+	text-align: center;
+	width: 250px;
+	height: 370px;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 1.2rem;
+	margin: 2rem;
+    border: 5px solid white;
+}
+
+.product .product-title, .product .product-price{
+	font-size: 22px;
+}
+
+.product:hover img{
+	scale:  1.1;
+}
+
+.product:hover {
+	box-shadow: 5px 15px 25px #f9fbfb;
+}
+
+.product img {
+	max-height: 170px;
+	margin: 1rem;
+	transition: all 0.3s;
+}
+
+.product a:link, .product a:visited{
+	color: #ececec;
+	display: inline-block;
+	text-decoration: none;
+	background-color: #0d0d0d;
+	padding: 1.2rem 3rem;
+	border-radius: 1rem;
+	margin-top: 1rem;
+	font-size: 14px;
+	transition: all 0.2s;
+    border: 3px solid aqua;
+}
+
+.product a:hover{
+	transform: scale(1.1);
+}
+
+
+ 
+ input[type="submit"] {
+	background-color: black; 
+	border: 3px solid rgb(6, 6, 6);
+	box-shadow: rgb(5, 5, 5) 3px 3px 3px;
+	color: #fff; 
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px; 
+	font-size: 16px;
+	
+}
+
+input[type="submit"]:active {
+	
+		position: relative;
+		top: 4px;
+		display: inline-block;
+}

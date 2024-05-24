@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(89,213,201,1) 100%);
+    display: flex; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-box {
+    width: 850px;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: -1px 1px 5px 7px rgba(0,0,0,0.37);
+    -webkit-box-shadow: -1px 1px 5px 7px rgba(0,0,0,0.37);
+    -moz-box-shadow: -1px 1px 5px 7px rgba(0,0,0,0.37);
+    margin-left: 1px;
+    justify-content: center;
+    margin-top: 2px;
+}
+img{
+    width: 110px;
+    height: 90px;
+    margin-left: 10%;
+    margin-top: -15px;
+    margin-bottom: 30px;
+}
+.login-box h1 {
+    margin: 0 0 20px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 70px;
+    margin-top: -100px;
+   ;
+}
+.login-box label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    
+}
+.login-box input[type="text"],
+.login-box input[type="password"],
+.login-box select {
+    width: calc(35% - 5px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.login-box select {
+    width: calc(35% - 5px);
+    vertical-align: top;
+    margin-right: 20px;
+}
+.login-box .form-row {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Ajustes para los botones */
+.login-box .button {
+    width: 30%; /* Cambia el ancho a tu preferencia */
+    background-color: aqua; /* Color rojo para el botón Cancelar */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    padding: 13px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 27.5%; /* Agrega margen entre los botones */
+}
+
+.login-box input[type="submit"] {
+    width: 30%; /* Cambia el ancho a tu preferencia */
+    background-color: #046bcc; /* Color azul para el botón Crear Usuario */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #fff;
+    padding: 13px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 4%; /* Elimina el margen izquierdo */
+}
+
+/* Alineación de los botones al centro */
+.login-box .form-row {
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo al pasar el mouse sobre los botones */
+.login-box .button:hover,
+.login-box input[type="submit"]:hover {
+    background-color: #057ef0; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* Estilo específico para el botón "Cancelar" al pasar el mouse */
+.login-box .button:hover {
+    background-color: rgb(59, 243, 243); /* Cambia el color de fondo al pasar el mouse */
+   
+}
+
+
+form .btn{
+    width: 15%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #046bcc;
+    margin-bottom: 15px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    outline: medium none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 20px;
+}
+
+form .btn:hover{
+    background-color: #057ef0;
+}
+
+@media screen and (max-width: 767px) {
+    .login-box h1 {
+        margin-top: -100px; /* Ajusta este valor según sea necesario */
+        margin-bottom: 70px; /* Ajusta este valor según sea necesario */
+        font-size: 18px; /* Tamaño de fuente más pequeño para pantallas pequeñas */
+    }
+}
+
