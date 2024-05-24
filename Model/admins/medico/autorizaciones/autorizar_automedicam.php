@@ -11,7 +11,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historia Clínica</title>
+    <title>Autorización Médica</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,7 +71,7 @@ session_start();
             </form>
         </div>
     <div class="container">
-        <h1>Historia Clínica</h1>
+        <h1>Autorización Médica</h1>
         <form action="#" method="post">
             <div class="form-group">
                 <label for="nombre_paciente">Nombre del Paciente:</label>

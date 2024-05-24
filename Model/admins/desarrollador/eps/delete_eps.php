@@ -7,13 +7,13 @@ session_start();
 
 <?php
 
-    if(isset($_GET['id_auto'])){
-        $id_lab=(int) $_GET['id_lab'];
-        $delete=$con->prepare('DELETE FROM autorizaciones WHERE id_auto=:id_auto');
+    if(isset($_GET['id_eps'])){
+        $id_eps=(int) $_GET['id_eps'];
+        $delete=$con->prepare('DELETE FROM eps WHERE id_eps=:id_eps');
         $delete->execute(array(
-            ':id_auto'=>$id_auto
+            ':id_eps'=>$id_eps
         ));
         echo '<script> alert("REGISTRO ELIMINADO EXITOSAMENTE");</script>';
-        echo '<script>window.location="index_automedicam.php"</script>';
-    }      
+        echo '<script>window.location="index_eps.php"</script>';
+    }     
 ?>

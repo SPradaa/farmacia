@@ -135,7 +135,10 @@ validarSesion();
                         <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
                                     class="fa fa-globe"></i><span class="hide-menu">Citas</span></a>
                         </li>
-                       
+                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false"><i
+                                    class="fa fa-bookmark-o"></i><span class="hide-menu">Datos generales</span></a>
+                        </li>
+
                     </ul>
 
                 </nav>
@@ -182,61 +185,13 @@ validarSesion();
                                 </h6>
                                 <div class="space">
 
-                                    <!-- Creacion de medicos  -->
-                                    <div class="card">
-
-                                        <a href="medicos/index_medico.php">
-                                            <div class="card_box">
-                                                <h3 class="car_box__title">Medicos
-                                                </h3>
-                                                <p class="card_box__content">Gestiona la información personal y
-                                                    profesional de médicos. </p>
-                                                <div class="card__date">
-                                                    Haz clic para crear o editar datos del médico personal
-                                                </div>
-                                                <div class="card_box__arrow">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" height="15" width="15">
-                                                        <path fill="#fff"
-                                                            d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- fin creacion de medicos -->
-                                    <!-- Modulo especializaciones  -->
-                                    <div class="card">
-
-                                        <a href="especializacion/index_esp.php">
-                                            <div class="card_box">
-                                                <h3 class="car_box__title">especializacion
-                                                </h3>
-                                                <p class="card_box__content">Explora las especializaciones de los
-                                                    médicos. </p>
-                                                <div class="card__date">
-                                                    Haz clic y gestiona sus especializaciónes.
-                                                </div>
-                                                <div class="card_box__arrow">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" height="15" width="15">
-                                                        <path fill="#fff"
-                                                            d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <!-- fin modulo especializaciones -->
+                                   
                                     <!-- modulo medicamentos  -->
                                     <div class="card">
 
                                         <a href="medicamentos/index_medicame.php">
                                             <div class="card_box">
-                                                <h3 class="car_box__title">medicamentos
+                                                <h3 class="car_box__title">Medicamentos
                                                 </h3>
                                                 <p class="card_box__content">Revisa y crea medicamentos en este módulo
                                                 </p>
@@ -284,33 +239,14 @@ validarSesion();
                                     <!-- fin de la creacion de  medicamentos -->
 
 
-                                    <!-- modulo de tipos de sangre -->
 
-                                    <div class="card">
 
-                                        <a href="rh/index_rh.php">
-                                            <div class="card_box">
-                                                <h3 class="car_box__title">Tipo de Sangre
-                                                </h3>
-                                                <p class="card_box__content">Explora y visualiza información sobre
-                                                    diferentes tipos de sangre.</p>
-                                                <div class="card__date">
-                                                    Haz clic para acceder y obtener detalles sobre las clasificaciones
-                                                    sanguíneas.
-                                                </div>
-                                                <div class="card_box__arrow">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" height="15" width="15">
-                                                        <path fill="#fff"
-                                                            d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
 
-                                    <!-- fin modulo de tipos de sangre -->
+
+
+
+
+                                    <!-- <div class="space"> -->
 
                                     <!-- modulo laboratorios -->
 
@@ -319,7 +255,7 @@ validarSesion();
 
                                         <a href="laboratorio/index_lab.php">
                                             <div class="card_box">
-                                                <h3 class="car_box__title">Laboratorio Medico
+                                                <h3 class="car_box__title">Laboratorio Médico
                                                 </h3>
                                                 <p class="card_box__content">Accede a la gestión de datos relacionados
                                                     con laboratorios médicos. </p>
@@ -342,6 +278,62 @@ validarSesion();
 
 
                                     <!-- fin modulo  laboratorios -->
+
+                                    <!-- modulo autorizacion -->
+
+
+                                    <div class="card">
+
+                                        <a href="autorizaciones/index_automedicam.php">
+                                            <div class="card_box">
+                                        <h3 class="car_box__title">Autorización de medicamentos
+                                        </h3>
+                                            <p class="card_box__content">Accede a la gestión de datos relacionados
+                                            con Autorización de medicamentos </p>
+                                                <div class="card__date">
+                                                Haz clic para verificar y autorizar los medicamentos.
+                                    </div>
+                                    <div class="card_box__arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" height="15" width="15">
+                                            <path fill="#fff"
+                                            d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+</div>
+
+                                    <!-- fin modulo  Autorización -->
+
+                                    <!-- modulo historia clinica -->
+
+
+                                    <div class="card">
+
+                                    <a href="histo_clinica/index_histoclinica.php">
+                                        <div class="card_box">
+                                    <h3 class="car_box__title">Historia Clínica
+                                    </h3>
+                                        <p class="card_box__content">Accede a la gestión de datos relacionados
+                                        con historia clinica </p>
+                                            <div class="card__date">
+                                            Haz clic para verificar la historia clínica correspondiente.
+                                    </div>
+                                    <div class="card_box__arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" height="15" width="15">
+                                        <path fill="#fff"
+                                        d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
+                                        </path>
+                                    </svg>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    </div>
+
+                                    <!-- fin modulo  Autorización -->
 
 
                                 </div>

@@ -124,6 +124,7 @@ form .btn{
 }
 
 
+
 /* table */
 table{
     width: 100%;
@@ -146,7 +147,6 @@ table tr td{
     padding: 7px;
     font-size: 14px;
     color: black;
-    text-align: center;
 }
 
 
@@ -164,6 +164,15 @@ table tr td{
     display: inline-block;
     font-size: 14px;
     background: #8a0505;
+    color: #fff;
+    border: 5px;
+    padding: 5px 10px;
+}
+
+.btn__detalle{
+    display: inline-block;
+    font-size: 14px;
+    background: #058a12;
     color: #fff;
     border: 5px;
     padding: 5px 10px;
