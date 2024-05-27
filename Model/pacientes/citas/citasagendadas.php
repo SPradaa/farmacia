@@ -12,33 +12,35 @@ if (!isset($_SESSION['documento'])) {
 $user_document = $_SESSION['documento'];
 ?>
 
-<?php
-$sentencia_select = $con->prepare("SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple AS nombre_medico, especializacion.especializacion AS nombre_especializacion
-                                    FROM citas 
-                                    JOIN medicos ON citas.docu_medico = medicos.docu_medico 
-                                    JOIN especializacion ON citas.id_esp = especializacion.id_esp 
-                                    WHERE citas.documento = :user_document
-                                    ORDER BY citas.fecha ASC");
-$sentencia_select->bindParam(':user_document', $user_document, PDO::PARAM_STR);
-$sentencia_select->execute();
-$resultado = $sentencia_select->fetchAll();
+                <?php
+                $sentencia_select = $con->prepare("SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple AS nombre_medico, 
+                especializacion.especializacion AS nombre_especializacion, estados.estado AS nombre_estado
+                FROM citas 
+                JOIN medicos ON citas.docu_medico = medicos.docu_medico 
+                JOIN especializacion ON citas.id_esp = especializacion.id_esp 
+                JOIN estados ON citas.id_estado = estados.id_estado
+                WHERE citas.documento = :user_document
+                ORDER BY citas.fecha ASC");
+                $sentencia_select->bindParam(':user_document', $user_document, PDO::PARAM_STR);
+                $sentencia_select->execute();
+                $resultado = $sentencia_select->fetchAll();
 
-if (isset($_GET['btn_buscar'])) {
-    $buscar = $_GET['buscar'];
+// if (isset($_GET['btn_buscar'])) {
+//     $buscar = $_GET['buscar'];
 
-    $consulta = $con->prepare("SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple AS nombre_medico, especializacion.nombre AS nombre_especializacion
-                                FROM citas 
-                                JOIN medicos ON citas.docu_medico = medicos.docu_medico 
-                                JOIN especializacion ON citas.id_esp = especializacion.id_esp 
-                                WHERE citas.documento = :user_document
-                                AND (citas.documento LIKE :buscar OR medicos.nombre_comple LIKE :buscar OR especializacion.nombre LIKE :buscar)
-                                ORDER BY citas.fecha ASC");
-    $buscar = "%$buscar%";
-    $consulta->bindParam(':user_document', $user_document, PDO::PARAM_STR);
-    $consulta->bindParam(':buscar', $buscar, PDO::PARAM_STR);
-    $consulta->execute();
-    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-}
+//     $consulta = $con->prepare("SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple AS nombre_medico, especializacion.nombre AS nombre_especializacion
+//                                 FROM citas 
+//                                 JOIN medicos ON citas.docu_medico = medicos.docu_medico 
+//                                 JOIN especializacion ON citas.id_esp = especializacion.id_esp 
+//                                 WHERE citas.documento = :user_document
+//                                 AND (citas.documento LIKE :buscar OR medicos.nombre_comple LIKE :buscar OR especializacion.nombre LIKE :buscar)
+//                                 ORDER BY citas.fecha ASC");
+//     $buscar = "%$buscar%";
+//     $consulta->bindParam(':user_document', $user_document, PDO::PARAM_STR);
+//     $consulta->bindParam(':buscar', $buscar, PDO::PARAM_STR);
+//     $consulta->execute();
+//     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+// }
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +78,7 @@ if (isset($_GET['btn_buscar'])) {
                     <td>Hora</td>
                     <td>Medico</td>
                     <td>Especializacion</td>
+                    <td>Estado</td>
                 </tr>
                 <?php
                 if (isset($_GET['btn_buscar'])) {
@@ -87,9 +90,10 @@ if (isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['nombre_medico']; ?></td>
                         <td><?php echo $fila['nombre_especializacion']; ?></td>
+                        <td><?php echo $fila['nombre_estado']; ?></td> <!-- Mostrar el nombre del estado -->
                     </tr>
-                <?php
-                    }
+                    <?php
+    }
                 } else {
                     foreach ($resultado as $fila) {
                 ?>
@@ -99,6 +103,7 @@ if (isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['nombre_medico']; ?></td>
                         <td><?php echo $fila['nombre_especializacion']; ?></td>
+                        <td><?php echo $fila['nombre_estado']; ?></td> <!-- Mostrar el nombre del estado -->
                     </tr>
                 <?php
                     }
