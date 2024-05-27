@@ -7,51 +7,60 @@
 <?php
 require_once("../../../controller/seguridad.php");
 validarSesion();
-
-
 ?>
 <?php
 $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $sql->bindParam(':documento', $_SESSION['documento']);
 $sql->execute();
 $fila = $sql->fetch();
-echo"conectado";
+echo "conectado";
 
-$documento=$_SESSION['documento'];
+$documento = $_SESSION['documento'];
 $nombre = $_SESSION['nombre'];
 $apellido = $_SESSION['apellido'];
 $direccion = $_SESSION['direccion'];
-$telefono =$_SESSION['telefono'];
-$correo= $_SESSION['correo'];
+$telefono = $_SESSION['telefono'];
+$correo = $_SESSION['correo'];
 $rol = $_SESSION['tipo'];
-$empresa = $_SESSION[ 'nit'];
+$empresa = $_SESSION['nit'];
 
-$nombre_comple = $nombre .''.$apellido; 
+$nombre_comple = $nombre . ' ' . $apellido;
 
 // Verificar si se encontró al usuario
 if (!$fila) {
     echo '<script>alert("Usuario no encontrado.");</script>';
     echo '<script>window.location.href = "login.php";</script>';
     exit;
-
-
 }
-
-// Variables para el usuario
-
-
-
-    // $_SESSION['documento'] = $fila['documento'];
-    // $_SESSION['nombre'] = $fila['nombre'];
-    // $_SESSION[ 'apellido'] = $fila['apellido'];
-    // $_SESSION[ 'direccion'] = $fila['direccion'];
-    // $_SESSION['telefono'] = $fila['telefono'];
-    // $_SESSION['correo'] = $fila['correo'];
-    // $_SESSION['password'] = $fila['password'];
-    // $_SESSION['tipo'] = $fila['id_rol'];
-    // $_SESSION['nit'] = $fila['nit'];
-
 ?>
+
+<?php
+// Verificar si el formulario ha sido enviado y el botón de actualización ha sido presionado
+if (isset($_POST['update'])) {
+    // Recuperar los datos del formulario
+    $correo = $_POST['correo']; 
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccion'];
+    
+    // Validar campos vacíos
+    if (empty($correo) || empty($telefono) || empty($direccion)) {
+        echo '<script>alert("Existen campos vacíos.");</script>';
+    } else {
+        // Consulta SQL para actualizar los datos del usuario
+        $consulta = "UPDATE usuarios 
+                     SET telefono = '$telefono', direccion = '$direccion', correo = '$correo'
+                     WHERE documento = $documento";
+        
+        // Ejecutar la consulta
+        if ($con->query($consulta) === TRUE) {
+            echo '<script>alert("Actualización exitosa.");</script>';
+        } else {
+            echo '<script>alert("Error al actualizar los datos.");</script>';
+        }
+    }
+}
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -107,7 +116,7 @@ if (!$fila) {
                 <!-- Logo -->
                 <div class="navbar-header">
                 <div class="logg">
-                            <img src="../../../assets/img/log.farma.png">
+                            <img src="../../../assets/img/logo.png">
                             </div>
                 </div>
                 <div class="navbar-collapse">
@@ -197,13 +206,14 @@ if (!$fila) {
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
+                        <div class="perfil">
                         <h3 class="text-themecolor">Perfil</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
+                            <li class="breadcrumb-item active">Perfil</li>
                         </ol>
-                    </div>
+                    
+    </div>
                    
                 </div>
                 <!-- ============================================================== -->
@@ -218,7 +228,11 @@ if (!$fila) {
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-body">
-                                <center class="mt-4"> <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 48 48"><rect width="37" height="37" x="5.5" y="5.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" rx="2" ry="2"/><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="m19.896 10.128l-8.24 27.744m10.953-5.768l13.735-7.417l-13.735-7.417"/></svg>
+                                <center class="mt-4"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120px" height="120px" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                                </svg>
+
                                     <h4 class="card-title mt-2"> <?php echo $_SESSION['nombre'];?></h4>
                                    
                                     <?php  
@@ -230,80 +244,57 @@ if (!$fila) {
                                     
                                     ?>
 
-                                    <h6 class="card-subtitle"><?php echo $consulta['rol'] ;   ?> </h6>
-                                    <div class="row text-center justify-content-md-center">
-                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i
-                                                    class="fa fa-user"></i>
-                                                <font class="font-medium">254</font>
-                                            </a></div>
-                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i
-                                                    class="fa fa-camera"></i>
-                                                <font class="font-medium">54</font>
-                                            </a></div>
-                                    </div>
-                                </center>
+                                    <h6 class="subtitulo"><?php echo $consulta['rol'] ;   ?> </h6>
+                                    
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-8 col-xlg-9 col-md-7">
-                        <div class="card">
-                            <!-- Tab panes -->
-                            <div class="card-body">
-                                <form class="form-horizontal form-material mx-2">
-                                    <div class="form-group">
-                                        <label class="col-md-12">Nombre Completo</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="<?php echo $nombre_comple ;?> "
-                                                class="form-control form-control-line" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="example-email" class="col-md-12">Email</label>
-                                        <div class="col-md-12">
-                                            <input type="email" placeholder="<?php echo $_SESSION['correo'] ; ?>"
-                                                class="form-control form-control-line" name="example-email"
-                                                id="example-email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Documento</label>
-                                        <div class="col-md-12">
-                                            <input type="text" value=" <?php echo $_SESSION['documento'];?>"
-                                                class="form-control form-control-line" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Phone No</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="<?php echo $_SESSION['telefono'] ; ?>"
-                                                class="form-control form-control-line">
-                                        </div>
-                                    </div>
-                                  
-                                    <div class="form-group">
-                                        <label class="col-md-12">Phone No</label>
-                                        <div class="col-md-12">
-                                            <input type="text" placeholder="<?php echo $direccion ?>"
-                                                class="form-control form-control-line">
-                                        </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-success">Update Profile</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+    <div class="card">
+        <!-- Tab panes -->
+        <div class="card-body">
+            <form class="form-horizontal form-material mx-2" method="POST">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label>Documento:</label>
+                        <input type="text" value=" <?php echo $_SESSION['documento'];?>" class="form-control form-control-line" disabled>
                     </div>
-                    <!-- Column -->
+                    <div class="col-md-6">
+                        <label>Nombre Completo:</label>
+                        <input type="text" placeholder="<?php echo $nombre_comple ;?>" class="form-control form-control-line" disabled>
+                    </div>
                 </div>
-                <!-- Row -->
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-            </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="example-email">Correo:</label>
+                        <input type="text" value ="<?php echo $correo;?>"
+                        class="form-control form-control-line" name="correo" >
+                    </div>
+                    <div class="col-md-6">
+                        <label>Telefono:</label>
+                        <input type="text" value="<?php echo $telefono ; ?>"
+                        class="form-control form-control-line" name="telefono" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label>Dirección:</label>
+                        <input type="text" value="<?php echo $direccion ?>"
+                        class="form-control form-control-line" name="direccion">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                    <input type="submit" name="update" class="btn btn-success" value="Actualizar Datos"">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
