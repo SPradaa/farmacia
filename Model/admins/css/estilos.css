@@ -149,30 +149,19 @@ table tr td{
     color: black;
 }
 
-
-
-.btn__update{
+.btn__detalle{
     display: inline-block;
     font-size: 14px;
-    background: #046bcc;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-.btn__delete{
-    display: inline-block;
-    font-size: 14px;
-    background: #8a0505;
+    background: #058a12;
     color: #fff;
     border: 5px;
     padding: 5px 10px;
 }
 
-.btn__detalle{
+.btn__autorizar{
     display: inline-block;
     font-size: 14px;
-    background: #058a12;
+    background: #046bcc;
     color: #fff;
     border: 5px;
     padding: 5px 10px;

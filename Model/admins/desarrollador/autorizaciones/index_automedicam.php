@@ -40,7 +40,6 @@ if(isset($_GET['btn_buscar'])) {
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar autorización" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="insert_automedicam.php" class="btn btn_nuevo">Autorizar</a>
                 </form>
             </div>
             <table>
@@ -52,7 +51,7 @@ if(isset($_GET['btn_buscar'])) {
                     <td>Documento médico</td>
                     <td>Especialización</td>
                     <td>Estado</td>
-                    <td colspan="3">Acción</td>
+                    <td colspan="2">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -67,27 +66,38 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['docu_medico']; ?></td>
-                        <td><?php echo $fila['id_esp']; ?></td>
-                        <td><?php echo $fila['id_estado']; ?></td>
+                        <td><?php echo $fila['especializacion']; ?></td>
+                        <td><?php echo $fila['estado']; ?></td>
                         <td><a href="detalle_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__detalle">Ver Detalle</a></td>
-                    </tr>
+                        <td><a href="" class="btn__autorizar" onclick="window.open
+                        ('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width= 600,height=500, toolbar=NO');void(null);">Autorizar</a>
+
+                  </tr>
                 <?php 
                     }
                 } else {
-                    $consulta = $con->prepare("SELECT citas.id_cita, citas.documento, citas.hora, citas.docu_medico, citas.id_esp, citas.id_estado FROM citas");
+                    $consulta = $con->prepare("SELECT citas.id_cita, citas.documento, citas.hora, citas.docu_medico, especializacion.especializacion, estados.estado
+                    FROM citas
+                    INNER JOIN especializacion ON especializacion.id_esp = citas.id_esp
+                    INNER JOIN estados ON estados.id_estado = citas.id_estado;");
                     $consulta->execute();
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
+
+
                     <tr>
                         <td><input type="checkbox" name="select_row[]"></td>
                         <td><?php echo $fila['id_cita']; ?></td>
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['docu_medico']; ?></td>
-                        <td><?php echo $fila['id_esp']; ?></td>
-                        <td><?php echo $fila['id_estado']; ?></td>
+                        <td><?php echo $fila['especializacion']; ?></td>
+                        <td><?php echo $fila['estado']; ?></td>
                         <td><a href="detalle_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__detalle">Ver Detalle</a></td>
-                    </tr>
+                        <td><a href="" class="btn__autorizar" onclick="window.open
+                        ('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width= 600,height=500, toolbar=NO');void(null);">Autorizar</a>
+
+                  </tr>
                 <?php 
                     }
                 }

@@ -160,14 +160,14 @@ table tr td{
     padding: 5px 10px;
 }
 
-.btn__delete{
+/* .btn__delete{
     display: inline-block;
     font-size: 14px;
     background: #8a0505;
     color: #fff;
     border: 5px;
     padding: 5px 10px;
-}
+} */
 
 .btn__autorizar{
     display: inline-block;
