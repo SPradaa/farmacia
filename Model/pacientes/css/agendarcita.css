@@ -24,6 +24,18 @@ body {
     padding-left: 50px;
 }
 
+img{
+  width: 90px;
+  height: 70px;
+  margin-left: 20px;
+
+}
+
+p {
+  text-align: center;
+  font-size: large;
+}
+
 h2 {
     text-align: center;
     margin-bottom: 18px;
@@ -54,6 +66,17 @@ input[type="date" i] {
     font-size: 16px;
     margin-left: 2px;
     margin-bottom: -12px;
+
+}
+
+input[type="time" i] {
+  width: calc(94% - 10px);
+  padding: 10px;
+  border: 2px solid #02e8f8;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 2px;
+  margin-bottom: -12px;
 
 }
 

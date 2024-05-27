@@ -33,7 +33,7 @@ validarSesion();
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/google-vector-map.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -125,7 +125,7 @@ validarSesion();
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
+                <ul id="sidebarnav">
                         <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
                                     class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
                         </li>
@@ -133,11 +133,15 @@ validarSesion();
                                     class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Citas</span></a>
-
+                                    class="fa fa-table"></i><span class="hide-menu">Citas </span></a>
                         </li>
-                      
-                        
+                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false"><i
+                                    class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false"><i
+                                    class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
+                        </li>
+                             
                     </ul>
                 
                 </nav>
@@ -182,7 +186,7 @@ validarSesion();
                 <div class="card-container">
                     <!-- Carta para el módulo de citas -->
                     <div class="card">
-                        <a href="agendarcitas.php">
+                        <a href="citas/agendarcitas.php">
                             <div class="card_box">
                                 <h3 >Citas</h3>
                                 <p class="card_box__content">Administra tus citas en este módulo.</p>
@@ -198,7 +202,7 @@ validarSesion();
 
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="#">
+                        <a href="citas/citasagendadas.php">
                             <div class="card_box">
                                 <h3 >Citas Agendadas</h3>
                                 <p class="card_box__content">Visualiza tus citas agendadas en este módulo.</p>

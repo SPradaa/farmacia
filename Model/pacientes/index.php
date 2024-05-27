@@ -67,7 +67,7 @@ if (!$fila) {
     <!--c3 CSS -->
     <link href="assets/node_modules/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
     <!-- Dashboard 1 Page CSS -->
     <link href="css/pages/dashboard1.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -117,12 +117,13 @@ if(isset($_POST['btncerrar']))
                 <!-- ============================================================== -->
                 <div class="navbar-header">
                     
-                    <a class="navbar-brand" href="index.html">
                    
                     
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
+                            <div class="logg">
+                                <img src="../../assets/img/log.farma.png">
+                            </div>
                             <!-- Dark Logo icon -->
                 
                         </b>
@@ -194,8 +195,12 @@ if(isset($_POST['btncerrar']))
                         </li>
                         <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
                                     class="fa fa-table"></i><span class="hide-menu">Citas</span></a>
-                      
-            
+                                    </li>
+                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
+                                    class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
+                                    class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
                         </li>
                       
                         
@@ -246,7 +251,7 @@ if(isset($_POST['btncerrar']))
                 <!-- ============================================================== -->
                 
 
-                <h2>Bienvenido <?php echo $_SESSION['nombre']; ?></h2>
+                <h2>Bienvenido Paciente <?php echo $_SESSION['nombre']; ?></h2>
 
               
 
