@@ -11,7 +11,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="../../assets/css/seguridadd.css">
+    <link href="../../assets/img/logof.png" rel="icon">
+    <link href="../../assets/img/logof.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="../../assets/css/seguridad.css">
 
 </head>
 <body>

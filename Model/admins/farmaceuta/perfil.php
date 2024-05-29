@@ -1,20 +1,15 @@
 <?php
-    require_once("../../../db/connection.php"); 
-    $conexion = new Database();
-    $con = $conexion->conectar();
-    // session_start();
-?>
-<?php
+require_once("../../../db/connection.php"); 
 require_once("../../../controller/seguridad.php");
-validarSesion();
-?>
-<?php
-$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-$sql->bindParam(':documento', $_SESSION['documento']);
-$sql->execute();
-$fila = $sql->fetch();
-echo "conectado";
 
+// Establecer conexión a la base de datos
+$conexion = new Database();
+$con = $conexion->conectar();
+
+// Verificar sesión (session_start() se llama dentro de validarSesion())
+validarSesion();
+
+// Obtener datos del usuario de la sesión
 $documento = $_SESSION['documento'];
 $nombre = $_SESSION['nombre'];
 $apellido = $_SESSION['apellido'];
@@ -23,8 +18,13 @@ $telefono = $_SESSION['telefono'];
 $correo = $_SESSION['correo'];
 $rol = $_SESSION['tipo'];
 $empresa = $_SESSION['nit'];
-
 $nombre_comple = $nombre . ' ' . $apellido;
+
+// Consultar datos del usuario
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
 
 // Verificar si se encontró al usuario
 if (!$fila) {
@@ -32,34 +32,52 @@ if (!$fila) {
     echo '<script>window.location.href = "login.php";</script>';
     exit;
 }
-?>
 
-<?php
-// Verificar si el formulario ha sido enviado y el botón de actualización ha sido presionado
 if (isset($_POST['update'])) {
     // Recuperar los datos del formulario
     $correo = $_POST['correo']; 
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
+    $id_depart = $_POST['id_depart'];
+    $id_municipio = $_POST['id_municipio'];
     
     // Validar campos vacíos
-    if (empty($correo) || empty($telefono) || empty($direccion)) {
+    if (empty($correo) || empty($telefono) || empty($direccion) || empty($id_depart) || empty($id_municipio)) {
         echo '<script>alert("Existen campos vacíos.");</script>';
     } else {
-        // Consulta SQL para actualizar los datos del usuario
-        $consulta = "UPDATE usuarios 
-                     SET telefono = '$telefono', direccion = '$direccion', correo = '$correo'
-                     WHERE documento = $documento";
-        
-        // Ejecutar la consulta
-        if ($con->query($consulta) === TRUE) {
-            echo '<script>alert("Actualización exitosa.");</script>';
-        } else {
-            echo '<script>alert("Error al actualizar los datos.");</script>';
+        try {
+            // Consulta SQL para actualizar los datos del usuario
+            $consulta = "UPDATE usuarios 
+                         SET telefono = :telefono, direccion = :direccion, correo = :correo, id_depart = :id_depart, id_municipio = :id_municipio
+                         WHERE documento = :documento";
+            $stmt = $con->prepare($consulta);
+            $stmt->bindParam(':telefono', $telefono);
+            $stmt->bindParam(':direccion', $direccion);
+            $stmt->bindParam(':correo', $correo);
+            $stmt->bindParam(':id_depart', $id_depart);
+            $stmt->bindParam(':id_municipio', $id_municipio);
+            $stmt->bindParam(':documento', $documento);
+            
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                // Actualizar los datos en la sesión
+                $_SESSION['telefono'] = $telefono;
+                $_SESSION['direccion'] = $direccion;
+                $_SESSION['correo'] = $correo;
+                $_SESSION['id_depart'] = $id_depart;
+                $_SESSION['id_municipio'] = $id_municipio;
+
+                echo '<script>alert("Actualización exitosa.");</script>';
+            } else {
+                throw new Exception("Error al actualizar los datos: " . $stmt->errorInfo()[2]);
+            }
+        } catch (Exception $e) {
+            echo '<script>alert("' . $e->getMessage() . '");</script>';
         }
     }
 }
-?> 
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -285,6 +303,34 @@ if (isset($_POST['update'])) {
                         class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
+                <div class="form-group row">
+    <div class="col-md-6">
+        <label>Departamento:</label>
+        <select class="form-control form-control-line" name="id_depart" id="id_depart">
+            <option value="">Seleccione el Departamento</option>
+            <?php
+            $departamentos = $con->query("SELECT * FROM departamentos");
+            while ($row = $departamentos->fetch(PDO::FETCH_ASSOC)) {
+                $selected = ($fila['id_depart'] == $row['id_depart']) ? 'selected' : '';
+                echo '<option value="' . $row['id_depart'] . '" ' . $selected . '>' . $row['depart'] . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label>Municipio:</label>
+        <select class="form-control form-control-line" name="id_municipio" id="id_municipio">
+            <option value="">Seleccione el Municipio</option>
+            <?php
+            $municipios = $con->query("SELECT * FROM municipios WHERE id_depart = " . $fila['id_depart']);
+            while ($row = $municipios->fetch(PDO::FETCH_ASSOC)) {
+                $selected = ($fila['id_municipio'] == $row['id_municipio']) ? 'selected' : '';
+                echo '<option value="' . $row['id_municipio'] . '" ' . $selected . '>' . $row['municipio'] . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
                 <div class="form-group">
                     <div class="col-sm-12">
                     <input type="submit" name="update" class="btn btn-success" value="Actualizar Datos"">
@@ -327,6 +373,23 @@ if (isset($_POST['update'])) {
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#id_depart').change(function(){
+                var id_depart = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "municipio.php",
+                    data: {id_depart: id_depart},
+                    success: function(response){
+                        $('#id_municipio').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
