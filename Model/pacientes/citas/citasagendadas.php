@@ -25,22 +25,6 @@ $user_document = $_SESSION['documento'];
                 $sentencia_select->execute();
                 $resultado = $sentencia_select->fetchAll();
 
-// if (isset($_GET['btn_buscar'])) {
-//     $buscar = $_GET['buscar'];
-
-//     $consulta = $con->prepare("SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple AS nombre_medico, especializacion.nombre AS nombre_especializacion
-//                                 FROM citas 
-//                                 JOIN medicos ON citas.docu_medico = medicos.docu_medico 
-//                                 JOIN especializacion ON citas.id_esp = especializacion.id_esp 
-//                                 WHERE citas.documento = :user_document
-//                                 AND (citas.documento LIKE :buscar OR medicos.nombre_comple LIKE :buscar OR especializacion.nombre LIKE :buscar)
-//                                 ORDER BY citas.fecha ASC");
-//     $buscar = "%$buscar%";
-//     $consulta->bindParam(':user_document', $user_document, PDO::PARAM_STR);
-//     $consulta->bindParam(':buscar', $buscar, PDO::PARAM_STR);
-//     $consulta->execute();
-//     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-// }
 ?>
 
 <!DOCTYPE html>

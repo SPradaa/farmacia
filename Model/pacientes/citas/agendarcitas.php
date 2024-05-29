@@ -51,7 +51,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg"))
             echo '<script>alert("Ya hay una cita programada con la hora seleccionada.");</script>';
             echo '<script>window.location="agendarcitas.php"</script>';
         } else {
-            $insertSQL = $con->prepare("INSERT INTO citas(documento, fecha, hora, id_esp, docu_medico) VALUES(:documento, :fecha, :hora, :id_esp, :docu_medico)");
+            $insertSQL = $con->prepare("INSERT INTO citas(documento, fecha, hora, id_esp, docu_medico, id_estado) VALUES(:documento, :fecha, :hora, :id_esp, :docu_medico, 1)");
             $insertSQL->execute([
                 ':documento' => $documento, // Se corrige aquí el nombre de la variable
                 ':fecha' => $fecha,
