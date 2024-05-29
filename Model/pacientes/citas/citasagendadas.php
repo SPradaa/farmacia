@@ -10,21 +10,22 @@ if (!isset($_SESSION['documento'])) {
 }
 
 $user_document = $_SESSION['documento'];
+
 // Manejo de la lógica de cancelación de citas
 if (isset($_POST['cancelar'])) {
     $id_cita = $_POST['id_cita'];
     $fecha = $_POST['fecha'];
     $hora = $_POST['hora'];
-    
+
     $fechaHoraCita = new DateTime("$fecha $hora");
     $fechaHoraActual = new DateTime();
     $intervalo = $fechaHoraActual->diff($fechaHoraCita);
-    
+
     if ($intervalo->invert == 0 && $intervalo->days >= 1) {
-        $actualizarEstado = $con->prepare("UPDATE citas SET id_estado = (SELECT id_estado FROM estados WHERE estado = 'Cancelada') WHERE id_cita = :id_cita");
+        $actualizarEstado = $con->prepare("UPDATE citas SET id_estado = 6 WHERE id_cita = :id_cita");
         $actualizarEstado->bindParam(':id_cita', $id_cita, PDO::PARAM_INT);
         $actualizarEstado->execute();
-        
+
         echo '<script>alert("Cita cancelada con éxito.");</script>';
         echo '<script>window.location="citasagendadas.php"</script>';
     } else {
@@ -32,11 +33,9 @@ if (isset($_POST['cancelar'])) {
         echo '<script>window.location="citasagendadas.php"</script>';
     }
 }
-?>
 
-<?php
 $sentencia_select = $con->prepare("
-    SELECT citas.documento, citas.fecha, citas.hora, medicos.nombre_comple, 
+    SELECT citas.id_cita, citas.documento, citas.fecha, citas.hora, medicos.nombre_comple, 
     especializacion.especializacion, estados.estado
     FROM citas 
     JOIN medicos ON citas.docu_medico = medicos.docu_medico 
@@ -73,7 +72,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
             <div class="barra_buscador">
-                <form action="" class="formulario" method="GET">
+                <form action="citasagendadas.php" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Cita" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
                 </form>
@@ -87,59 +86,56 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                     <td>Especializacion</td>
                     <td>Estado</td>
                     <td>Acciones</td>
-                    
+                </tr>
                 <?php
                 if (isset($_GET['btn_buscar'])) {
-                    foreach ($resultados as $fila) {
-                ?>
-                    <tr>
-                        <td><?php echo $fila['documento']; ?></td>
-                        <td><?php echo $fila['fecha']; ?></td>
-                        <td><?php echo $fila['hora']; ?></td>
-                        <td><?php echo $fila['nombre_comple']; ?></td>
-                        <td><?php echo $fila['especializacion']; ?></td>
-                        <td><?php echo $fila['estado']; ?></td>
-                        <td>
-                            <?php if ($fila['estado'] == 'Pendiente'): ?>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_cita" value="<?php echo $fila['id_cita']; ?>">
-                                    <input type="hidden" name="fecha" value="<?php echo $fila['fecha']; ?>">
-                                    <input type="hidden" name="hora" value="<?php echo $fila['hora']; ?>">
-                                    <input type="submit" name="cancelar" value="Cancelar" class="btn btn-danger">
-                                </form>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    
-                <?php
+                    foreach ($resultado as $fila) {
+                        if (strpos($fila['documento'], $_GET['buscar']) !== false) {
+                            echo "<tr>
+                                    <td>{$fila['documento']}</td>
+                                    <td>{$fila['fecha']}</td>
+                                    <td>{$fila['hora']}</td>
+                                    <td>{$fila['nombre_comple']}</td>
+                                    <td>{$fila['especializacion']}</td>
+                                    <td>{$fila['estado']}</td>
+                                    <td>";
+                            if ($fila['estado'] == 'Pendiente') {
+                                echo "<form action='' method='post'>
+                                        <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
+                                        <input type='hidden' name='fecha' value='{$fila['fecha']}'>
+                                        <input type='hidden' name='hora' value='{$fila['hora']}'>
+                                        <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
+                                      </form>";
+                            }
+                            echo    "</td>
+                                  </tr>";
+                        }
                     }
                 } else {
                     foreach ($resultado as $fila) {
-                ?>
-                    <tr>
-                        <td><?php echo $fila['documento']; ?></td>
-                        <td><?php echo $fila['fecha']; ?></td>
-                        <td><?php echo $fila['hora']; ?></td>
-                        <td><?php echo $fila['nombre_comple']; ?></td>
-                        <td><?php echo $fila['especializacion']; ?></td>
-                        <td><?php echo $fila['estado']; ?></td>
-                        <td>
-                            <?php if ($fila['estado'] == 'Pendiente'): ?>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id_cita" value="<?php echo $fila['id_cita']; ?>">
-                                    <input type="hidden" name="fecha" value="<?php echo $fila['fecha']; ?>">
-                                    <input type="hidden" name="hora" value="<?php echo $fila['hora']; ?>">
-                                    <input type="submit" name="cancelar" value="Cancelar" class="btn btn-danger">
-                                </form>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    
-                <?php
+                        echo "<tr>
+                                <td>{$fila['documento']}</td>
+                                <td>{$fila['fecha']}</td>
+                                <td>{$fila['hora']}</td>
+                                <td>{$fila['nombre_comple']}</td>
+                                <td>{$fila['especializacion']}</td>
+                                <td>{$fila['estado']}</td>
+                                <td>";
+                        if ($fila['estado'] == 'Pendiente') {
+                            echo "<form action='' method='post'>
+                                    <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
+                                    <input type='hidden' name='fecha' value='{$fila['fecha']}'>
+                                    <input type='hidden' name='hora' value='{$fila['hora']}'>
+                                    <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
+                                  </form>";
+                        }
+                        echo    "</td>
+                              </tr>";
                     }
                 }
                 ?>
             </table>
         </div>
-    </body>
+    </div>
+</body>
 </html>
