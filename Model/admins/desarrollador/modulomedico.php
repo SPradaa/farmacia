@@ -285,14 +285,14 @@ validarSesion();
 
                                     <div class="card">
 
-                                    <a href="../medico/histo_clinica/index_histoclinica.php">
+                                    <a href="autorizaciones/index_automedicam.php">
                                         <div class="card_box">
-                                    <h3 class="car_box__title">Historia Clínica
+                                    <h3 class="car_box__title">Citas
                                     </h3>
                                         <p class="card_box__content">Accede a la gestión de datos relacionados
-                                        con historia clinica </p>
+                                        con citas </p>
                                             <div class="card__date">
-                                            Haz clic para verificar la historia clínica correspondiente.
+                                            Haz clic para verificar las citas agendadas.
                                     </div>
                                     <div class="card_box__arrow">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"

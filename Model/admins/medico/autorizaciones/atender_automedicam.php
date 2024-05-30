@@ -113,7 +113,7 @@ $con = $conexion->conectar();
         </form>
     </div>
     <div class="left-align">
-        <form action="../../desarrollador/modulomedico.php">
+        <form action="../../desarrollador/autorizaciones/index_automedicam.php">
             <input type="submit" value="Regresar" class="btn-regresar"/>
         </form>
     </div>

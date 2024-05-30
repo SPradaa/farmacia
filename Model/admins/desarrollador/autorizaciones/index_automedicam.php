@@ -6,13 +6,13 @@ $con = $conexion->conectar();
 ?>
 
 <?php 
-$sentencia_select = $con->prepare("SELECT * FROM citas ORDER BY documento ASC");
+$sentencia_select = $con->prepare("SELECT * FROM citas ORDER BY id_cita ASC");
 $sentencia_select->execute();
 $resultado = $sentencia_select->fetchAll();
 
 if(isset($_GET['btn_buscar'])) {    
     $buscar = $_GET['buscar'];
-    $consulta = $con->prepare("SELECT * FROM citas WHERE documento LIKE :buscar");
+    $consulta = $con->prepare("SELECT * FROM citas WHERE id_cita LIKE :buscar");
     $buscar = "%$buscar%";
     $consulta->bindParam(':buscar', $buscar, PDO::PARAM_STR);
     $consulta->execute();
@@ -24,12 +24,12 @@ if(isset($_GET['btn_buscar'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Autorizacion de medicamentos</title>
+    <title>Citas agendadas</title>
     <link rel="stylesheet" href="../../css/estilos.css">
 </head>
 <body>
     <div class="contenedor">
-        <h2>AUTORIZACIONES DISPONIBLES</h2>
+        <h2>CITAS AGENDADAS</h2>
         <div class="row mt-3">
             <div class="col-md-6">
                 <form action="../modulomedico.php">
@@ -44,7 +44,6 @@ if(isset($_GET['btn_buscar'])) {
             </div>
             <table>
                 <tr class="head">
-                    <td></td>
                     <td>Cita</td>
                     <td>Documento</td>
                     <td>Hora</td>
@@ -56,23 +55,21 @@ if(isset($_GET['btn_buscar'])) {
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
                     $buscar = $_GET['buscar'];
-                    $consulta = $con->prepare("SELECT * FROM citas WHERE documento LIKE ?");
+                    $consulta = $con->prepare("SELECT * FROM citas WHERE id_cita LIKE ?");
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                     <tr>
-                        <td><input type="checkbox" name="select_row[]"></td>
                         <td><?php echo $fila['id_cita']; ?></td>
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="detalle_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__detalle">Ver Detalle</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open
-                        ('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width= 600,height=500, toolbar=NO');void(null);">Autorizar</a>
+                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../autorizar/autorizaciones.php?documento=<?php echo $fila['id_cita'] ?>','','width=600,height=500,toolbar=NO');void(null);">Autorizar</a></td>
+                </tr>
 
-                  </tr>
                 <?php 
                     }
                 } else {
@@ -84,20 +81,16 @@ if(isset($_GET['btn_buscar'])) {
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
 
-
                     <tr>
-                        <td><input type="checkbox" name="select_row[]"></td>
                         <td><?php echo $fila['id_cita']; ?></td>
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="detalle_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__detalle">Ver Detalle</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open
-                        ('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width= 600,height=500, toolbar=NO');void(null);">Autorizar</a>
-
-                  </tr>
+                        <td><a href="atender_automedicam.php?cedula=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width=600,height=500,toolbar=NO');void(null);">Autorizar</a></td>
+                </tr>
                 <?php 
                     }
                 }
