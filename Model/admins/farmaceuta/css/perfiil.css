@@ -1,51 +1,5 @@
 @charset "UTF-8";
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/**
- * Table Of Content
- *
- * 	1. Globals
- *	2. Headers
- *	3. Navigations
- *	4. Banners
- *	5. Footers
- *	6. app
- *	7. Widgets
- *	8. Custom Templates
- */
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*Theme Colors*/
-/*bootstrap Color*/
-/*Light colors*/
-/*Normal Color*/
-/*Extra Variable*/
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/**
- * Table Of Content
- *
- *  1. Globals
- *  2. Headers
- *  3. Navigations
- *  4. Banners
- *  5. Footers
- *  6. Posts
- *  7. Widgets
- *  8. Custom Templates
- */
+
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
 /******************* 
 Global Styles 
@@ -98,12 +52,13 @@ body {
   width: 90%;
 }
 
-.btn {
+.botones {
   font-size: 15px;
   padding-left: 5px;
   padding-right: 5px;
   margin-left: 38px;
   margin-top:35px;
+  margin-bottom: -90px;
   border: none;
   outline: none;
   border-radius: 0.4rem;
@@ -117,11 +72,11 @@ body {
   transition: 0.6s;
 }
 
-.btn:active {
+.botones:active {
   scale: 0.92;
 }
 
-.btn:hover {
+.botones:hover {
   background: rgb(2,29,78);
   background: linear-gradient(270deg, rgba(2, 29, 78, 0.681) 0%, rgba(31, 215, 232, 0.873) 60%);
   color: rgb(4, 4, 38);
@@ -130,6 +85,8 @@ body {
 .navbar-nav-me-auto{
   background: #F6F9FA;
 }
+
+
 
 html {
   position: relative;
@@ -1271,6 +1228,7 @@ File: scss
   margin-top: 40px;
   color: black;
   font-weight: 600;
+  margin-bottom: -5px;
 }
 
 .titulo{
@@ -1945,6 +1903,7 @@ ul#themecolors li a.working:before {
   right: 0;
   border-top: 1px solid rgba(120, 130, 140, 0.13);
   background: #F6F9FA;
+  margin-top: -200px;
 }
 
 /*******************
@@ -2323,6 +2282,9 @@ Buttons
 .btn {
   padding: 7px 12px;
   cursor: pointer;
+  margin-top: -100px;
+  margin-left: 143px;
+  margin-bottom: -125px;
 }
 .btn:hover {
   opacity: 0.8;
@@ -2492,14 +2454,17 @@ Buttons
 
 .btn-success,
 .btn-success.disabled {
-  background: #24d2b5;
+  background: rgb(116, 231, 244);
   border: 1px solid #24d2b5;
+  color: black;
+  font-weight: 600;
   /*box-shadow: $success-shadow;*/
   transition: 0.2s ease-in;
 }
 .btn-success:hover,
 .btn-success.disabled:hover {
-  background: #24d2b5;
+  background: rgb(91, 233, 249);
+  color: black;
   /*box-shadow: $success-shadow-hover;*/
   border: 1px solid #24d2b5;
 }
@@ -3043,13 +3008,12 @@ Form-control
 .custom-control-input:focus ~ .custom-control-indicator {
   box-shadow: none;
 }
-
 .custom-control-input:checked ~ .custom-control-indicator {
   background-color: #24d2b5;
 }
 
 form label {
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .form-group {

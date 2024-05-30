@@ -1,22 +1,24 @@
 <?php
-require_once("../../../db/connection.php");
+$conexion = new mysqli("localhost", "root", "", "vitalfarma");
 
-$conexion = new Database();
-$con = $conexion->conectar();
+if ($conexion->connect_error) {
+    die("La conexión ha fallado: " . $conexion->connect_error);
+}
 
 $depar = $_POST['id_depart'];
 
-$sql = "SELECT municipios.id_municipio, municipios.municipio FROM municipios 
-        WHERE municipios.id_depart = :id_depart";
-$stmt = $con->prepare($sql);
-$stmt->bindParam(':id_depart', $depar, PDO::PARAM_INT);
+$sql = "SELECT id_municipio, municipio FROM municipios WHERE id_depart = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("i", $depar);
 $stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = $stmt->get_result();
 
 $options = "<option value=''>Seleccione el Municipio</option>";
-foreach ($result as $row) {
-    $options .= '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
+while ($ver = $result->fetch_assoc()) {
+    $options .= '<option value="' . $ver['id_municipio'] . '">' . $ver['municipio'] . '</option>';
 }
 
 echo $options;
+$stmt->close();
+$conexion->close();
 ?>
