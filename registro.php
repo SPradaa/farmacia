@@ -58,6 +58,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro usuario</title>
+    <link href="assets/img/logof.png" rel="icon">
+  <link href="assets/img/logof.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="assets/css/registroo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
 </head>

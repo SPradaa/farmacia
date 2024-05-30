@@ -48,6 +48,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restablecer Contraseña</title>
+  <link href="assets/img/logof.png" rel="icon">
+  <link href="assets/img/logof.png" rel="apple-touch-icon">
   <link rel="stylesheet" href="assets/css/recuperar.css">
 </head>
 <body>

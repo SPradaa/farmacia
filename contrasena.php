@@ -53,7 +53,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario de Cambio de Contraseña</title>
-<link rel="stylesheet" href="assets/css/contrasena.css">
+<link href="assets/img/logof.png" rel="icon">
+<link href="assets/img/logof.png" rel="apple-touch-icon">
+<link rel="stylesheet" href="assets/css/contrasenaa.css">
 </head>
 <body>
 <div class="regresar">
