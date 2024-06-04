@@ -3,7 +3,68 @@ session_start();
 require_once("../../../../db/connection.php"); 
 $conexion = new Database();
 $con = $conexion->conectar();
+
+
+// Suponiendo que el documento del paciente está guardado en la sesión
+if (isset($_SESSION['documento'])) {
+    $documento = $_SESSION['documento'];
+} else {
+    // Manejar el caso en el que no exista el documento en la sesión
+    $documento = "Documento no encontrado";
+}
+
+$paciente = $_GET['cedula']     ;
+
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     $documento_paciente = $_POST['documento'];
+//     $docu_medico = $_POST['docu_medico'];
+//     $descripcion = $_POST['descripcion'];
+//     $diagnostico = $_POST['diagnostico'];
+
+//     $query = "INSERT INTO histo_clinica, medicos, usuarios (documento, docu_medico, descripcion, diagnostico) 
+//               VALUES (:documento, :docu_medico, :descripcion, :diagnostico)";
+//     $stmt = $con->prepare($query);
+//     $stmt->bindParam(':documento', $documento);
+//     $stmt->bindParam(':documedico', $docu_medico);
+//     $stmt->bindParam(':descripcion', $descripcion);
+//     $stmt->bindParam(':diagnostico', $diagnostico);
+
+//     if ($stmt->execute()) {
+//         echo "Historia Clínica guardada exitosamente.";
+//     } else {
+//         echo "Error al guardar la Historia Clínica.";
+//     }
+// }
+
+if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
+   {
+      $paciente= $_POST['documento'];
+      $documento= $_POST['docu_medico'];
+      $descripcion= $_POST['descripcion'];
+      $diagnostico= $_POST['diagnostico'];
+           
+
+      $sql= $con -> prepare ("SELECT descripcion, diagnostico FROM histo_clinica, usuarios, medicos WHERE histo_clinica.documento = usuarios.documento AND histo_clinica.docu_medico = medicos.docu_medico");
+      $sql -> execute();
+      $fila = $sql -> fetchAll(PDO::FETCH_ASSOC);
+ 
+      if ($descripcion=="" || $diagnostico=="")
+      {
+         echo '<script>alert ("EXISTEN DATOS VACIOS");</script>';
+         echo '<script>window.location="atender_automedicam.php"</script>';
+      }
+    }
+      else
+      {
+        $insertSQL = $con->prepare("INSERT INTO histo_clinica(documento, docu_medico, descripcion, diagnostico) VALUES('$paciente', '$documento', '$descripcion', '$diagnostico')");
+        $insertSQL -> execute();
+        echo '<script> alert("REGISTRO EXITOSO");</script>';
+        echo '<script>window.location=""</script>';
+        
+    } 
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -53,6 +114,10 @@ $con = $conexion->conectar();
         font-size: 16px;
     }
 
+    input[readonly] {
+        background-color: #e9e9e9;
+    }
+
     button.submit-btn {
         width: 102%;
         padding: 10px;
@@ -92,12 +157,12 @@ $con = $conexion->conectar();
         <h1>Historia Clínica</h1>
         <form action="guardar_historia_clinica.php" method="post">
             <div class="form-group">
-                <label for="documento_paciente">Documento del Paciente:</label>
-                <input type="text" id="documento_paciente" name="documento_paciente" required>
+                <label for="documento">Documento del Paciente</label>
+                <input type="text" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
             </div>
             <div class="form-group">
-                <label for="documento_medico">Documento del Medico:</label>
-                <input type="text" id="documento_medico" name="documento_medico" required>
+                <label for="documento_medico">Documento del Médico:</label>
+                <input type="text" id="documento_medico" name="documento_medico" value="<?php echo $documento; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
@@ -119,4 +184,5 @@ $con = $conexion->conectar();
     </div>
 </body>
 </html>
+
 

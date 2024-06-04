@@ -66,7 +66,7 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?id_cita=<?php echo $fila['id_cita']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
                         <td><a href="" class="btn__autorizar" onclick="window.open('../autorizar/autorizaciones.php?documento=<?php echo $fila['id_cita'] ?>','','width=600,height=500,toolbar=NO');void(null);">Autorizar</a></td>
                 </tr>
 
@@ -88,7 +88,7 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?id_cita=<?php echo $fila['id_cita']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="atender_automedicam.php?cedula=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
                         <td><a href="" class="btn__autorizar" onclick="window.open('../autorizar/autorizaciones.php?documento=<?php echo $fila['documento'] ?>','','width=600,height=500,toolbar=NO');void(null);">Autorizar</a></td>
                 </tr>
                 <?php 
