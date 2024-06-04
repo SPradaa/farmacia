@@ -27,10 +27,10 @@ if (isset($_POST['cancelar'])) {
         $actualizarEstado->execute();
 
         echo '<script>alert("Cita cancelada con éxito.");</script>';
-        echo '<script>window.location="citasagendadas.php"</script>';
+        echo '<script>window.location="cancelarcitas.php"</script>';
     } else {
         echo '<script>alert("Las citas solo pueden ser canceladas con al menos 24 horas de antelación.");</script>';
-        echo '<script>window.location="citasagendadas.php"</script>';
+        echo '<script>window.location="cancelarcitas.php"</script>';
     }
 }
 
