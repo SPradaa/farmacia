@@ -124,7 +124,6 @@ form .btn{
 }
 
 
-
 /* table */
 table{
     width: 100%;
@@ -147,21 +146,24 @@ table tr td{
     padding: 7px;
     font-size: 14px;
     color: black;
+    text-align: center;
 }
 
-.btn__atender{
-    display: inline-block;
-    font-size: 14px;
-    background: #058a12;
-    color: #fff;
-    border: 5px;
-    padding: 5px 10px;
-}
 
-.btn__autorizar{
+
+.btn__update{
     display: inline-block;
     font-size: 14px;
     background: #046bcc;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn__delete{
+    display: inline-block;
+    font-size: 14px;
+    background: #8a0505;
     color: #fff;
     border: 5px;
     padding: 5px 10px;

@@ -7,32 +7,32 @@ session_start();
 
 <?php
 
-    if(isset($_GET['id_detalle'])){
-        $id_detalle=(int) $_GET['id_detalle'];
+    if(isset($_GET['id_lab'])){
+        $id_lab=(int) $_GET['id_lab'];
 
-        $buscar_id=$con->prepare('SELECT * FROM det_autorizacion WHERE id_detalle=:id_detalle');
+        $buscar_id=$con->prepare('SELECT * FROM laboratorio WHERE id_lab=:id_lab');
         $buscar_id->execute(array(
-            ':id_detalle'=>$id_detalle
+            ':id_lab'=>$id_lab
         ));
         $resultado=$buscar_id->fetch();
     }else{
-        header('Location: index_automedicam.php');
+        header('Location: index_lab.php');
     }
 
     if(isset($_POST['guardar'])){
 
-        $det_autorizacion=$_POST['det_autorizacion'];
-        $id_detalle=(int) $_GET['id_detalle'];
+        $laboratorio=$_POST['laboratorio'];
+        $id_lab=(int) $_GET['id_lab'];
 
-        if(!empty($id_detalle) && !empty($det_autorizacion)){
+        if(!empty($id_lab) && !empty($laboratorio)){
             {
-            $consulta_update = $con->prepare('UPDATE det_autorizacion SET det_autorizacion=:det_autorizacion WHERE id_detalle =:id_detalle;');
+            $consulta_update = $con->prepare('UPDATE laboratorio SET laboratorio=:laboratorio WHERE id_lab =:id_lab;');
             $consulta_update->execute(array(
-                ':det_autorizacion' =>$det_autorizacion,
-                ':id_detalle' =>$id_detalle
+                ':laboratorio' =>$laboratorio,
+                ':id_lab' =>$id_lab
             ));
             echo '<script> alert("REGISTRO ACTUALIZADO EXITOSAMENTE");</script>';
-            echo '<script>window.location="index_automedicam.php"</script>';
+            echo '<script>window.location="index_lab.php"</script>';
         }
     }else{
         echo "<scrip> alert ('Los campos estan vacios');</scrip>";
@@ -52,14 +52,13 @@ session_start();
         <h2>Editar Informacion </h2>
         <form action="" method="post">
             <div class="form-group">
-                <input type="text" name="id_auto" value="<?php if($resultado) echo
-                    $resultado['id_auto']; ?>" class="input__text">
-                <input type="text" name="autorizaciones" value="<?php if(isset($resultado) && 
-                isset($resultado['autorizaciones'])) echo $resultado['autorizaciones']; ?>" class="input__text">
-
+                <input type="text" name="id_lab" value="<?php if($resultado) echo
+                    $resultado['id_lab']; ?>" class="input__text">
+                <input type="text" name="laboratorio" value="<?php if($resultado) echo 
+                    $resultado['laboratorio']; ?>" class="input__text">
             </div>
             <div class="btn__group">
-                <a href="detalle_automedicam.php" class="btn btn__danger">Cancelar</a>
+                <a href="index_lab.php" class="btn btn__danger">Cancelar</a>
                 <input type="submit" name="guardar" value="Guardar" class="btn
                 btn__primary">
             </div>
