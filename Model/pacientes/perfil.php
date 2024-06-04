@@ -179,6 +179,9 @@ if (!$fila) {
                         <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
                                     class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
                         </li>
+                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false"><i
+                                    class="fa fa-globe"></i><span class="hide-menu">Historial</span></a>
+                        </li>
                        
                         
                     </ul>
