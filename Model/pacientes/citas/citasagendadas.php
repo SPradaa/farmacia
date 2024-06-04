@@ -11,7 +11,7 @@ if (!isset($_SESSION['documento'])) {
 
 $user_document = $_SESSION['documento'];
 
-// Manejo de la lógica de cancelación de citas
+// Manejo de la lógica de cancelación de citas (este bloque se puede eliminar si ya no se necesita cancelar citas)
 if (isset($_POST['cancelar'])) {
     $id_cita = $_POST['id_cita'];
     $fecha = $_POST['fecha'];
@@ -34,6 +34,7 @@ if (isset($_POST['cancelar'])) {
     }
 }
 
+// Modificar la consulta para seleccionar todas las citas independientemente del estado
 $sentencia_select = $con->prepare("
     SELECT citas.id_cita, citas.documento, citas.fecha, citas.hora, medicos.nombre_comple, 
     especializacion.especializacion, estados.estado
@@ -82,10 +83,9 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                     <td>Documento</td>
                     <td>Fecha</td>
                     <td>Hora</td>
-                    <td>Medico</td>
-                    <td>Especializacion</td>
+                    <td>Médico</td>
+                    <td>Especialización</td>
                     <td>Estado</td>
-                    <td>Acciones</td>
                 </tr>
                 <?php
                 if (isset($_GET['btn_buscar'])) {
@@ -98,16 +98,6 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                                     <td>{$fila['nombre_comple']}</td>
                                     <td>{$fila['especializacion']}</td>
                                     <td>{$fila['estado']}</td>
-                                    <td>";
-                            if ($fila['estado'] == 'Pendiente') {
-                                echo "<form action='' method='post'>
-                                        <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
-                                        <input type='hidden' name='fecha' value='{$fila['fecha']}'>
-                                        <input type='hidden' name='hora' value='{$fila['hora']}'>
-                                        <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
-                                      </form>";
-                            }
-                            echo    "</td>
                                   </tr>";
                         }
                     }
@@ -120,16 +110,6 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                                 <td>{$fila['nombre_comple']}</td>
                                 <td>{$fila['especializacion']}</td>
                                 <td>{$fila['estado']}</td>
-                                <td>";
-                        if ($fila['estado'] == 'Pendiente') {
-                            echo "<form action='' method='post'>
-                                    <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
-                                    <input type='hidden' name='fecha' value='{$fila['fecha']}'>
-                                    <input type='hidden' name='hora' value='{$fila['hora']}'>
-                                    <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
-                                  </form>";
-                        }
-                        echo    "</td>
                               </tr>";
                     }
                 }

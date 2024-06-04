@@ -41,7 +41,7 @@ $sentencia_select = $con->prepare("
     JOIN medicos ON citas.docu_medico = medicos.docu_medico 
     JOIN especializacion ON citas.id_esp = especializacion.id_esp 
     JOIN estados ON citas.id_estado = estados.id_estado
-    WHERE citas.documento = :user_document
+    WHERE citas.documento = :user_document AND citas.id_estado = 1
     ORDER BY citas.fecha ASC
 ");
 $sentencia_select->bindParam(':user_document', $user_document, PDO::PARAM_STR);
