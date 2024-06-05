@@ -150,17 +150,7 @@ table tr td{
 }
 
 
-
-.btn__update{
-    display: inline-block;
-    font-size: 14px;
-    background: #046bcc;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-.btn__delete{
+.btn__atender{
     display: inline-block;
     font-size: 14px;
     background: #8a0505;

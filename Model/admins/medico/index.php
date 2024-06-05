@@ -1,5 +1,4 @@
 <?php
-
    require_once ("../../../db/connection.php");
    $db = new Database();
    $con = $db ->conectar();
@@ -13,34 +12,30 @@ validarSesion();
 
 ?>
 
-
 <?php
-$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-$sql->bindParam(':documento', $_SESSION['documento']);
+$sql = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas WHERE medicos.id_doc = t_documento.id_doc
+AND medicos.id_rol = roles.id_rol AND medicos.id_estado = estados.id_estado AND medicos.id_esp = especializacion.id_esp AND medicos.nit = empresas.nit AND docu_medico = :docu_medico");
+$sql->bindParam(':docu_medico', $_SESSION['docu_medico']);
 $sql->execute();
 $fila = $sql->fetch();
-echo"conectado";
+echo "conectado";
 
-$documento=$_SESSION['documento'];
-$nombre = $_SESSION['nombre'];
-$apellido = $_SESSION['apellido'];
-$direccion = $_SESSION['direccion'];
-$telefono =$_SESSION['telefono'];
-$correo= $_SESSION['correo'];
-$rol = $_SESSION['tipo'];
-$empresa = $_SESSION[ 'nit'];
+$docu_medico = $_SESSION['docu_medico'];
 
-$nombre_comple = $nombre .''.$apellido; 
-
-// Verificar si se encontró al usuario
-if (!$fila) {
-    echo '<script>alert("Usuario no encontrado.");</script>';
-    echo '<script>window.location.href = "login.php";</script>';
-    exit;
+$doc = isset($_SESSION['id_doc']) ? $_SESSION['id_doc'] : '';
+$nombre_comple = isset($_SESSION['nombre_comple']) ? $_SESSION['nombre_comple'] : '';
+$correo = isset($_SESSION['correo']) ? $_SESSION['correo'] : '';
+$telefono = isset($_SESSION['telefono']) ? $_SESSION['telefono'] : '';
+$password = isset($_SESSION['password']) ? $_SESSION['password'] : '';
+$roles = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : '';
+$estado = isset($_SESSION['id_estado']) ? $_SESSION['id_estado'] : '';
+$esp = isset($_SESSION['id_esp']) ? $_SESSION['id_esp'] : '';
+$nit = isset($_SESSION['nit']) ? $_SESSION['nit'] : '';
 
 
-}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -253,62 +248,6 @@ if(isset($_POST['btncerrar']))
                 <h2>Bienvenido <?php echo $_SESSION['nombre']; ?></h2>
 
               
-
-                <!-- <div class="container mt-3"> -->
-                    <h2>Lista de Usuarios</h2>
-            
-                    <!-- Campo de búsqueda -->
-                    <div class="mb-3">
-                        <input type="text" id="search" class="form-control" placeholder="Buscar por documento...">
-                    </div>
-            
-                    <!-- Div con scroll -->
-                    <div class="scrollable-div">
-                        <table class="table table-bordered">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>Documento</th>
-                                    <th>Nombre</th>
-                                    <th>Correo</th>
-                                    <th>EPS</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="userTable">
-                                <!-- Código PHP para cargar las filas -->
-                                <?php
-                                $empresa = $_SESSION[ 'nit'];
-                                // Asegúrate de tener una conexión de base de datos válida en $con
-                                $consulta = "SELECT *
-                                FROM usuarios
-                                JOIN ciudad ON usuarios.id_ciudad = ciudad.id_ciudad
-                                JOIN eps ON usuarios.id_eps = eps.id_eps
-                                JOIN estados ON usuarios.id_estado = estados.id_estado
-                                WHERE usuarios.nit = '$empresa'";  // Condición para filtrar por empresa
-                   
-                   $resultado = $con->query($consulta);
-                   
-                                while ($fila = $resultado->fetch()) {
-                                    echo '
-                                    <tr>
-                                        <td>' . $fila["documento"] . '</td>
-                                        <td>' . $fila["nombre"] . '</td>
-                                        <td>' . $fila["correo"] . '</td>
-                                        <td>' . $fila["eps"] . '</td>
-                                        <td>' . $fila["estado"] . '</td>
-                                        <td>
-                                            <div class="text-center">
-                                                <a href="update_usu.php?id=' . $fila['documento'] . '" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
                 <!-- </div> -->
             

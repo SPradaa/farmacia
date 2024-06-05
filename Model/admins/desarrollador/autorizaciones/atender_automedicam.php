@@ -15,9 +15,55 @@ if (isset($_SESSION['documento'])) {
 
 $paciente = $_GET['cedula']     ;
 
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     $documento_paciente = $_POST['documento'];
+//     $docu_medico = $_POST['docu_medico'];
+//     $descripcion = $_POST['descripcion'];
+//     $diagnostico = $_POST['diagnostico'];
+
+//     $query = "INSERT INTO histo_clinica, medicos, usuarios (documento, docu_medico, descripcion, diagnostico) 
+//               VALUES (:documento, :docu_medico, :descripcion, :diagnostico)";
+//     $stmt = $con->prepare($query);
+//     $stmt->bindParam(':documento', $documento);
+//     $stmt->bindParam(':documedico', $docu_medico);
+//     $stmt->bindParam(':descripcion', $descripcion);
+//     $stmt->bindParam(':diagnostico', $diagnostico);
+
+//     if ($stmt->execute()) {
+//         echo "Historia Clínica guardada exitosamente.";
+//     } else {
+//         echo "Error al guardar la Historia Clínica.";
+//     }
+// }
+
+if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
+   {
+      $paciente= $_POST['documento'];
+      $documento= $_POST['docu_medico'];
+      $descripcion= $_POST['descripcion'];
+      $diagnostico= $_POST['diagnostico'];
+           
+
+      $sql= $con -> prepare ("SELECT descripcion, diagnostico FROM histo_clinica, usuarios, medicos WHERE histo_clinica.documento = usuarios.documento AND histo_clinica.docu_medico = medicos.docu_medico");
+      $sql -> execute();
+      $fila = $sql -> fetchAll(PDO::FETCH_ASSOC);
+ 
+      if ($descripcion=="" || $diagnostico=="")
+      {
+         echo '<script>alert ("EXISTEN DATOS VACIOS");</script>';
+         echo '<script>window.location="atender_automedicam.php"</script>';
+      }
+    }
+      else
+      {
+        $insertSQL = $con->prepare("INSERT INTO histo_clinica(documento, docu_medico, descripcion, diagnostico) VALUES('$paciente', '$documento', '$descripcion', '$diagnostico')");
+        $insertSQL -> execute();
+        echo '<script> alert("REGISTRO EXITOSO");</script>';
+        echo '<script>window.location=""</script>';
+        
+    } 
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -132,7 +178,7 @@ $paciente = $_GET['cedula']     ;
         </form>
     </div>
     <div class="left-align">
-        <form action="../../medico/autorizaciones/index_automedicam.php">
+        <form action="../../desarrollador/autorizaciones/index_automedicam.php">
             <input type="submit" value="Regresar" class="btn-regresar"/>
         </form>
     </div>

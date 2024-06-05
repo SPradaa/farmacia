@@ -3,7 +3,7 @@
     $conexion = new Database();
     $con = $conexion->conectar();
     session_start();
-
+    
     if(isset($_POST["inicio"])){
         $documento = $_POST['documento'];
         $password = $_POST['password'];
@@ -57,3 +57,4 @@
             exit();
         }
     }
+?>
