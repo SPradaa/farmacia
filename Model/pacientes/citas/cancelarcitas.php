@@ -58,7 +58,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <div class="contenedor">
-        <h2>CITAS AGENDADAS</h2>
+        <h2>CANCELAR CITAS</h2>
         <div class="row mt-3">
             <div class="col-md-6">
                 <?php if (isset($_GET['btn_buscar'])): ?>
