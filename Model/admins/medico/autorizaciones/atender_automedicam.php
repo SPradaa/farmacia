@@ -4,7 +4,6 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
-
 // Suponiendo que el documento del paciente está guardado en la sesión
 if (isset($_SESSION['documento'])) {
     $documento = $_SESSION['documento'];
@@ -13,12 +12,20 @@ if (isset($_SESSION['documento'])) {
     $documento = "Documento no encontrado";
 }
 
-$paciente = $_GET['cedula']     ;
+$paciente = $_GET['cedula'];
 
+// Suponiendo que tienes una tabla de pacientes en tu base de datos
+// y que puedes obtener el nombre del paciente a partir de su documento
+$sql = "SELECT nombre FROM usuarios WHERE documento = :documento";
+$stmt = $con->prepare($sql);
+$stmt->bindParam(':documento', $paciente);
+$stmt->execute();
+$nombre = "Nombre no encontrado"; // Valor por defecto si no se encuentra el nombre
+if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $nombre = $row['nombre'];
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +36,7 @@ $paciente = $_GET['cedula']     ;
     <link rel="stylesheet" href="styles.css">
 </head>
 <style>
-    body {
+        body {
         font-family: Arial, sans-serif;
         background-color: #f0f8ff;
         margin: 0;
@@ -73,7 +80,7 @@ $paciente = $_GET['cedula']     ;
     }
 
     button.submit-btn {
-        width: 102%;
+        width: 100%;
         padding: 10px;
         background-color: #007bff;
         color: #fff;
@@ -103,7 +110,7 @@ $paciente = $_GET['cedula']     ;
 
     .left-align {
         float: left;
-        margin-right: 20px; 
+        margin: 20px 0 0 20px; 
     }
 </style>
 <body>
@@ -114,10 +121,12 @@ $paciente = $_GET['cedula']     ;
                 <label for="documento">Documento del Paciente</label>
                 <input type="text" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
             </div>
+
             <div class="form-group">
-                <label for="documento_medico">Documento del Médico:</label>
-                <input type="text" id="documento_medico" name="documento_medico" value="<?php echo $documento; ?>" readonly>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly>
             </div>
+            
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion" rows="4"></textarea>
@@ -138,5 +147,3 @@ $paciente = $_GET['cedula']     ;
     </div>
 </body>
 </html>
-
-
