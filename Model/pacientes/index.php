@@ -251,7 +251,7 @@ if(isset($_POST['btncerrar']))
                 <!-- ============================================================== -->
                 
 
-                <h2>Bienvenido Paciente <?php echo $_SESSION['nombre']; ?></h2>
+                <h2>Bienvenido Pacientes <?php echo $_SESSION['nombre']; ?></h2>
 
               
 
