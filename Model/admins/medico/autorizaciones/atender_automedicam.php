@@ -120,12 +120,18 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             <div class="form-group">
                 <label for="documento">Documento del Paciente</label>
-                <input type="text" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
+                <h3 id="documento"><?php echo $paciente; ?></h3>
+                <input type="hidden" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
             </div>
 
             <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly>
+                <h3 id="nombre"><?php echo $nombre; ?></h3>
+                <input type="hidden" id="nombre" name="nombre" value="<?php echo $nombre; ?>" readonly>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" id="docu_medico" name="docu_medico" value="<?php echo $documento; ?>" readonly>
             </div>
             
             <div class="form-group">
