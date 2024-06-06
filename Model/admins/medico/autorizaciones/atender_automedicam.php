@@ -12,7 +12,7 @@ if (isset($_SESSION['documento'])) {
     $documento = "Documento no encontrado";
 }
 
-$paciente = $_GET['cedula'];
+$paciente = $_GET['documento'];
 
 // Suponiendo que tienes una tabla de pacientes en tu base de datos
 // y que puedes obtener el nombre del paciente a partir de su documento
@@ -117,6 +117,7 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <div class="container">
         <h1>Historia Clínica</h1>
         <form action="guardar_historia_clinica.php" method="post">
+
             <div class="form-group">
                 <label for="documento">Documento del Paciente</label>
                 <input type="text" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
