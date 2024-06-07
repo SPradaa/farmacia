@@ -199,9 +199,6 @@ if(isset($_POST['btncerrar']))
                         <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
                                     class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
-                        </li>
                         <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false"><i
                                     class="fa fa-globe"></i><span class="hide-menu">Historial</span></a>
                         </li>
@@ -254,7 +251,7 @@ if(isset($_POST['btncerrar']))
                 <!-- ============================================================== -->
                 
 
-                <h2>Bienvenido Paciente <?php echo $_SESSION['nombre']; ?></h2>
+                <h2>Bienvenido Pacientes <?php echo $_SESSION['nombre']; ?></h2>
 
               
 

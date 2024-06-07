@@ -69,12 +69,25 @@ validarSesion();
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        
-                        <!-- Logo icon -->     <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
-              
+                      <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <div class="logg">
+                                <img src="../../assets/img/log.farma.png">
+                            </div>
+                            <!-- Dark Logo icon -->
+                
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                            <!-- dark Logo text -->
+                            <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                            
+                            <!-- Light Logo text -->
+
+                            <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
                     </a>
                 </div>
+                 
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
