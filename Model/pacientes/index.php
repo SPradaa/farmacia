@@ -1,25 +1,20 @@
 <?php
-
-   require_once ("../../db/connection.php");
-   $db = new Database();
-   $con = $db ->conectar();
-//    session_start();
+    require_once("../../db/connection.php"); 
+    $conexion = new Database();
+    $con = $conexion->conectar();
+    // session_start();
 ?>
-
 <?php
 require_once("../../controller/seguridad.php");
 validarSesion();
 
 
 ?>
-
-
 <?php
 $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $sql->bindParam(':documento', $_SESSION['documento']);
 $sql->execute();
 $fila = $sql->fetch();
-echo"conectado";
 
 $documento=$_SESSION['documento'];
 $nombre = $_SESSION['nombre'];
@@ -40,6 +35,21 @@ if (!$fila) {
 
 
 }
+
+// Variables para el usuario
+
+
+
+    // $_SESSION['documento'] = $fila['documento'];
+    // $_SESSION['nombre'] = $fila['nombre'];
+    // $_SESSION[ 'apellido'] = $fila['apellido'];
+    // $_SESSION[ 'direccion'] = $fila['direccion'];
+    // $_SESSION['telefono'] = $fila['telefono'];
+    // $_SESSION['correo'] = $fila['correo'];
+    // $_SESSION['password'] = $fila['password'];
+    // $_SESSION['tipo'] = $fila['id_rol'];
+    // $_SESSION['nit'] = $fila['nit'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,22 +64,15 @@ if (!$fila) {
     <meta name="description"
         content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Paciente</title>
+    <title>Pacientes</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
-    <!-- This page CSS -->
-    <!-- chartist CSS -->
-    <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
-    <!--c3 CSS -->
-    <link href="assets/node_modules/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/styles.css" rel="stylesheet">
-    <!-- Dashboard 1 Page CSS -->
-    <link href="css/pages/dashboard1.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,100 +81,51 @@ if (!$fila) {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
-<?php 
-
-if(isset($_POST['btncerrar']))
-{
-    session_destroy();
-
-   
-    header('location: ../../../index.html');
-}
-    
-?>
 </head>
 
-<body class="fix-header fix-sidebar card-no-border">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
+<body class="fix-header card-no-border fix-sidebar">
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
             <p class="loader__label">VitalFarma</p>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
+    
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
+        
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- ============================================================== -->
                 <!-- Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-header">
-                    
-                   
-                    
-                        <!-- Logo icon --><b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <div class="logg">
-                                <img src="../../assets/img/log.farma.png">
+                <div class="logg">
+                            <img src="../../assets/img/log.farma.png">
                             </div>
-                            <!-- Dark Logo icon -->
-                
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text --><span>
-                            <!-- dark Logo text -->
-                            <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
-                            
-                            <!-- Light Logo text -->
-
-                            <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
-                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse">
+                
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
-                                href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
+                    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h3 class="titulo">Bienvenido/a Paciente <?php echo $nombre;?></h3>
+        </div>
+    </div>
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item hidden-xs-down search-box"> <a
-                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
-                                    class="fa fa-search"></i></a>
+                        <li class="nav-item hidden-xs-down search-box"> 
                             <form class="app-search">
                                 <input type="text" class="form-control" placeholder="Search & enter"> <a
-                                    class="srh-btn"><i class="fa fa-times"></i></a></form>
+                                    class="srh-btn"></a> </form>
                         </li>
                     </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="#"
-                                id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
-                                    class="hidden-md-down"><?php echo $nombre_comple ;?> &nbsp;</span> </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
-                        </li>
-                    </ul>
+                    
                 </div>
             </nav>
         </header>
@@ -187,34 +141,31 @@ if(isset($_POST['btncerrar']))
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Citas</span></a>
-                                    </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
+                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false">
+                        <i <a class="fas fa-archive"></i><span class="hide-menu">Citas</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Historial</span></a>
+                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones</span></a>
                         </li>
-                      
+                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Historial</span></a>
+                        </li>
+                       
                         
                     </ul>
-                    <form method="POST">
-    <tr>
-        <td colspan='1'></td>
-    </tr>
-
-    <input type="submit" value="Cerrar sesion" name="btncerrar"  class="btn waves-effect waves-light btn-info hidden-md-down text-white" >
-</tr>
-</form>
-                 
+                  
                 </nav>
+                <div class="boton">
+                <form method="POST">
+        <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+    </form>
+    </div>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
@@ -229,37 +180,42 @@ if(isset($_POST['btncerrar']))
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Principal</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Casa</a></li>
-                            <li class="breadcrumb-item active">Principal</li>
-                        </ol>
-                    </div>
-                   
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Sales Chart and browser state-->
-                <!-- ============================================================== -->
-                
-
-                <h2>Bienvenido Pacientes <?php echo $_SESSION['nombre']; ?></h2>
-
-              
+            <!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
 
+    <!-- Agrega este código HTML al final de tu archivo PHP -->
+<div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="assets/images/imagen1.jpg" class="w-100 " alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/images/imagen2.jpg" class=" w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="assets/images/imagen4.jpg" class="w-100" alt="...">
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
 
+    </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer"> © 2021 Adminwrap by <a href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+            <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -275,7 +231,7 @@ if(isset($_POST['btncerrar']))
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="assets/node_modules/jquery/jquery.min.js"></script>
-    <!-- Bootstrap popper Core JavaScript -->
+    <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/node_modules/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/perfect-scrollbar.jquery.min.js"></script>
@@ -285,17 +241,8 @@ if(isset($_POST['btncerrar']))
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- This page plugins -->
-    <!-- ============================================================== -->
-    <!--morris JavaScript -->
-    <script src="assets/node_modules/raphael/raphael-min.js"></script>
-    <script src="assets/node_modules/morrisjs/morris.min.js"></script>
-    <!--c3 JavaScript -->
-    <script src="assets/node_modules/d3/d3.min.js"></script>
-    <script src="assets/node_modules/c3-master/c3.min.js"></script>
-    <!-- Chart JS -->
-    <script src="js/dashboard1.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

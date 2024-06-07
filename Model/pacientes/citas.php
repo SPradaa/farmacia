@@ -28,6 +28,7 @@ validarSesion();
     <meta name="robots" content="noindex,nofollow">
     <title>Citas</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <!-- Bootstrap Core CSS -->
@@ -134,23 +135,20 @@ validarSesion();
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Citas </span></a>
+                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false">
+                        <i <a class="fas fa-archive"></i><span class="hide-menu">Citas</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
+                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Historial</span></a>
+                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Historial</span></a>
                         </li>
                              
                     </ul>
