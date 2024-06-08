@@ -7,7 +7,7 @@
 ?>
 
 <?php
-require_once("../../controller/seguridad.php");
+require_once("../../controller/segpacientes.php");
 validarSesion();
 
 
@@ -34,7 +34,7 @@ validarSesion();
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/google-vector-map.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -66,11 +66,7 @@ validarSesion();
         <!-- ============================================================== -->
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-header">
-                      <!-- Logo icon --><b>
+                  <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <div class="logg">
                                 <img src="../../assets/img/log.farma.png">
@@ -88,7 +84,6 @@ validarSesion();
                             <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
                     </a>
                 </div>
-                 
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
@@ -158,6 +153,12 @@ validarSesion();
                        
                         
                     </ul>
+                    </nav>
+                <div class="boton">
+                <form method="POST">
+        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
+    </form>
+    </div>
                 
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -202,7 +203,7 @@ validarSesion();
 
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="historial/verhistorial.php">
+                        <a href="#">
                             <div class="card_box">
                                 <h3 >Historial</h3>
                                 <p class="card_box__content">Visualiza tu historial en este módulo.</p>

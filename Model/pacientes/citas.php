@@ -7,7 +7,7 @@
 ?>
 
 <?php
-require_once("../../controller/seguridad.php");
+require_once("../../controller/segpacientes.php");
 validarSesion();
 
 
@@ -34,7 +34,7 @@ validarSesion();
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/google-vector-map.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -154,6 +154,11 @@ validarSesion();
                     </ul>
                 
                 </nav>
+                <div class="boton">
+                <form method="POST">
+        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
+    </form>
+    </div>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
