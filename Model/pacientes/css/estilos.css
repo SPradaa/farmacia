@@ -151,7 +151,7 @@ table tr td{
 
 
 
-.btn__update{
+.btn_pdf{
     display: inline-block;
     font-size: 14px;
     background: #046bcc;
@@ -160,11 +160,22 @@ table tr td{
     padding: 5px 10px;
 }
 
-.btn__delete{
+.btn_excel{
     display: inline-block;
     font-size: 14px;
-    background: #8a0505;
-    color: #fff;
+    background: #ff0000;
+    color: #ffffff;
     border: 5px;
     padding: 5px 10px;
+}
+.espacio{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    /* background: red; */
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 30px;
+
 }

@@ -35,9 +35,10 @@ if (isset($_POST['cancelar'])) {
 }
 
 $sentencia_select = $con->prepare("
-    SELECT citas.id_cita, citas.documento, citas.fecha, citas.hora, medicos.nombre_comple, 
+    SELECT citas.id_cita, usuarios.nombre, usuarios.apellido, citas.fecha, citas.hora, medicos.nombre_comple, 
     especializacion.especializacion, estados.estado
     FROM citas 
+    JOIN usuarios ON citas.documento = usuarios.documento
     JOIN medicos ON citas.docu_medico = medicos.docu_medico 
     JOIN especializacion ON citas.id_esp = especializacion.id_esp 
     JOIN estados ON citas.id_estado = estados.id_estado
@@ -79,11 +80,12 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <table>
                 <tr class="head">
-                    <td>Documento</td>
+                    <td>Nombre</td>
+                    <td>Apellido</td>
                     <td>Fecha</td>
                     <td>Hora</td>
-                    <td>Medico</td>
-                    <td>Especializacion</td>
+                    <td>Médico</td>
+                    <td>Especialización</td>
                     <td>Estado</td>
                     <td>Acciones</td>
                 </tr>
@@ -92,7 +94,8 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($resultado as $fila) {
                         if (strpos($fila['documento'], $_GET['buscar']) !== false) {
                             echo "<tr>
-                                    <td>{$fila['documento']}</td>
+                                    <td>{$fila['nombre']}</td>
+                                    <td>{$fila['apellido']}</td>
                                     <td>{$fila['fecha']}</td>
                                     <td>{$fila['hora']}</td>
                                     <td>{$fila['nombre_comple']}</td>
@@ -114,7 +117,8 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     foreach ($resultado as $fila) {
                         echo "<tr>
-                                <td>{$fila['documento']}</td>
+                                <td>{$fila['nombre']}</td>
+                                <td>{$fila['apellido']}</td>
                                 <td>{$fila['fecha']}</td>
                                 <td>{$fila['hora']}</td>
                                 <td>{$fila['nombre_comple']}</td>
