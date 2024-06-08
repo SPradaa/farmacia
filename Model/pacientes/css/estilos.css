@@ -122,6 +122,34 @@ form .btn{
 .btn__danger{
     background: #8a0505 !important;
 }
+form .btn-excel{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #008d26;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: medium none;
+    cursor: pointer;
+}
+form .btn-pdf{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #a20000;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: medium none;
+    cursor: pointer;
+}
 
 
 /* table */
@@ -151,7 +179,7 @@ table tr td{
 
 
 
-.btn_pdf{
+.btn__update{
     display: inline-block;
     font-size: 14px;
     background: #046bcc;
@@ -160,7 +188,7 @@ table tr td{
     padding: 5px 10px;
 }
 
-.btn_excel{
+.btn_danger{
     display: inline-block;
     font-size: 14px;
     background: #ff0000;
