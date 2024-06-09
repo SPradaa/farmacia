@@ -72,7 +72,7 @@ if (!$fila) {
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -145,16 +145,16 @@ if (!$fila) {
                         <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
-                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false">
-                        <i class="fas fa-pills"></i><span class="hide-menu">Medicamentos </span></a>
+                        <i class="fas fa-pills"></i><span class="hide-menu" id="medi">Medicamentos </span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-archive"></i><span class="hide-menu">Inventario</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones
+                        <!-- <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="fas fa-archive"></i><span class="hide-menu" id="inve">Inventario</span></a>
+                        </li> -->
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#autorizacionesModal">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu" id="auto">Autorizaciones
                                         
                                     </span></a>
                         </li>
@@ -169,9 +169,9 @@ if (!$fila) {
                   
                 </nav>
                 <div class="boton">
-                <form method="POST">
-        <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
-    </form>
+                <form method="POST" action="../../../login.html">
+                    <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                </form>
     </div>
                 <!-- End Sidebar navigation -->
             </div>
@@ -223,19 +223,63 @@ if (!$fila) {
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
+
+   <!-- Modal de Autorizaciones -->
+<div class="modal fade" id="autorizacionesModal" tabindex="-1" aria-labelledby="autorizacionesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center fw-600 w-100" id="autorizacionesModalLabel">Buscar Autorizaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="autorizacionesForm">
+                    <div class="mb-3 text-center">
+                        <label for="documentoPaciente" class="form-label text-dark">Documento Paciente:</label><br>
+                        <input type="text" name="documento" class="form-control mx-auto" id="documentoPaciente" pattern="[0-9]{8,10}" placeholder="Ingrese el documento" title="El documento debe contener solo numeros (8 a 10 digitos)"  style="max-width: 300px;">
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" onclick="buscarAutorizacion()">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .modal-title {
+        font-size: 24px; /* Ajusta el tamaño del título según tu preferencia */
+        font-weight: 600;
+        margin-left: 20px;
+    }
+
+    .modal-content {
+        border: 2px solid #343a40; /* Color de borde oscuro */
+    }
+
+    .form-label {
+        font-weight: 600; /* Peso de la fuente del label */
+    }
+
+    .form-control {
+        border-color: #343a40; /* Color de borde oscuro para el input */
+    }
+
+    .btn-primary {
+        background-color: rgb(123, 245, 245); /* Color de fondo azul claro */
+        color: black; /* Color de texto blanco */
+        border: 1px solid rgb(123, 245, 245);
+        margin-top: 20px;
+        margin-left: -3px;
+        margin-bottom: 20px;
+    }
+</style>
+
+
     <!-- ============================================================== -->
     <script src="assets/node_modules/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
@@ -248,6 +292,33 @@ if (!$fila) {
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
+
+    <!-- Script para manejo de búsqueda de autorizaciones -->
+    <script>
+        function buscarAutorizacion() {
+            var documento = document.getElementById("documentoPaciente").value;
+
+            if (documento === "") {
+                alert("El campo está vacío, digite un número de documento.");
+                return;
+            }
+
+            // Realizar solicitud AJAX para verificar el documento
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "buscar_autorizacion.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.responseText === "no_existe") {
+                        alert("El documento no existe, cámbielo.");
+                    } else {
+                        window.location.href = "autorizaciones_resultado.php?documento=" + documento;
+                    }
+                }
+            };
+            xhr.send("documento=" + documento);
+        }
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

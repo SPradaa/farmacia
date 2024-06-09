@@ -1,51 +1,5 @@
 @charset "UTF-8";
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/**
- * Table Of Content
- *
- * 	1. Globals
- *	2. Headers
- *	3. Navigations
- *	4. Banners
- *	5. Footers
- *	6. app
- *	7. Widgets
- *	8. Custom Templates
- */
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*Theme Colors*/
-/*bootstrap Color*/
-/*Light colors*/
-/*Normal Color*/
-/*Extra Variable*/
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/**
- * Table Of Content
- *
- *  1. Globals
- *  2. Headers
- *  3. Navigations
- *  4. Banners
- *  5. Footers
- *  6. Posts
- *  7. Widgets
- *  8. Custom Templates
- */
+
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
 /******************* 
 Global Styles 
@@ -67,14 +21,44 @@ body {
   font-size: 14px;
 }
 
+.card svg{
+  margin-left: -90px;
+}
 
+.card-title{
+  color: #20AEE3;
+  font-weight: 600;
+}
 
-.btn {
+.card .card-title{
+  margin-left: -90px;
+  font-weight: 600;
+}
+
+.card .subtitulo{
+  margin-left: -90px;
+}
+
+.subtitulo{
+  color: black;
+  font-weight: 600;
+}
+
+.card-body{
+  margin-top: -45px;
+}
+
+.form-material .form-control{
+  width: 90%;
+}
+
+.botones {
   font-size: 15px;
   padding-left: 5px;
   padding-right: 5px;
   margin-left: 38px;
   margin-top:35px;
+  margin-bottom: -90px;
   border: none;
   outline: none;
   border-radius: 0.4rem;
@@ -88,11 +72,11 @@ body {
   transition: 0.6s;
 }
 
-.btn:active {
+.botones:active {
   scale: 0.92;
 }
 
-.btn:hover {
+.botones:hover {
   background: rgb(2,29,78);
   background: linear-gradient(270deg, rgba(2, 29, 78, 0.681) 0%, rgba(31, 215, 232, 0.873) 60%);
   color: rgb(4, 4, 38);
@@ -101,6 +85,8 @@ body {
 .navbar-nav-me-auto{
   background: #F6F9FA;
 }
+
+
 
 html {
   position: relative;
@@ -544,6 +530,35 @@ html body .text-themecolor {
   color: #20aee3;
 }
 
+.text-themecolor{
+  color: black;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .page-titles h3{
+    margin-left: 0%;
+  }
+}
+@media (max-width: 768px) {
+  .perfil{
+    margin-left: 22%;
+  }
+}
+@media (max-width: 768px) {
+  .card-body{
+    margin-left: 17%;
+  }
+}
+
+.page-wrapper{
+  margin-top: -34px;
+}
+
+.breadcrumb{
+  color: black;
+  background-color: white;
+}
+
 /*******************
 Background Colors
 *******************/
@@ -975,6 +990,57 @@ use profile section
   padding-left: 40px;
 }
 
+@media (max-width: 768px) {
+  .mini-sidebar .scroll-sidebar{
+    background: #F6F9FA;
+    width: 31%;
+    margin-left: 250px;
+    margin-top: -30px;
+  }
+}
+@media (max-width: 768px) {
+  .hide-menu{
+    width: 31%;
+    margin-left: -3px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #perf{
+    width: 31%;
+    margin-left: 8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #inve{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #medi, #auto{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 9px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  i{
+    width: 51%;
+    margin-left: 13px;
+    margin-top: -22px;
+  }
+}
 /*******************
 sidebar navigation
 ******************/
@@ -1228,6 +1294,7 @@ File: scss
   margin-top: 40px;
   color: black;
   font-weight: 600;
+  margin-bottom: -5px;
 }
 
 .titulo{
@@ -1238,10 +1305,30 @@ File: scss
   background: #F6F9FA;
   margin-left: 100%;
   font-family: Arial, Helvetica, sans-serif;
+  margin-top: -20px;
+}
+
+
+@media (max-width: 909px) {
+  .titulo{
+    margin-right: 300px;
+    margin-left: 67px;
+    font-size: 20px;
+  }
 }
 
 .col-md-5{
+  background: white;
+}
+
+.col-md-5.align-self-center{
+  padding-top: -38px;
   background: #F6F9FA;
+}
+
+.perfil{
+  background-color: white;
+  margin-top: 20px;
 }
 /*--------------------------------------------------------------
 # Hero Section
@@ -1350,6 +1437,7 @@ section {
 }
 .navbar-collapse{
   background: #F6F9FA;
+  margin-top: -25px;
 }
 .topbar .top-navbar {
   min-height: 70px;
@@ -1360,7 +1448,7 @@ section {
 }
 .topbar .top-navbar .navbar-header {
   line-height: 72px;
-  padding-left: 10px;
+  padding-left: 0px;
   border-right: 1px solid rgba(120, 130, 140, 0.13);
 }
 
@@ -1609,8 +1697,9 @@ Notify
  Breadcrumb and page title
 *******************/
 .page-titles {
-  background: #F6F9FA;
+  background: white;
   margin-bottom: 20px;
+  padding-top: -30px;
   padding: 0px;
 }
 .page-titles h3 {
@@ -1889,6 +1978,7 @@ ul#themecolors li a.working:before {
   right: 0;
   border-top: 1px solid rgba(120, 130, 140, 0.13);
   background: #F6F9FA;
+  margin-top: -200px;
 }
 
 /*******************
@@ -2267,6 +2357,9 @@ Buttons
 .btn {
   padding: 7px 12px;
   cursor: pointer;
+  margin-top: -100px;
+  margin-left: 143px;
+  margin-bottom: -125px;
 }
 .btn:hover {
   opacity: 0.8;
@@ -2436,14 +2529,17 @@ Buttons
 
 .btn-success,
 .btn-success.disabled {
-  background: #24d2b5;
+  background: rgb(116, 231, 244);
   border: 1px solid #24d2b5;
+  color: black;
+  font-weight: 600;
   /*box-shadow: $success-shadow;*/
   transition: 0.2s ease-in;
 }
 .btn-success:hover,
 .btn-success.disabled:hover {
-  background: #24d2b5;
+  background: rgb(91, 233, 249);
+  color: black;
   /*box-shadow: $success-shadow-hover;*/
   border: 1px solid #24d2b5;
 }
@@ -2987,13 +3083,12 @@ Form-control
 .custom-control-input:focus ~ .custom-control-indicator {
   box-shadow: none;
 }
-
 .custom-control-input:checked ~ .custom-control-indicator {
   background-color: #24d2b5;
 }
 
 form label {
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .form-group {
@@ -6294,6 +6389,22 @@ File: scss
   height: auto;
   margin-left: 63px;
   margin-top: 20px;
+}
+@media (max-width: 768px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px;
+  }
+}
+@media (max-width: 1199px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px
+  }
 }
 .logg{
   background: #F6F9FA;

@@ -109,30 +109,17 @@ if (isset($_POST['update'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, AdminWrap lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, AdminWrap lite design, AdminWrap lite dashboard bootstrap 5 dashboard template">
-    <meta name="description"
-        content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, AdminWrap lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, AdminWrap lite design, AdminWrap lite dashboard bootstrap 5 dashboard template">
+    <meta name="description" content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Perfil</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
-    <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Custom CSS -->
-    <link href="css/perfiil.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
+    <link href="css/perfil.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
@@ -201,16 +188,16 @@ if (isset($_POST['update'])) {
                         <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
-                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false">
-                        <i class="fas fa-pills"></i><span class="hide-menu">Medicamentos </span></a>
+                        <i class="fas fa-pills"></i><span class="hide-menu" id="medi">Medicamentos </span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-archive"></i><span class="hide-menu">Inventario</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones
+                        <!-- <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="fas fa-archive"></i><span class="hide-menu" id="inve">Inventario</span></a>
+                        </li> -->
+                        <li> <a class="waves-effect waves-dark" href="auto.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu" id="auto">Autorizaciones
                                         
                                     </span></a>
                         </li>
@@ -225,7 +212,7 @@ if (isset($_POST['update'])) {
                   
                 </nav>
                 <div class="boton">
-                <form method="POST">
+                <form method="POST" action="../../../login.html">
         <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
     </form>
     </div>
@@ -311,43 +298,37 @@ if (isset($_POST['update'])) {
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label>Correo:</label>
-                        <input type="text" pattern="[A-Za-z0-9@._-]{7,60}" title="El correo debe contener el @ y debe ser alfanumerico" value ="<?php echo $correo ;?>"
-                        class="form-control form-control-line" name="correo" >
+                        <input type="text" name="correo" id="correo" pattern="[0-9a-zA-Z@_.-]{7,60}" title="El correo debe contener un @ y debe contener minimo 7 digitos" value ="<?php echo $correo ;?>" class="form-control form-control-line">
                     </div>
                     <div class="col-md-6">
                         <label>Telefono:</label>
-                        <input type="text" pattern="[0-9]{10}" title="El telefono debe tener solo numeros (10 digitos)" value="<?php echo $telefono ; ?>"
-                        class="form-control form-control-line" name="telefono" >
+                        <input type="text" name="telefono" id="telefono" pattern="[0-9]{10}" title="El telefono debe contener solo numeros (10 digitos)" value="<?php echo $telefono ; ?>" class="form-control form-control-line">
                     </div>
                 </div>
                 <div class="form-group row">
-    <div class="col-md-6">
-        <label>Departamento:</label>
-        <select id="id_depart" name="id_depart" class="form-control form-control-line">
-            <option value="<?php echo $_SESSION['id_depart']?>"><?php echo $_SESSION['depart']?></option>
-            <?php
-                $control = $con->prepare("SELECT * FROM departamentos");
-                $control->execute();
-                while ($fila = $control->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<option value=" . $fila['id_depart'] . ">" . $fila['depart'] . "</option>";
-                }
-            ?>
-        </select>
-    </div>
-    <div class="col-md-6">
-        <label>Municipio:</label>
-        <select id="id_municipio" name="id_municipio" class="form-control form-control-line">
-            <option value="<?php echo $_SESSION['id_municipio']?>"><?php echo $_SESSION['municipio']?></option>
-        </select>
-    </div>
-</div>
-
-
-
+                <div class="col-md-6">
+                    <label>Departamento:</label>
+                    <select id="id_depart" name="id_depart" class="form-control form-control-line">
+                        <option value="<?php echo $_SESSION['id_depart']?>"><?php echo $_SESSION['depart']?></option>
+                        <?php
+                            $control = $con->prepare("SELECT * FROM departamentos");
+                            $control->execute();
+                            while ($fila = $control->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<option value=" . $fila['id_depart'] . ">" . $fila['depart'] . "</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
                     <div class="col-md-6">
+                        <label>Municipio:</label>
+                        <select id="id_municipio" name="id_municipio" class="form-control form-control-line">
+                            <option value="<?php echo $_SESSION['id_municipio']?>"><?php echo $_SESSION['municipio']?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
                         <label>Dirección:</label>
-                        <input type="text" pattern="[A-Za-z0-9._-´# ]{7,40}" title="La dirección debe tener minimo 5 caracteres" value="<?php echo $direccion ?>"
-                        class="form-control form-control-line" name="direccion">
+                        <input type="text" pattern="[0-9a-zA-ZÑñ#.,_-´ ]{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
                 <div class="form-group">
@@ -360,45 +341,28 @@ if (isset($_POST['update'])) {
     </div>
 </div>
 
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
             <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function(){
-    $('#id_depart').change(function(){
-        var id_depart = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "municipio.php",
-            data: {id_depart: id_depart},
-            success: function(response){
-                $('#id_municipio').html(response);
-            }
+
+    <script>
+    $(document).ready(function(){
+        $('#id_depart').change(function(){
+            var id_depart = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "municipio.php",
+                data: {id_depart: id_depart},
+                success: function(response){
+                    $('#id_municipio').html(response);
+                }
+            });
         });
     });
-});
-</script>
+    </script>
 
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
     <script src="assets/node_modules/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/node_modules/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -410,7 +374,6 @@ $(document).ready(function(){
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-
 
 
 </body>

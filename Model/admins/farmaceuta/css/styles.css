@@ -1,5 +1,51 @@
 @charset "UTF-8";
-
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*Theme Colors*/
+/*bootstrap Color*/
+/*Light colors*/
+/*Normal Color*/
+/*Extra Variable*/
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/**
+ * Table Of Content
+ *
+ *  1. Globals
+ *  2. Headers
+ *  3. Navigations
+ *  4. Banners
+ *  5. Footers
+ *  6. Posts
+ *  7. Widgets
+ *  8. Custom Templates
+ */
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
 /******************* 
 Global Styles 
@@ -969,6 +1015,119 @@ sidebar navigation
 .sidebar-nav ul li a.active, .sidebar-nav ul li a:hover {
   color: #20aee3;
 }
+@media (max-width: 768px) {
+  .mini-sidebar .scroll-sidebar{
+    background: #F6F9FA;
+    width: 31%;
+    margin-left: 250px;
+    margin-top: -30px;
+  }
+}
+@media (max-width: 768px) {
+  .hide-menu{
+    width: 31%;
+    margin-left: -3px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #perf{
+    width: 31%;
+    margin-left: 8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #inve{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #medi, #auto{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 9px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  i{
+    width: 51%;
+    margin-left: 13px;
+    margin-top: -22px;
+  }
+}
+@media (max-width: 768px) {
+  h3.titulo{
+    margin-right: 300px;
+    margin-left: 25px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 909px) {
+  h3.titulo{
+    margin-right: 300px;
+    margin-left: 67px;
+    font-size: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .container-fluid{
+    margin-left: 39px;
+  }
+}
+@media (max-width: 768px) {
+  .btn{
+    margin-left: 7px;
+    margin-top: -13px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 779px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: -10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 789px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 799px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: -10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .footer{
+    text-align: center;
+}
+}
+
 .sidebar-nav ul li a.active i, .sidebar-nav ul li a:hover i {
   color: #20aee3;
 }
@@ -1194,12 +1353,8 @@ File: scss
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.page-titles{
-    background: white;
-}
-
-.col-md-5.align-self-center{
-    background: #F6F9FA;
+.col-md-5{
+  background: #F6F9FA;
 }
 /*--------------------------------------------------------------
 # Hero Section
@@ -1318,7 +1473,7 @@ section {
 }
 .topbar .top-navbar .navbar-header {
   line-height: 72px;
-  padding-left: 10px;
+  padding-left: 0px;
   border-right: 1px solid rgba(120, 130, 140, 0.13);
 }
 
@@ -1567,14 +1722,13 @@ Notify
  Breadcrumb and page title
 *******************/
 .page-titles {
-  background: white;
+  background: #F6F9FA;
   margin-bottom: 20px;
   padding: 0px;
 }
 .page-titles h3 {
   margin-bottom: 0px;
   margin-top: 0px;
-  font-weight: 600;
 }
 .page-titles .breadcrumb {
   padding: 0px;
@@ -6176,17 +6330,14 @@ File: scss
   --border-radius: 0.75rem;
   --primary-color: #3a93b4;
   --secondary-color: #3c3852;
-  width: 280px;
-  height: 240px;
-  margin-top: 25px;
+  width: 210px;
   font-family: "Arial";
   padding: 1rem;
   cursor: pointer;
   border-radius: var(--border-radius) ;
+
   background: #F6F9FA;
-  box-shadow: -6px 10px 5px 0px rgba(0,0,0,0.35);
--webkit-box-shadow: -6px 10px 5px 0px rgba(0,0,0,0.35);
--moz-box-shadow: -6px 10px 5px 0px rgba(0,0,0,0.35);
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
   position: relative;
   margin-right: 30px;
 }
@@ -6204,16 +6355,6 @@ File: scss
   padding: 0;
   font-size: 1.3rem;
   font-weight: bold;
-}
-
-h3.car_box__title{
-    color: black;
-    font-weight: 600;
-    text-align: center;
-}
-
-p.card_box__content{
-    font-weight: 200;
 }
 
 .card_box .card_box__date {
@@ -6267,9 +6408,27 @@ p.card_box__content{
   margin-left: 63px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px;
+  }
+}
+@media (max-width: 1199px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px
+  }
+}
 .logg{
   background: #F6F9FA;
 }
+
 
 .sombra{
   color: #007ee5;
