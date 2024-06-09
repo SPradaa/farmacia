@@ -55,7 +55,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Citas</title>
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
     <div class="contenedor">
@@ -92,7 +92,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                 <?php
                 if (isset($_GET['btn_buscar'])) {
                     foreach ($resultado as $fila) {
-                        if (strpos($fila['documento'], $_GET['buscar']) !== false) {
+                        if (strpos($fila['fecha'], $_GET['buscar']) !== false) {
                             echo "<tr>
                                     <td>{$fila['nombre']}</td>
                                     <td>{$fila['apellido']}</td>
@@ -107,7 +107,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                                         <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
                                         <input type='hidden' name='fecha' value='{$fila['fecha']}'>
                                         <input type='hidden' name='hora' value='{$fila['hora']}'>
-                                        <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
+                                        <input type='submit' name='cancelar' value='Cancelar' class='btn-cancelar'>
                                       </form>";
                             }
                             echo    "</td>
@@ -130,7 +130,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                                     <input type='hidden' name='id_cita' value='{$fila['id_cita']}'>
                                     <input type='hidden' name='fecha' value='{$fila['fecha']}'>
                                     <input type='hidden' name='hora' value='{$fila['hora']}'>
-                                    <input type='submit' name='cancelar' value='Cancelar' class='btn btn-danger'>
+                                    <input type='submit' name='cancelar' value='Cancelar' class='btn-cancelar'>
                                   </form>";
                         }
                         echo    "</td>

@@ -151,6 +151,21 @@ form .btn-pdf{
     cursor: pointer;
 }
 
+.btn-cancelar{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #a20000;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: medium none;
+    cursor: pointer;
+}
+
 
 /* table */
 table{

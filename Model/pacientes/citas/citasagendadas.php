@@ -92,7 +92,7 @@ $resultado = $sentencia_select->fetchAll(PDO::FETCH_ASSOC);
                 <?php
                 if (isset($_GET['btn_buscar'])) {
                     foreach ($resultado as $fila) {
-                        if (strpos($fila['documento'], $_GET['buscar']) !== false) {
+                        if (strpos($fila['fecha'], $_GET['buscar']) !== false) {
                             echo "<tr>
                                     <td>{$fila['nombre']}</td>
                                     <td>{$fila['apellido']}</td>
