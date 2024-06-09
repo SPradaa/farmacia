@@ -237,8 +237,8 @@ if (!$fila) {
             <div class="modal-body">
                 <form id="autorizacionesForm">
                     <div class="mb-3 text-center">
-                        <label for="documentoPaciente" class="form-label text-dark">Documento Paciente:</label><br>
-                        <input type="text" name="documento" class="form-control mx-auto" id="documentoPaciente" pattern="[0-9]{8,10}" placeholder="Ingrese el documento" title="El documento debe contener solo numeros (8 a 10 digitos)"  style="max-width: 300px;">
+                        <label for="documentoPaciente" class="form-label text-dark">Documento del Paciente:</label><br>
+                        <input type="text" name="documento" class="form-control mx-auto" id="documentoPaciente" pattern="[0-9]{8,10}" placeholder="Digite el documento" title="El documento debe contener solo numeros (8 a 10 digitos)"  style="max-width: 300px;">
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-primary" onclick="buscarAutorizacion()">Buscar</button>

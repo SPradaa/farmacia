@@ -51,7 +51,7 @@ th {
                     <th>Tipo de Documento</th>
                     <th>Documento</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Apellidos</th>
                     <th>Correo</th>
                     <th>Teléfono</th>
                     <th>Ciudad</th>
