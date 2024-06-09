@@ -117,13 +117,11 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <div class="container">
         <h1>Historia Clínica</h1>
         <form action="guardar_historia_clinica.php" method="post">
-
             <div class="form-group">
                 <label for="documento">Documento del Paciente</label>
                 <h3 id="documento"><?php echo $paciente; ?></h3>
                 <input type="hidden" id="documento" name="documento" value="<?php echo $paciente; ?>" readonly>
             </div>
-
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <h3 id="nombre"><?php echo $nombre; ?></h3>

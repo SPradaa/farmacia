@@ -4,37 +4,71 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
-// Consultar los datos necesarios de la base de datos
-$documento = '12345678'; // Asumiendo que este documento es dinámico y se obtiene de alguna forma
+// Verificar si el documento del paciente está presente en la URL
+if (isset($_GET['docu_medico'])) 
+    $documento_medico = $_GET['docu_medico'];
 
-try {
-    // Consultar citas
-    $stmt = $con->prepare("SELECT fecha, hora FROM citas WHERE documento = $documento");
-    $stmt->execute();
-    $citas = $stmt->fetch();
+    // Consultar datos del paciente
+    $sql_medico = "SELECT docu_medico FROM medicos WHERE docu_medico = :docu_medico";
+    $stmt_medico = $con->prepare($sql_medico);
+    $stmt_medico->bindParam(':docu_medico', $documento_medico);
+    $stmt_medico->execute();
+    $medico = $stmt_medico->fetch(PDO::FETCH_ASSOC);
 
-    echo $fila['fecha'];
+// Verificar si el documento del paciente está presente en la URL
+if (isset($_GET['documento'])) {
+    $documento_paciente = $_GET['documento'];
 
-    // Consultar usuario
-    $stmt = $con->prepare("SELECT nombre, apellido FROM usuarios WHERE documento = :documento");
-    $stmt->execute(['documento' => $documento]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Consultar datos del paciente
+    $sql_paciente = "SELECT nombre, apellido FROM usuarios WHERE documento = :documento";
+    $stmt_paciente = $con->prepare($sql_paciente);
+    $stmt_paciente->bindParam(':documento', $documento_paciente);
+    $stmt_paciente->execute();
+    $paciente = $stmt_paciente->fetch(PDO::FETCH_ASSOC);
 
-    // Consultar medicos
-    $stmt = $con->query("SELECT docu_medico, nombre_comple FROM medicos");
-    $medicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Consultar empresas
-    $stmt = $con->query("SELECT nit, empresa FROM empresas");
-    $empresas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Consultar citas del paciente
+    $sql_citas = "SELECT id_cita, fecha, hora, docu_medico FROM citas WHERE documento = :documento";
+    $stmt_citas = $con->prepare($sql_citas);
+    $stmt_citas->bindParam(':documento', $documento_paciente);
+    $stmt_citas->execute();
+    $citas = $stmt_citas->fetchAll(PDO::FETCH_ASSOC);
 
-    // Consultar medicamentos
-    $stmt = $con->query("SELECT id_medicamento, nombre FROM medicamentos");
-    $medicamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    // Consultar historias clínicas del paciente
+    $sql_historias = "SELECT id_histo, docu_medico, descripcion, diagnostico FROM histo_clinica WHERE documento = :documento";
+    $stmt_historias = $con->prepare($sql_historias);
+    $stmt_historias->bindParam(':documento', $documento_paciente);
+    $stmt_historias->execute();
+    $historias = $stmt_historias->fetchAll(PDO::FETCH_ASSOC);
+
+    // Consultar autorizaciones del paciente
+    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, nit, id_medicamento, presentacion, cantidad, fecha_hora_auto, fecha_venc FROM autorizaciones WHERE documento = :documento";
+    $stmt_autorizaciones = $con->prepare($sql_autorizaciones);
+    $stmt_autorizaciones->bindParam(':documento', $documento_paciente);
+    $stmt_autorizaciones->execute();
+    $autorizaciones = $stmt_autorizaciones->fetchAll(PDO::FETCH_ASSOC);
+
+} else {
+    // Manejar el caso en el que no se haya proporcionado el documento del paciente
+    $documento_paciente = "Documento no encontrado";
+    $paciente = ["nombre" => "Nombre no encontrado", "apellido" => "Apellido no encontrado"];
+    $citas = [];
+    $historias = [];
+    $autorizaciones = [];
 }
 
+// Consultar datos de médicos y empresas
+$medicos_sql = "SELECT docu_medico, nombre_comple FROM medicos";
+$medicos_stmt = $con->prepare($medicos_sql);
+$medicos_stmt->execute();
+$medicos = $medicos_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Consultar datos de medicamentos
+$medicamentos_sql = "SELECT id_medicamento, nombre FROM medicamentos";
+$medicamentos_stmt = $con->prepare($medicamentos_sql);
+$medicamentos_stmt->execute();
+$medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -99,7 +133,7 @@ try {
 </head>
 <body>
     <div class="col-md-6">
-        <form action="../../../admins/desarrollador/autorizaciones/detalle_automedicam.php">
+        <form action="../../../admins/desarrollador/autorizaciones/atender_automedicam.php">
             <input type="submit" value="Regresar" class="btn btn-secondary"/>
         </form>
     </div>
@@ -108,32 +142,15 @@ try {
         <form action="#" method="post">
             <div class="form-group">
                 <label for="fecha">Fecha:</label>
-                <input type="text" id="fecha" name="fecha" class="form-control" value="<?php echo isset($citas['fecha']) ? $citas['fecha'] : ''; ?>" readonly>
-        </div>
-        <div class="form-group">
-            <label for="nombre_paciente">Nombre del Paciente:</label>
-            <input type="text" id="nombre_paciente" name="nombre_paciente" class="form-control" value="<?php echo isset($usuario['nombre']) ? $usuario['nombre'] : ''; ?>" readonly>
-        </div>
-    <div class="form-group">
-    <label for="apellido_paciente">Apellido del Paciente:</label>
-    <input type="text" id="apellido_paciente" name="apellido_paciente" class="form-control" value="<?php echo isset($usuario['apellido']) ? $usuario['apellido'] : ''; ?>" readonly>
-</div>
-
-            <div class="form-group">
-                <label for="solicitado_por">Solicitado por (Médico):</label>
-                <select id="solicitado_por" name="solicitado_por" required>
-                    <?php foreach ($medicos as $medico): ?>
-                        <option value="<?php echo $medico['docu_medico']; ?>"><?php echo $medico['nombre_comple']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <input type="text" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
             <div class="form-group">
-                <label for="expedida_a">Expedida a (Empresa):</label>
-                <select id="expedida_a" name="expedida_a" required>
-                    <?php foreach ($empresas as $empresa): ?>
-                        <option value="<?php echo $empresa['nit']; ?>"><?php echo $empresa['empresa']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <label for="documento">Documento del Paciente:</label>
+                <input type="text" id="documento" name="documento" value="<?php echo $documento_paciente; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="docu_medico">Documento del Médico:</label>
+                <input type="text" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="codigo_autorizacion">Código de la Autorización:</label>

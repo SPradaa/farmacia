@@ -251,7 +251,7 @@ validarSesion();
 
                                     <div class="card">
 
-                                        <a href="autorizaciones/index_automedicam.php">
+                                        <a href="/historiasclinicas.php">
                                             <div class="card_box">
                                         <h3 class="car_box__title">Historias clínicas
                                         </h3>

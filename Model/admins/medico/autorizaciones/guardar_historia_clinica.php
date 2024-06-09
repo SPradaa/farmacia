@@ -33,4 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Método de solicitud no válido.";
 }
+
+// Después de guardar la historia clínica, redirigir a autorizar_medicamentos.php con los parámetros del documento del paciente y del médico
+$documento_paciente = $_POST['documento'];
+$documento_medico = $_POST['docu_medico']; // Obtener el documento del médico
+header("Location: autorizar_medicamentos.php?documento=$documento_paciente&docu_medico=$documento_medico");
+exit();
+
+
 ?>
