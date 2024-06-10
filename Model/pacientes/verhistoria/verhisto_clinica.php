@@ -84,7 +84,7 @@ $documento = $_GET['documento'];
             width: 200px;
             margin: 20px auto;
             padding: 10px;
-            background-color: #2dcac1;
+            background-color: #a20000;
             color: white;
             text-align: center;
             text-decoration: none;
