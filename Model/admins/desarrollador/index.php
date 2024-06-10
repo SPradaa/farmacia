@@ -106,6 +106,10 @@ if ($estupdate->execute()) {
     <link href="css/pages/dashboard1.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -157,6 +161,7 @@ if(isset($_POST['btncerrar']))
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
+                         
                             <!-- Dark Logo icon -->
                 
                         </b>
@@ -178,18 +183,7 @@ if(isset($_POST['btncerrar']))
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
-                                href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item hidden-xs-down search-box"> <a
-                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
-                                    class="fa fa-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search & enter"> <a
-                                    class="srh-btn"><i class="fa fa-times"></i></a></form>
-                        </li>
+                     <h1 class="rol">Administrador</h1>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
