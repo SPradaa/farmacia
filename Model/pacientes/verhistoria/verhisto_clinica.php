@@ -57,7 +57,7 @@ $documento = $_GET['documento'];
         }
 
         .seccion h3 {
-            background-color: #333;
+            background-color: #2dcac1;;
             color: #fff;
             padding: 5px;
             margin-top: 0;
@@ -82,7 +82,7 @@ $documento = $_GET['documento'];
 </head>
 <body>
     <div class="contenedor">
-        <img src="../../../../assets/img/log.farma.png" alt="Logo" class="logo">
+        <img src="../../../assets/img/log.farma.png" alt="Logo" class="logo">
         <br><br><br><br><br>
         <h2>Historial Clínico</h2>
         <?php
