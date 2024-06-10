@@ -21,7 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':diagnostico', $diagnostico);
         
         if ($stmt->execute()) {
-            echo '<script> alert("HISTORIA CLINICA GUARDADA EXITOSAMENTE");</script>';
+            // Actualizar el estado de la cita a "Atendido"
+            $sql_update = "UPDATE citas SET id_estado = 11 WHERE documento = :documento";
+            $stmt_update = $con->prepare($sql_update);
+            $stmt_update->bindParam(':documento', $paciente);
+            $stmt_update->execute();
+
+            // Mostrar la alerta después de la redirección
+            echo '<script>setTimeout(function() { alert("HISTORIA CLINICA GUARDADA EXITOSAMENTE"); }, 500);</script>';
             echo '<script>window.location="autorizar_medicamentos.php"</script>';
         } else {
             echo "Error al guardar la historia clínica: " . $stmt->errorInfo()[2];
@@ -39,6 +46,4 @@ $documento_paciente = $_POST['documento'];
 $documento_medico = $_POST['docu_medico']; // Obtener el documento del médico
 header("Location: autorizar_medicamentos.php?documento=$documento_paciente&docu_medico=$documento_medico");
 exit();
-
-
 ?>

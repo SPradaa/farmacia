@@ -4,28 +4,27 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
-// Verificar si el documento del paciente está presente en la URL
-if (isset($_GET['docu_medico'])) 
+// Verificar si el documento del médico está presente en la URL
+if (isset($_GET['docu_medico'])) {
     $documento_medico = $_GET['docu_medico'];
 
-    // Consultar datos del paciente
+    // Consultar datos del médico
     $sql_medico = "SELECT docu_medico FROM medicos WHERE docu_medico = :docu_medico";
     $stmt_medico = $con->prepare($sql_medico);
     $stmt_medico->bindParam(':docu_medico', $documento_medico);
     $stmt_medico->execute();
     $medico = $stmt_medico->fetch(PDO::FETCH_ASSOC);
+}
 
-// Verificar si el documento del paciente está presente en la URL
 if (isset($_GET['documento'])) {
     $documento_paciente = $_GET['documento'];
-
+    
     // Consultar datos del paciente
     $sql_paciente = "SELECT nombre, apellido FROM usuarios WHERE documento = :documento";
     $stmt_paciente = $con->prepare($sql_paciente);
     $stmt_paciente->bindParam(':documento', $documento_paciente);
     $stmt_paciente->execute();
     $paciente = $stmt_paciente->fetch(PDO::FETCH_ASSOC);
-
 
     // Consultar citas del paciente
     $sql_citas = "SELECT id_cita, fecha, hora, docu_medico FROM citas WHERE documento = :documento";
@@ -42,12 +41,11 @@ if (isset($_GET['documento'])) {
     $historias = $stmt_historias->fetchAll(PDO::FETCH_ASSOC);
 
     // Consultar autorizaciones del paciente
-    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, nit, id_medicamento, presentacion, cantidad, fecha_hora_auto, fecha_venc FROM autorizaciones WHERE documento = :documento";
+    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, id_medicamento, presentacion, cantidad, fecha_hora_auto, fecha_venc FROM autorizaciones WHERE documento = :documento";
     $stmt_autorizaciones = $con->prepare($sql_autorizaciones);
     $stmt_autorizaciones->bindParam(':documento', $documento_paciente);
     $stmt_autorizaciones->execute();
     $autorizaciones = $stmt_autorizaciones->fetchAll(PDO::FETCH_ASSOC);
-
 } else {
     // Manejar el caso en el que no se haya proporcionado el documento del paciente
     $documento_paciente = "Documento no encontrado";
@@ -63,13 +61,14 @@ $medicos_stmt = $con->prepare($medicos_sql);
 $medicos_stmt->execute();
 $medicos = $medicos_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
 // Consultar datos de medicamentos
-$medicamentos_sql = "SELECT id_medicamento, nombre FROM medicamentos";
+$medicamentos_sql = "SELECT id_medicamento, nombre, cantidad FROM medicamentos";
 $medicamentos_stmt = $con->prepare($medicamentos_sql);
 $medicamentos_stmt->execute();
 $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -139,7 +138,7 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="container">
         <h1>Autorización de Medicamentos</h1>
-        <form action="#" method="post">
+        <form action="autorizar.php" method="post" onsubmit="return validarCantidad()">
             <div class="form-group">
                 <label for="fecha">Fecha:</label>
                 <input type="text" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
@@ -153,14 +152,15 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <input type="text" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
             </div>
             <div class="form-group">
-                <label for="codigo_autorizacion">Código de la Autorización:</label>
-                <input type="text" id="codigo_autorizacion" name="codigo_autorizacion" required>
+                <label for="cod_autorizacion">Código de la Autorización:</label>
+                <input type="text" id="cod_autorizacion" name="cod_autorizacion" required maxlength="3" onkeypress="validateNumberInput(event)" onblur="checkCodeExists()">
             </div>
             <div class="form-group">
-                <label for="medicamento">Medicamento:</label>
-                <select id="medicamento" name="medicamento" required>
+                <label for="id_medicamento">Medicamento:</label>
+                <select id="id_medicamento" name="id_medicamento" required>
+                    <option value="">Seleccione un medicamento</option>
                     <?php foreach ($medicamentos as $medicamento): ?>
-                        <option value="<?php echo $medicamento['id_medicamento']; ?>"><?php echo $medicamento['nombre']; ?></option>
+                        <option value="<?php echo $medicamento['id_medicamento']; ?>" data-cantidad="<?php echo $medicamento['cantidad']; ?>"><?php echo $medicamento['nombre']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -170,20 +170,107 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
-                <input type="text" id="cantidad" name="cantidad" required>
+                <input type="text" id="cantidad" name="cantidad" required pattern="\d*" title="Por favor ingrese solo números">
             </div>
             <div class="form-group">
-                <label for="fecha_reclamo">Fecha y Hora para Reclamar:</label>
-                <input type="datetime-local" id="fecha_reclamo" name="fecha_reclamo" required>
+                <label for="fecha_hora_auto">Fecha y Hora para Reclamar:</label>
+                <input type="datetime-local" id="fecha_hora_auto" name="fecha_hora_auto" required>
             </div>
             <div class="form-group">
-                <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
-                <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" required>
+                <label for="fecha_venc">Fecha de Vencimiento:</label>
+                <input type="date" id="fecha_venc" name="fecha_venc" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn">Autorizar</button>
             </div>
         </form>
     </div>
+    <script>
+        // Lista de medicamentos con sus presentaciones permitidas
+        const presentacionesPermitidas = {
+            '1': ['tableta'],
+            '2': ['tableta'],
+            '3': ['tableta', 'jarabe']
+            // Agrega más medicamentos y presentaciones según sea necesario
+        };
+
+        // Función para validar la presentación basada en el medicamento seleccionado
+        function validarPresentacion() {
+            const medicamento = document.getElementById('id_medicamento').value;
+            const presentacion = document.getElementById('presentacion').value.toLowerCase();
+
+            if (medicamento && presentacion) {
+                const presentaciones = presentacionesPermitidas[medicamento] || [];
+                if (!presentaciones.includes(presentacion)) {
+                    alert('Presentación no válida para el medicamento seleccionado.');
+                    document.getElementById('presentacion').value = '';
+                }
+            }
+        }
+
+        // Agregar el evento change al campo select del medicamento
+        document.getElementById('id_medicamento').addEventListener('change', function() {
+            document.getElementById('presentacion').value = '';
+        });
+
+        // Agregar el evento blur al campo de presentación para validar la presentación
+        document.getElementById('presentacion').addEventListener('blur', validarPresentacion);
+
+        function validateNumberInput(event) {
+            const input = event.target;
+            const value = input.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+            input.value = value;
+        }
+
+        // Función para verificar si el código ya existe en la base de datos
+        function checkCodeExists() {
+            const codigo_autorizacion = document.getElementById('codigo_autorizacion').value;
+
+            // Realizar una solicitud AJAX para verificar el código
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'verificar_codigo.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = xhr.responseText;
+                        if (response === 'existe') {
+                            alert('El código de autorización ya existe. Por favor, ingrese otro código.');
+                            document.getElementById('codigo_autorizacion').value = '';
+                        }
+                    }
+                }
+            };
+            xhr.send('codigo_autorizacion=' + encodeURIComponent(codigo_autorizacion));
+        }
+        function validarCantidad() {
+            const cantidad = document.getElementById('cantidad').value;
+            const selectMedicamento = document.getElementById('id_medicamento');
+            const cantidadDisponible = selectMedicamento.selectedOptions[0].getAttribute('data-cantidad');
+
+            if (isNaN(cantidad) || parseInt(cantidad) <= 0) {
+                alert('Por favor, ingrese un valor numérico mayor a cero en el campo Cantidad.');
+                return false;
+            }
+
+            if (parseInt(cantidad) > parseInt(cantidadDisponible)) {
+                alert('La cantidad ingresada no puede ser mayor a la cantidad disponible (' + cantidadDisponible + ').');
+                return false;
+            }
+
+            return true;
+        }
+
+        document.getElementById('cantidad').addEventListener('input', function() {
+            const cantidad = this.value;
+            const selectMedicamento = document.getElementById('id_medicamento');
+            const cantidadDisponible = selectMedicamento.selectedOptions[0].getAttribute('data-cantidad');
+
+            if (parseInt(cantidad) > parseInt(cantidadDisponible)) {
+                alert('La cantidad ingresada no puede ser mayor a la cantidad disponible (' + cantidadDisponible + ').');
+                this.value = '';
+            }
+        });
+    </script>
 </body>
 </html>
