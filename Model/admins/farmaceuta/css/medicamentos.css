@@ -1385,7 +1385,7 @@ section {
 }
 .topbar .top-navbar .navbar-header {
   line-height: 72px;
-  padding-left: 10px;
+  padding-left: 0px;
   border-right: 1px solid rgba(120, 130, 140, 0.13);
 }
 

@@ -81,7 +81,7 @@ if(isset($_POST["inicio"])) {
             exit();
         } elseif($tipo == 3) {
             // Redirigir al dashboard del profesional médico
-            header("Location: ../medico/indexmed.php");
+            header("Location: ../model/admins/medico/index.php");
             exit();
         } elseif($tipo == 4) {
             // Redirigir al dashboard del farmacéutico

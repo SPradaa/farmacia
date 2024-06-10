@@ -3,7 +3,29 @@ session_start();
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
-    
+?> 
+
+<?php
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
+
+$documento=$_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono =$_SESSION['telefono'];
+$correo= $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$nit = $_SESSION[ 'nit'];
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+}
 ?>
 
 <?php 
@@ -41,7 +63,7 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Usuarios</title>
-        <link rel="stylesheet" href="../../css/usuario.css">
+        <link rel="stylesheet" href="../../css/usuarios.css">
     </head>
     <body>
         <div class="contenedor">
@@ -73,20 +95,18 @@ session_start();
                     <td>Apellido</td>
                     <td>Correo</td>
                     <td>Telefono</td>
-                    <td>Ciudad</td>
+                    <td>Departamento</td>
+                    <td>Municipio</td>
                     <td>Dirección</td>
                     <td>Tipo de Sangre</td>
-                    <td>Tipo de Usuario</td>
-                    <td>Estado</td>
-
+                    <td>EPS</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
                     $buscar = $_GET['buscar'];
-                    $consulta = $con->prepare("SELECT * FROM usuarios, t_documento, ciudad, rh, roles, estados
-                    WHERE usuarios.id_doc = t_documento.id_doc AND usuarios.id_ciudad = ciudad.id_ciudad 
-                    AND usuarios.id_rh = rh.id_rh AND usuarios.id_estado = estados.id_estado AND
-                    usuarios.id_rol = roles.id_rol AND nombre LIKE ? ORDER BY nombre ASC");
+                    $consulta = $con->prepare("SELECT * FROM usuarios, empresas, t_documento, municipios, departamentos, rh
+                    WHERE usuarios.nit = '$nit' AND usuarios.nit = empresas.nit AND usuarios.id_doc = t_documento.id_doc AND usuarios.id_municipio = municipios.id_municipio
+                    AND municipios.id_depart = departamentos.id_depart AND usuarios.id_rh = rh.id_rh AND nombre LIKE ? ORDER BY nombre ASC");
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -97,21 +117,20 @@ session_start();
                         <td><?php echo $fila['apellido']; ?></td>
                         <td><?php echo $fila['correo']; ?></td>
                         <td><?php echo $fila['telefono']; ?></td>
-                        <td><?php echo $fila['ciudad']; ?></td>
+                        <td><?php echo $fila['depart']; ?></td>
+                        <td><?php echo $fila['municipio']; ?></td>
                         <td><?php echo $fila['direccion']; ?></td>
                         <td><?php echo $fila['rh']; ?></td>
-                        <td><?php echo $fila['rol']; ?></td>
-                        <td><?php echo $fila['estado']; ?></td>
+                        <td><?php echo $fila['empresa']; ?></td>
                         
                     </tr>
                 <?php 
                     }
                 } else {
                     // Mostrar todos los registros si no se ha realizado una búsqueda
-                    $consulta = $con->prepare("SELECT * FROM usuarios, t_documento, ciudad, rh, roles, estados
-                    WHERE usuarios.id_doc = t_documento.id_doc AND usuarios.id_ciudad = ciudad.id_ciudad 
-                    AND usuarios.id_rh = rh.id_rh AND usuarios.id_estado = estados.id_estado AND
-                    usuarios.id_rol = roles.id_rol ORDER BY nombre ASC");
+                    $consulta = $con->prepare("SELECT * FROM usuarios, empresas, t_documento, municipios, departamentos, rh
+                    WHERE usuarios.nit = '$nit' AND usuarios.nit = empresas.nit AND usuarios.id_doc = t_documento.id_doc AND usuarios.id_municipio = municipios.id_municipio
+                    AND municipios.id_depart = departamentos.id_depart AND usuarios.id_rh = rh.id_rh ORDER BY nombre ASC");
                     $consulta->execute();
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -122,11 +141,11 @@ session_start();
                         <td><?php echo $fila['apellido']; ?></td>
                         <td><?php echo $fila['correo']; ?></td>
                         <td><?php echo $fila['telefono']; ?></td>
-                        <td><?php echo $fila['ciudad']; ?></td>
+                        <td><?php echo $fila['depart']; ?></td>
+                        <td><?php echo $fila['municipio']; ?></td>
                         <td><?php echo $fila['direccion']; ?></td>
                         <td><?php echo $fila['rh']; ?></td>
-                        <td><?php echo $fila['rol']; ?></td>
-                        <td><?php echo $fila['estado']; ?></td>
+                        <td><?php echo $fila['empresa']; ?></td>
                       
                     </tr>
                 <?php 

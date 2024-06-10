@@ -131,6 +131,26 @@ function getRowClass($fila) {
             justify-content: space-between;
         }
 
+        .espacios{
+            margin-top: -60px;
+            width: 100%;
+            height: auto;
+            margin-left: 34%;
+            /* background: red; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+        .btn.btn-danger{
+            background: red;
+            border: 1px solid red;
+        }
+        .btn.btn-primary{
+            background: green;
+            border: 1px solid green;
+        }
+
     </style>
 </head>
 <body>
