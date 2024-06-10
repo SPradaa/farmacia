@@ -1,8 +1,18 @@
 <?php
 session_start();
-require_once("../../../../db/connection.php");
+require_once("../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
+
+// Asegúrate de que el usuario haya iniciado sesión
+if (!isset($_SESSION['documento'])) {
+    die("Usuario no autenticado.");
+}
+
+// Verificar si el parámetro 'documento' está presente en la URL
+if (!isset($_GET['documento'])) {
+    die("Documento no especificado.");
+}
 
 $documento = $_GET['documento'];
 ?>
@@ -96,31 +106,31 @@ $documento = $_GET['documento'];
             <table class="datos">
                 <tr>
                     <th>Tipo de Documento</th>
-                    <td><?php echo $fila['tipo_doc']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['tipo_doc']); ?></td>
                 </tr>
                 <tr>
                     <th>Documento</th>
-                    <td><?php echo $fila['doc_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['doc_usuario']); ?></td>
                 </tr>
                 <tr>
                     <th>Nombre</th>
-                    <td><?php echo $fila['nombre_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_usuario']); ?></td>
                 </tr>
                 <tr>
                     <th>Apellido</th>
-                    <td><?php echo $fila['apellido_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['apellido_usuario']); ?></td>
                 </tr>
                 <tr>
                     <th>Teléfono</th>
-                    <td><?php echo $fila['telefono_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['telefono_usuario']); ?></td>
                 </tr>
                 <tr>
                     <th>Correo</th>
-                    <td><?php echo $fila['correo_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['correo_usuario']); ?></td>
                 </tr>
                 <tr>
                     <th>Dirección</th>
-                    <td><?php echo $fila['direccion_usuario']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['direccion_usuario']); ?></td>
                 </tr>
             </table>
         </div>
@@ -129,11 +139,11 @@ $documento = $_GET['documento'];
             <table class="datos">
                 <tr>
                     <th>Descripción</th>
-                    <td><?php echo $fila['descripcion']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['descripcion']); ?></td>
                 </tr>
                 <tr>
                     <th>Diagnóstico</th>
-                    <td><?php echo $fila['diagnostico']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['diagnostico']); ?></td>
                 </tr>
             </table>
         </div>
@@ -142,19 +152,19 @@ $documento = $_GET['documento'];
             <table class="datos">
                 <tr>
                     <th>Nombre</th>
-                    <td><?php echo $fila['nombre_medico']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_medico']); ?></td>
                 </tr>
                 <tr>
                     <th>Especialización</th>
-                    <td><?php echo $fila['especializacion']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['especializacion']); ?></td>
                 </tr>
                 <tr>
                     <th>Teléfono</th>
-                    <td><?php echo $fila['telefono_medico']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['telefono_medico']); ?></td>
                 </tr>
                 <tr>
                     <th>Correo</th>
-                    <td><?php echo $fila['correo_medico']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['correo_medico']); ?></td>
                 </tr>
             </table>
         </div>

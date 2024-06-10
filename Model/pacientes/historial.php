@@ -203,7 +203,7 @@ validarSesion();
 
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="historial/verhisto_clinica.php">
+                        <a href="historial/historia.php">
                             <div class="card_box">
                                 <h3 >Historial</h3>
                                 <p class="card_box__content">Visualiza tu historial en este módulo.</p>
