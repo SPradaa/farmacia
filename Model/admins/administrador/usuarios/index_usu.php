@@ -105,9 +105,7 @@ if (!$fila) {
                 </form>
               
             </div>
-            <div class="col-md-6">
-                <a href="create_usu.php" class="btn btn-success"><i class="fas fa-user-plus"></i>Crear Usuario</a>
-            </div>
+           
             
         </div>
        

@@ -319,8 +319,7 @@ if(isset($_POST['btncerrar']))
             <?php
             $empresa = $_SESSION['nit'];
             // Asegúrate de tener una conexión de base de datos válida en $con
-            $consulta = "SELECT *
-                         FROM usuarios
+            $consulta = "SELECT * FROM usuarios
                         --  JOIN municipios ON usuarios.id_municipio = municipio.id_municipio
                          JOIN empresas ON usuarios.nit = empresas.nit
                          JOIN estados ON usuarios.id_estado = estados.id_estado

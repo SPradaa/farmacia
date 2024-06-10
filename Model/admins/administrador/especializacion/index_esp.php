@@ -63,13 +63,13 @@ session_start();
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Especializacion" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="insert_esp.php" class="btn btn_nuevo">Crear Especialización</a>
+                   
                 </form>
             </div>
             <table>
                 <tr class="head">
                     <td>Especializacion</td>
-                    <td colspan="2">Acción</td>
+                   
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -80,8 +80,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['especializacion']; ?></td>
-                        <td><a href="update_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__delete">Eliminar</a></td>
+                     
                     </tr>
                 <?php 
                     }
@@ -93,8 +92,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['especializacion']; ?></td>
-                        <td><a href="update_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__delete">Eliminar</a></td>
+                       
                     </tr>
                 <?php 
                     }

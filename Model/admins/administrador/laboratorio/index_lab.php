@@ -62,13 +62,13 @@ session_start();
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Laboratorio" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="insert_lab.php" class="btn btn_nuevo">Crear Laboratorio</a>
+                   
                 </form>
             </div>
             <table>
                 <tr class="head">
                     <td>Laboratorio</td>
-                    <td colspan="2">Acción</td>
+                   
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -79,8 +79,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['laboratorio']; ?></td>
-                        <td><a href="update_lab.php?id_lab=<?php echo $fila['id_lab']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_lab.php?id_lab=<?php echo $fila['id_lab']; ?>" class="btn__delete">Eliminar</a></td>
+                      
                     </tr>
                 <?php 
                     }
@@ -92,8 +91,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['laboratorio']; ?></td>
-                        <td><a href="update_lab.php?id_lab=<?php echo $fila['id_lab']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_lab.php?id_lab=<?php echo $fila['id_lab']; ?>" class="btn__delete">Eliminar</a></td>
+                        
                     </tr>
                 <?php 
                     }

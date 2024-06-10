@@ -94,7 +94,7 @@ if (isset($_GET['btn_buscar'])) {
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="update_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__delete">Eliminar</a></td>
+                      
                     </tr>
                 <?php
                     }
@@ -118,7 +118,7 @@ if (isset($_GET['btn_buscar'])) {
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="update_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__delete">Eliminar</a></td>
+                        
                     </tr>
                 <?php
                     }
