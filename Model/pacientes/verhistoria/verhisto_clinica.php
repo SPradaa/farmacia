@@ -57,7 +57,7 @@ $documento = $_GET['documento'];
         }
 
         .seccion h3 {
-            background-color: #2dcac1;;
+            background-color: #2dcac1;
             color: #fff;
             padding: 5px;
             margin-top: 0;
@@ -78,6 +78,18 @@ $documento = $_GET['documento'];
         .datos th {
             background-color: #f2f2f2;
         }
+
+        .boton-descargar {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #2dcac1;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -86,20 +98,21 @@ $documento = $_GET['documento'];
         <br><br><br><br><br>
         <h2>Historial Clínico</h2>
         <?php
-        $consulta = $con->prepare("SELECT histo_clinica.*, 
-                                          usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
-                                          medicos.nombre_comple AS nombre_medico, medicos.telefono AS telefono_medico, medicos.correo AS correo_medico, 
-                                          t_documento.tipo AS tipo_doc,
-                                          especializacion.especializacion
-                                   FROM histo_clinica 
-                                   JOIN usuarios ON histo_clinica.documento = usuarios.documento 
-                                   JOIN medicos ON histo_clinica.docu_medico = medicos.docu_medico
-                                   JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
-                                   JOIN especializacion ON medicos.id_esp = especializacion.id_esp
-                                   WHERE histo_clinica.documento = :documento");
-        $consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
-        $consulta->execute();
-        if ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+        if ($con) {
+            $consulta = $con->prepare("SELECT histo_clinica.*, 
+                                              usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
+                                              medicos.nombre_comple AS nombre_medico, medicos.telefono AS telefono_medico, medicos.correo AS correo_medico, 
+                                              t_documento.tipo AS tipo_doc,
+                                              especializacion.especializacion
+                                       FROM histo_clinica 
+                                       JOIN usuarios ON histo_clinica.documento = usuarios.documento 
+                                       JOIN medicos ON histo_clinica.docu_medico = medicos.docu_medico
+                                       JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
+                                       JOIN especializacion ON medicos.id_esp = especializacion.id_esp
+                                       WHERE histo_clinica.documento = :documento");
+            $consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
+            $consulta->execute();
+            if ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <div class="seccion">
             <h3>Datos del Paciente</h3>
@@ -168,9 +181,13 @@ $documento = $_GET['documento'];
                 </tr>
             </table>
         </div>
+        <a href="generar_historial_pdf.php?documento=<?php echo urlencode($documento); ?>" class="boton-descargar">Descargar en PDF</a>
         <?php
+            } else {
+                echo "<p>No se encontraron datos para el documento especificado.</p>";
+            }
         } else {
-            echo "<p>No se encontraron datos para el documento especificado.</p>";
+            echo "<p>Error en la conexión a la base de datos.</p>";
         }
         ?>
     </div>
