@@ -72,7 +72,7 @@ if (!$fila) {
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/medicamentos.css" rel="stylesheet">
+    <link href="css/medicamento.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/icon-page.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -142,16 +142,16 @@ if (!$fila) {
                         <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
-                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false">
-                        <i class="fas fa-pills"></i><span class="hide-menu">Medicamentos </span></a>
+                        <i class="fas fa-pills"></i><span class="hide-menu" id="medi">Medicamentos </span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-archive"></i><span class="hide-menu">Inventario</span></a>
+                        <i class="fas fa-archive"></i><span class="hide-menu" id="inve">Inventario</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones
+                        <li> <a class="waves-effect waves-dark" href="auto.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu" id="auto">Autorizaciones
                                         
                                     </span></a>
                         </li>
@@ -219,10 +219,10 @@ if (!$fila) {
                                             <div class="card_box">
                                                 <h3 class="car_box__title">Medicamentos
                                                 </h3>
-                                                <p class="card_box__content">Revisa y crea medicamentos en este módulo
+                                                <p class="card_box__content">Revisa y consulta la lista de medicamentos en este módulo
                                                 </p>
                                                 <div class="card__date">
-                                                    Haz clic para gestionar la información sobre diversos medicamentos.
+                                                Haz clic para gestionar la información sobre diversos medicamentos.
                                                 </div>
                                                 <div class="card_box__arrow">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -246,10 +246,11 @@ if (!$fila) {
                                             <div class="card_box">
                                                 <h3 class="car_box__title"> Tipo de Medicamentos
                                                 </h3>
-                                                <p class="card_box__content">Crea y organiza tipos de medicamentos.
+                                                <p class="card_box__content">Consulta los tipos de medicamentos que hay disponibles.
+
                                                 </p>
                                                 <div class="card__date">
-                                                    Haz clic para gestionar categorías específicas de medicamentos.
+                                                Haz clic para gestionar categorías específicas de medicamentos.
                                                 </div>
                                                 <div class="card_box__arrow">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -313,8 +314,7 @@ if (!$fila) {
                         <!-- ============================================================== -->
                         <!-- footer -->
                         <!-- ============================================================== -->
-                        <footer class="footer"> © 2021 Adminwrap by <a
-                                href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+                        <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
                         <!-- ============================================================== -->
                         <!-- End footer -->
                         <!-- ============================================================== -->

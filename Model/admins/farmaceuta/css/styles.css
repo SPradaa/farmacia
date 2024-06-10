@@ -1015,6 +1015,119 @@ sidebar navigation
 .sidebar-nav ul li a.active, .sidebar-nav ul li a:hover {
   color: #20aee3;
 }
+@media (max-width: 768px) {
+  .mini-sidebar .scroll-sidebar{
+    background: #F6F9FA;
+    width: 31%;
+    margin-left: 250px;
+    margin-top: -30px;
+  }
+}
+@media (max-width: 768px) {
+  .hide-menu{
+    width: 31%;
+    margin-left: -3px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #perf{
+    width: 31%;
+    margin-left: 8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #inve{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  #medi, #auto{
+    width: 31%;
+    margin-left: -8px;
+    margin-top: -90px;
+    font-size: 9px;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  i{
+    width: 51%;
+    margin-left: 13px;
+    margin-top: -22px;
+  }
+}
+@media (max-width: 768px) {
+  h3.titulo{
+    margin-right: 300px;
+    margin-left: 25px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 909px) {
+  h3.titulo{
+    margin-right: 300px;
+    margin-left: 67px;
+    font-size: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .container-fluid{
+    margin-left: 39px;
+  }
+}
+@media (max-width: 768px) {
+  .btn{
+    margin-left: 7px;
+    margin-top: -13px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 779px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: -10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 789px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 799px) {
+  .btn{
+    margin-left: 1%;
+    margin-top: -10px;
+    width: 80px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .footer{
+    text-align: center;
+}
+}
+
 .sidebar-nav ul li a.active i, .sidebar-nav ul li a:hover i {
   color: #20aee3;
 }
@@ -1360,7 +1473,7 @@ section {
 }
 .topbar .top-navbar .navbar-header {
   line-height: 72px;
-  padding-left: 10px;
+  padding-left: 0px;
   border-right: 1px solid rgba(120, 130, 140, 0.13);
 }
 
@@ -5006,9 +5119,7 @@ Table- editable table
 .stylish-table tbody tr {
   border-left: 3px solid transparent;
 }
-.stylish-table tbody tr:hover, .stylish-table tbody tr.active {
-  border-color: #20aee3;
-}
+
 
 /*******************
 Table-Jsgrid table
@@ -6295,9 +6406,27 @@ File: scss
   margin-left: 63px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px;
+  }
+}
+@media (max-width: 1199px) {
+  .logg img{
+    margin-left: 1px;
+    width: 80%;
+    height: auto;
+    margin-top: -5px
+  }
+}
 .logg{
   background: #F6F9FA;
 }
+
 
 .sombra{
   color: #007ee5;
