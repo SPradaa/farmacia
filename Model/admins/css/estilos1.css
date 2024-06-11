@@ -1,26 +1,26 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Arial', sans-serif;
     font-size: 16px;
     background: #fdfdfd;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-.contenedor{
+.contenedor {
     width: 80%;
     margin: 30px auto;
     overflow: hidden;
 }
 
-h2{
+h2 {
     display: block;
     margin-top: 1px;
     margin-bottom: 20px;
@@ -31,20 +31,19 @@ h2{
     color: #555;
 }
 
-.barra__bucador{
+.barra__bucador {
     width: 100%;
     margin-top: 50px;
     margin-bottom: 10px;
 }
 
-
-.formulario{
+.formulario {
     display: flex;
     width: 100%;
     overflow: hidden;
 }
 
-form .input_text{
+form .input_text {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -57,41 +56,39 @@ form .input_text{
     max-width: 30%;
     margin-right: 10px;
     outline: medium none;
-}   
-
-select{
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    color: #848688;
-    display: block;
-    font-size: 14px;
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    max-width: 30%;
-    margin-right: 10px;
-    outline: medium none;
-
 }
 
+select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: medium none;
+}
 
-form .input_text:focus{
+form .input_text:focus {
     border: 1px solid #1b743c;
 }
-form .form-group{
+
+form .form-group {
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
 }
 
-form .form-group .input_text{
+form .form-group .input_text {
     max-width: 45% !important;
 }
 
-
-form .btn{
+form .btn {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -105,36 +102,38 @@ form .btn{
     outline: medium none;
     cursor: pointer;
 }
-.btn__nuevo{
+
+.btn__nuevo {
     float: right;
     background: #1b743c !important;
 }
 
-.btn__group{
+.btn__group {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
-.btn__primary{
+
+.btn__primary {
     background: #046bcc;
 }
-.btn__danger{
+
+.btn__danger {
     background: #8a0505 !important;
 }
 
-
-
 /* table */
-table{
+table {
     width: 100%;
     border-collapse: collapse;
 }
 
-table .head{
+table .head {
     background: #05a0b8;
 }
-table .head td{
+
+table .head td {
     color: #ffffff;
     font-family: 'Arial', sans-serif;
     font-weight: bold;
@@ -142,15 +141,14 @@ table .head td{
     text-align: center;
 }
 
-table tr td{
+table tr td {
     border: 1px solid #ccc;
     padding: 7px;
     font-size: 14px;
     color: black;
 }
 
-
-.btn__atender{
+.btn__atender {
     display: inline-block;
     font-size: 14px;
     background: #8a0505;
@@ -159,11 +157,32 @@ table tr td{
     padding: 5px 10px;
 }
 
-.btn__autorizar{
+.btn__autorizar {
     display: inline-block;
     font-size: 14px;
     background: #058a12;
     color: #fff;
     border: 5px;
     padding: 5px 10px;
+}
+
+/* Botones generales */
+.btn__atender, .btn__autorizar, .btn__auto {
+    display: inline-block;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Estilos específicos */
+.btn__atender {
+    background: #8a0505;
+}
+
+.btn__autorizar, .btn__auto {
+    background: #058a12;
 }

@@ -41,7 +41,7 @@ if (isset($_GET['documento'])) {
     $historias = $stmt_historias->fetchAll(PDO::FETCH_ASSOC);
 
     // Consultar autorizaciones del paciente
-    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, id_medicamento, presentacion, cantidad, fecha_hora_auto, fecha_venc FROM autorizaciones WHERE documento = :documento";
+    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, id_medicamento, presentacion, cantidad, fecha_venc FROM autorizaciones WHERE documento = :documento";
     $stmt_autorizaciones = $con->prepare($sql_autorizaciones);
     $stmt_autorizaciones->bindParam(':documento', $documento_paciente);
     $stmt_autorizaciones->execute();
@@ -171,10 +171,6 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
                 <input type="text" id="cantidad" name="cantidad" required pattern="\d*" title="Por favor ingrese solo números">
-            </div>
-            <div class="form-group">
-                <label for="fecha_hora_auto">Fecha y Hora para Reclamar:</label>
-                <input type="datetime-local" id="fecha_hora_auto" name="fecha_hora_auto" required>
             </div>
             <div class="form-group">
                 <label for="fecha_venc">Fecha de Vencimiento:</label>

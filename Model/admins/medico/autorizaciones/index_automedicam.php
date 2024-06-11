@@ -74,7 +74,7 @@ if(isset($_GET['btn_buscar'])) {
                     <td>Fecha</td>
                     <td>Hora</td>
                     <td>Estado</td>
-                    <td colspan="2">Acción</td>
+                    <td colspan="3">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -96,8 +96,8 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
-
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td>
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
                     </tr>
                 <?php 
                     }
@@ -121,8 +121,8 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
                         <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
 
-                    </tr>
                 <?php 
                     }
                 }
