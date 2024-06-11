@@ -295,30 +295,35 @@ if (!$fila) {
 
     <!-- Script para manejo de búsqueda de autorizaciones -->
     <script>
-        function buscarAutorizacion() {
-            var documento = document.getElementById("documentoPaciente").value;
+    function buscarAutorizacion() {
+        var documento = document.getElementById("documentoPaciente").value;
 
-            if (documento === "") {
-                alert("El campo está vacío, digite un número de documento.");
-                return;
-            }
-
-            // Realizar solicitud AJAX para verificar el documento
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "buscar_autorizacion.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    if (xhr.responseText === "no_existe") {
-                        alert("El documento no existe, cámbielo.");
-                    } else {
-                        window.location.href = "autorizaciones_resultado.php?documento=" + documento;
-                    }
-                }
-            };
-            xhr.send("documento=" + documento);
+        if (documento === "") {
+            alert("El campo está vacío, digite un número de documento.");
+            return;
         }
-    </script>
+
+        // Realizar solicitud AJAX para verificar el documento
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "buscar_autorizacion.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText === "no_existe") {
+                    alert("El documento no existe, cámbielo.");
+                } else if (xhr.responseText.startsWith("no_afiliado:")) {
+                    var eps = xhr.responseText.split(":")[1];
+                    alert("El usuario no está afiliado a: " + eps + ".");
+                } else {
+                    window.location.href = "autorizaciones_resultado.php?documento=" + documento;
+                }
+            }
+        };
+        xhr.send("documento=" + documento);
+    }
+</script>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

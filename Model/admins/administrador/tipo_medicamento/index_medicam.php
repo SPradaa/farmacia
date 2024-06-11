@@ -93,7 +93,6 @@ session_start();
                     <tr>
                         <td><?php echo $fila['clasificacion']; ?></td>
                         <td><a href="update_tip_medicam.php?id_cla=<?php echo $fila['id_cla']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_tip_medicam.php?id_cla=<?php echo $fila['id_cla']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php 
                     }

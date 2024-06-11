@@ -9,6 +9,34 @@
 require_once("../../../controller/seguridad.php");
 validarSesion();
 ?>
+<?php
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
+echo"conectado";
+
+$documento=$_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono =$_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$empresa = $_SESSION[ 'nit'];
+
+$nombre_comple = $nombre .''.$apellido; 
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,19 +105,7 @@ validarSesion();
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                        <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
-                                href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item hidden-xs-down search-box"> <a
-                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
-                                    class="fa fa-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search & enter"> <a
-                                    class="srh-btn"><i class="fa fa-times"></i></a> </form>
-                        </li>
+                     <h1 class="rol">Administrador</h1>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
@@ -100,9 +116,8 @@ validarSesion();
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown u-pro">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="../assets/images/users/1.jpg" alt="user" class="" /> <span
-                                    class="hidden-md-down">Mark Sanders &nbsp;</span> </a>
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
+                                    class="hidden-md-down"> <?php echo $nombre_comple ?> &nbsp;</span> </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                         </li>
                     </ul>
@@ -186,20 +201,7 @@ validarSesion();
 
                 <div class="card-container">
                     <!-- Carta para Ciudad -->
-                    <div class="card">
-                        <a href="ciudad/index_ciu.php">
-                            <div class="card_box">
-                                <h3>Ciudad</h3>
-                                <p class="card_box__content">Administra información detallada sobre ciudades en este módulo.</p>
-                                <div class="card__date">Haz clic para acceder y gestionar datos relacionados con las ciudades.</div>
-                                <div class="card_box__arrow">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
-                                        <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                  
                     <!-- Carta para Estados -->
                     <div class="card">
                         <a href="estados/index_est.php">

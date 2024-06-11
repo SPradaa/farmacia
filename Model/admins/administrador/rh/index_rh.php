@@ -62,13 +62,13 @@ session_start();
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Rh" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="insert_rh.php" class="btn btn_nuevo">Crear RH</a>
+                  
                 </form>
             </div>
             <table>
                 <tr class="head">
                     <td>Rh</td>
-                    <td colspan="2">Acción</td>
+
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -79,8 +79,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['rh']; ?></td>
-                        <td><a href="update_rh.php?id_rh=<?php echo $fila['id_rh']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_rh.php?id_rh=<?php echo $fila['id_rh']; ?>" class="btn__delete">Eliminar</a></td>
+                       
                     </tr>
                 <?php 
                     }
@@ -92,8 +91,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['rh']; ?></td>
-                        <td><a href="update_rh.php?id_rh=<?php echo $fila['id_rh']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_rh.php?id_rh=<?php echo $fila['id_rh']; ?>" class="btn__delete">Eliminar</a></td>
+                      
                     </tr>
                 <?php 
                     }

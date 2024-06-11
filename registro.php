@@ -94,7 +94,7 @@
                 ?>
             </select>
         
-            <input type="text" name="documento" id="documento" pattern="[0-9]{8,11}" placeholder="Digite su Documento" title="El documento debe tener solo números de 8 a 10 dígitos" required>
+            <input type="number" name="documento" id="documento" min="8" max="10" pattern="[0-9]{8,11}" placeholder="Digite su Documento" title="El documento debe tener solo números de 8 a 10 dígitos" required>
             </div>
 
             <div class="row">
@@ -216,6 +216,31 @@
 
     // Asigna la función de validación al evento 'submit' del formulario
     document.getElementById("form1").onsubmit = validarCorreo;
+
+    // var documento = document.getElementById('documento')
+    // var nombre = document.getElementById('nombre')
+    // var apellido = document.getElementById('apellido')
+    // var telefono = document.getElementById('telefono')
+    // var correo = document.getElementById('correo')
+    // var direccion = document.getElementById('direccion')
+    // var password = document.getElementById('password')
+
+    const formulario =  document.getElementById('form1')
+    const inputs = document.querySelectorAll('#form1 input')
+    const expresiones = {
+    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+	password: /^.{4,12}$/, // 4 a 12 digitos.
+	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+    }
+
+    formulario.addEventListener('submit',  (e) =>{
+        e.preventDefault();
+    } ) 
+
+
+
 </script>
               
 </body>

@@ -89,8 +89,8 @@ if(isset($_POST["update"]))
             ?>
             </select>
             <div class="campos">
-                <input type="text" name="f_vencimiento" value="<?php echo $usua['f_vencimiento']?>">
-                <input type="text" name="lote" pattern="[0-9a-zA-Z]{4,8}" title="Debe tener numeros y letras" value="<?php echo $usua['lote']?>">
+                <input type="date" name="f_vencimiento" value="<?php echo $usua['f_vencimiento']?>">
+              
             </div>
             
             <select name="id_estado">

@@ -274,7 +274,7 @@ if (!$fila) {
 
                                         <a href="laboratorio/index_lab.php">
                                             <div class="card_box">
-                                                <h3 class="car_box__title">Laboratorio 
+                                                <h3 class="car_box__title">Laboratorio de Medicamentos
                                                 </h3>
                                                 <p class="card_box__content">Accede a la gestión de datos relacionados
                                                     con laboratorios. </p>
