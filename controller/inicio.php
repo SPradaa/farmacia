@@ -45,7 +45,6 @@ if ($_POST["inicio"]) {
     $sql->execute();
     $fila = $sql->fetch(PDO::FETCH_ASSOC);
 
-
     if ($fila && password_verify($encriptar, $fila['password'])) {
         // Establecer datos de usuario en la sesión
         $_SESSION['documento'] = $fila['documento'];
@@ -60,7 +59,17 @@ if ($_POST["inicio"]) {
         $_SESSION['correo'] = $fila['correo'];
         $_SESSION['password'] = $fila['password'];
         $_SESSION['tipo'] = $fila['id_rol'];
+        $_SESSION['estado'] = $fila['id_estado'];
         $_SESSION['nit'] = $fila['nit'];
+
+        // Validar el estado del usuario
+        if ($_SESSION['estado'] != 3) {
+            echo "<script>
+                    alert('Espere a ser activado');
+                    window.location.href = '../index.html';
+                  </script>";
+            exit();
+        }
 
         if (in_array($_SESSION['tipo'], [1, 2, 3, 4])) {
             header("Location: ../model/admins/insertar_codigo_seguridad.php");
@@ -74,5 +83,4 @@ if ($_POST["inicio"]) {
         exit();
     }
 }
-
 ?>
