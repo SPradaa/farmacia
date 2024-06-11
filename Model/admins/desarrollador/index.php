@@ -183,7 +183,7 @@ if(isset($_POST['btncerrar']))
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                     <h1 class="rol">Administrador</h1>
+                     <h1 class="rol">Desarrollador</h1>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
