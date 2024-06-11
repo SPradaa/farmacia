@@ -41,7 +41,7 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Tipos de Medicamentos</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <link rel="stylesheet" href="../css/tip_medi.css">
     </head>
     <body>
         <div class="contenedor">

@@ -37,7 +37,7 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     else
     {
       $pass_cifrado=password_hash($clave,PASSWORD_DEFAULT,array("pass"=>12));
-      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$clave', '$id_rol', '$id_estado', '$id_esp')");
+      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$pass_cifrado', '$id_rol', '$id_estado', '$id_esp')");
       $insertSQL -> execute();
       echo '<script> alert("REGISTRO EXITOSO");</script>';
       echo '<script>window.location="index_medico.php"</script>';

@@ -15,7 +15,7 @@ a{
 }
 
 .contenedor{
-    width: 80%;
+    width: 70%;
     margin: 30px auto;
     overflow: hidden;
 }
@@ -128,8 +128,6 @@ form .btn{
 table{
     width: 100%;
     border-collapse: collapse;
-    
-
 }
 
 table .head{
