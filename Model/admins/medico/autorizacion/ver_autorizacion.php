@@ -74,19 +74,22 @@ $documento = $_GET['documento'];
     <div class="contenedor">
         <img src="../../../../assets/img/log.farma.png" alt="Logo" class="logo">
         <br><br><br><br><br>
-        <h2>Historial Clínico</h2>
+        <h2>Autorizacion</h2>
         <?php
         $consulta = $con->prepare("SELECT histo_clinica.*, 
                                           usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
                                           medicos.nombre_comple AS nombre_medico, medicos.telefono AS telefono_medico, medicos.correo AS correo_medico, 
                                           t_documento.tipo AS tipo_doc,
-                                          histo_clinica.fecha,  
-                                          especializacion.especializacion
+                                          especializacion.especializacion,
+                                          autorizaciones.cod_auto, autorizaciones.presentacion, autorizaciones.cantidad, autorizaciones.fecha, autorizaciones.fecha_venc, 
+                                          medicamentos.nombre AS nombre_medicamento
                                    FROM histo_clinica 
                                    JOIN usuarios ON histo_clinica.documento = usuarios.documento 
                                    JOIN medicos ON histo_clinica.docu_medico = medicos.docu_medico
                                    JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
                                    JOIN especializacion ON medicos.id_esp = especializacion.id_esp
+                                   JOIN autorizaciones ON histo_clinica.documento = autorizaciones.documento
+                                   JOIN medicamentos ON autorizaciones.id_medicamento = medicamentos.id_medicamento
                                    WHERE histo_clinica.documento = :documento");
         $consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
         $consulta->execute();
@@ -94,7 +97,7 @@ $documento = $_GET['documento'];
         ?>
 
         <div class="seccion">
-            <h3>Fecha Historia Clinica</h3>
+            <h3>Fecha Autorización</h3>
             <table class="datos">
                 <tr>
                     <th>Fecha</th>
@@ -136,15 +139,27 @@ $documento = $_GET['documento'];
             </table>
         </div>
         <div class="seccion">
-            <h3>Datos de la Historia Clínica</h3>
+            <h3>Datos de la Autorización</h3>
             <table class="datos">
                 <tr>
-                    <th>Descripción</th>
-                    <td><?php echo $fila['descripcion']; ?></td>
+                    <th>Código de la Autorización</th>
+                    <td><?php echo $fila['cod_auto']; ?></td>
                 </tr>
                 <tr>
-                    <th>Diagnóstico</th>
-                    <td><?php echo $fila['diagnostico']; ?></td>
+                    <th>Medicamento</th>
+                    <td><?php echo $fila['nombre_medicamento']; ?></td>
+                </tr>
+                <tr>
+                    <th>Presentación</th>
+                    <td><?php echo $fila['presentacion']; ?></td>
+                </tr>
+                <tr>
+                    <th>Cantidad</th>
+                    <td><?php echo $fila['cantidad']; ?></td>
+                </tr>
+                <tr>
+                    <th>Fecha de Vencimiento</th>
+                    <td><?php echo $fila['fecha_venc']; ?></td>
                 </tr>
             </table>
         </div>

@@ -1,27 +1,50 @@
 <?php
-   require_once ("../../../db/connection.php");
-   $db = new Database();
-   $con = $db ->conectar();
-//    session_start();
-?>
+require_once("../../../db/connection.php");
+$db = new Database();
+$con = $db->conectar();
 
-<?php
 require_once("../../../controller/seguridad.php");
 validarSesion();
 
+// Asegúrate de que la sesión está iniciada y las variables de sesión están definidas
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-?>
+// Verificar que 'docu_medico' está establecido en la sesión
+if (isset($_SESSION['docu_medico'])) {
+    // Obtener la información del médico logueado
+    $sql = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas 
+                          WHERE medicos.id_doc = t_documento.id_doc 
+                          AND medicos.id_rol = roles.id_rol 
+                          AND medicos.id_estado = estados.id_estado 
+                          AND medicos.id_esp = especializacion.id_esp 
+                          AND medicos.nit = empresas.nit 
+                          AND docu_medico = :docu_medico");
+    $sql->bindParam(':docu_medico', $_SESSION['docu_medico']);
+    $sql->execute();
+    $fila = $sql->fetch();
 
-<?php
-$sql = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas WHERE medicos.id_doc = t_documento.id_doc
-AND medicos.id_rol = roles.id_rol AND medicos.id_estado = estados.id_estado AND medicos.id_esp = especializacion.id_esp AND medicos.nit = empresas.nit AND docu_medico = :docu_medico");
-$sql->bindParam(':docu_medico', $_SESSION['docu_medico']);
-$sql->execute();
-$fila = $sql->fetch();
-echo "conectado";
+    if ($fila) {
+        // Asignar los datos a las variables de sesión
+        $_SESSION['id_doc'] = $fila['id_doc'];
+        $_SESSION['nombre_comple'] = $fila['nombre_comple'];
+        $_SESSION['correo'] = $fila['correo'];
+        $_SESSION['telefono'] = $fila['telefono'];
+        $_SESSION['password'] = $fila['password'];
+        $_SESSION['id_rol'] = $fila['id_rol'];
+        $_SESSION['id_estado'] = $fila['id_estado'];
+        $_SESSION['id_esp'] = $fila['id_esp'];
+        $_SESSION['nit'] = $fila['nit'];
+    } else {
+        echo "No se encontró la información del médico.";
+    }
+} else {
+    echo "El documento del médico no está en la sesión.";
+}
 
-$docu_medico = $_SESSION['docu_medico'];
-
+// Asignar los datos a variables para uso posterior
+$docu_medico = isset($_SESSION['docu_medico']) ? $_SESSION['docu_medico'] : '';
 $doc = isset($_SESSION['id_doc']) ? $_SESSION['id_doc'] : '';
 $nombre_comple = isset($_SESSION['nombre_comple']) ? $_SESSION['nombre_comple'] : '';
 $correo = isset($_SESSION['correo']) ? $_SESSION['correo'] : '';
@@ -31,10 +54,8 @@ $roles = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : '';
 $estado = isset($_SESSION['id_estado']) ? $_SESSION['id_estado'] : '';
 $esp = isset($_SESSION['id_esp']) ? $_SESSION['id_esp'] : '';
 $nit = isset($_SESSION['nit']) ? $_SESSION['nit'] : '';
-
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

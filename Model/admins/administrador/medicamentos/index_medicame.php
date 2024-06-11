@@ -26,7 +26,7 @@ if (isset($_GET['btn_buscar'])) {
 <head>
     <meta charset="UTF-8">
     <title>Medicamentos</title>
-    <link rel="stylesheet" href="../../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
     <style>
         .codigo-barras-container {
             text-align: center;

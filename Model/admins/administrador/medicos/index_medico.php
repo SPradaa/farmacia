@@ -6,6 +6,33 @@ session_start();
     
 ?>
 
+<?php
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
+echo"conectado";
+
+$documento=$_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono =$_SESSION['telefono'];
+$correo= $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$nit = $_SESSION[ 'nit'];
+
+$nombre_comple = $nombre .''.$apellido; 
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+
+
+}
+?>
 <?php 
     
     $sentencia_select=$con->prepare("SELECT * FROM medicos ORDER BY nombre_comple ASC");
@@ -41,7 +68,7 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Medicos</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <link rel="stylesheet" href="../../css/estilos.css">
     </head>
     <body>
         <div class="contenedor">
@@ -83,7 +110,7 @@ session_start();
                     $buscar = $_GET['buscar'];
                     $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas
                     WHERE medicos.id_doc = t_documento.id_doc AND medicos.id_estado = estados.id_estado AND
-                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp and empresas.nit = empresas.nit AND nombre_comple LIKE ? where  ORDER BY nombre_comple ASC");
+                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp and empresas.nit = empresas.nit AND medico.nit = `$nit` AND nombre_comple LIKE ? where  ORDER BY nombre_comple ASC");
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>

@@ -7,7 +7,7 @@
 ?>
 
 <?php
-require_once("../../controller/seguridad.php");
+require_once("../../controller/segpacientes.php");
 validarSesion();
 
 
@@ -28,6 +28,7 @@ validarSesion();
     <meta name="robots" content="noindex,nofollow">
     <title>Citas</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <!-- Bootstrap Core CSS -->
@@ -65,14 +66,22 @@ validarSesion();
         <!-- ============================================================== -->
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        
-                        <!-- Logo icon -->     <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
-              
+                  <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <div class="logg">
+                                <img src="../../assets/img/log.farma.png">
+                            </div>
+                            <!-- Dark Logo icon -->
+                
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                            <!-- dark Logo text -->
+                            <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                            
+                            <!-- Light Logo text -->
+
+                            <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -125,22 +134,31 @@ validarSesion();
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                <ul id="sidebarnav">
+                <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Citas</span></a>
-
+                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false">
+                        <i <a class="fas fa-archive"></i><span class="hide-menu">Citas</span></a>
                         </li>
-                      
-                        
+                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones</span></a>
+                        </li>
+                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Historial</span></a>
+                        </li>
+                             
                     </ul>
                 
                 </nav>
+                <div class="boton">
+                <form method="POST">
+        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
+    </form>
+    </div>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
@@ -182,9 +200,9 @@ validarSesion();
                 <div class="card-container">
                     <!-- Carta para el módulo de citas -->
                     <div class="card">
-                        <a href="agendarcitas.php">
+                        <a href="citas/agendarcitas.php">
                             <div class="card_box">
-                                <h3 >Citas</h3>
+                                <h3 >Agendar Citas</h3>
                                 <p class="card_box__content">Administra tus citas en este módulo.</p>
                                 <div class="card__date">Haz clic para acceder y programar nuevas citas </div>
                                 <div class="card_box__arrow">
@@ -196,9 +214,25 @@ validarSesion();
                         </a>
                     </div>
 
+                    
+                    <div class="card">
+                        <a href="citas/cancelarcitas.php">
+                            <div class="card_box">
+                                <h3 >Cancelar Citas</h3>
+                                <p class="card_box__content">Administra y cancela tus citas en este módulo.</p>
+                                <div class="card__date">Haz clic para acceder y cancelar citas </div>
+                                <div class="card_box__arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+                                        <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="#">
+                        <a href="citas/citasagendadas.php">
                             <div class="card_box">
                                 <h3 >Citas Agendadas</h3>
                                 <p class="card_box__content">Visualiza tus citas agendadas en este módulo.</p>
@@ -210,7 +244,7 @@ validarSesion();
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>

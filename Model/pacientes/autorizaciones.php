@@ -7,7 +7,7 @@
 ?>
 
 <?php
-require_once("../../controller/seguridad.php");
+require_once("../../controller/segpacientes.php");
 validarSesion();
 
 
@@ -28,12 +28,13 @@ validarSesion();
     <meta name="robots" content="noindex,nofollow">
     <title>Citas</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/google-vector-map.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -65,14 +66,22 @@ validarSesion();
         <!-- ============================================================== -->
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        
-                        <!-- Logo icon -->     <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
-              
+                  <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <div class="logg">
+                                <img src="../../assets/img/log.farma.png">
+                            </div>
+                            <!-- Dark Logo icon -->
+                
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                            <!-- dark Logo text -->
+                            <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                            
+                            <!-- Light Logo text -->
+
+                            <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -126,24 +135,30 @@ validarSesion();
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Citas </span></a>
+                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false">
+                        <i <a class="fas fa-archive"></i><span class="hide-menu">Citas</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">Autorizaciones</span></a>
+                        <li> <a class="waves-effect waves-dark" href="autorizaciones.php" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i><span class="hide-menu">Autorizaciones</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="medicamentos.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Medicamentos</span></a>
+                        <li> <a class="waves-effect waves-dark" href="historial.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Historial</span></a>
                         </li>
                        
                         
                     </ul>
+                    </nav>
+                <div class="boton">
+                <form method="POST">
+        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
+    </form>
+    </div>
                 
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -188,7 +203,7 @@ validarSesion();
 
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="#">
+                        <a href="autorizaciones/autorizaciones.php">
                             <div class="card_box">
                                 <h3 >Autorizaciones</h3>
                                 <p class="card_box__content">Visualiza tus autorizaciones en este módulo.</p>

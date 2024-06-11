@@ -36,6 +36,7 @@ session_start();
             </form>
         </div>
     </div>
+    <a href="insertar_codigo_medico.php"> Soy Medico</a>
 </div>
 
 <script>
