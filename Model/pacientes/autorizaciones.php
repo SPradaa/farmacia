@@ -203,7 +203,7 @@ validarSesion();
 
                     <!-- Carta para el módulo de citas agendadas -->
                     <div class="card">
-                        <a href="#">
+                        <a href="autorizaciones/autorizaciones.php">
                             <div class="card_box">
                                 <h3 >Autorizaciones</h3>
                                 <p class="card_box__content">Visualiza tus autorizaciones en este módulo.</p>
