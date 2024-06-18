@@ -5,6 +5,7 @@ $con = $conexion->conectar();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cod_auto = $_POST['cod_autorizacion'];
+    $id_cita = $_POST['id_cita'];
     $id_medicamento = $_POST['id_medicamento'];
     $presentacion = $_POST['presentacion'];
     $cantidad = $_POST['cantidad'];
@@ -28,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->rowCount() > 0) {
         // Redirigir al formulario anterior con los mismos datos
         $url = 'autorizacion_form.php?documento=' . urlencode($documento_paciente) . '&docu_medico=' . urlencode($documento_medico);
-        echo "<script>alert('El código de autorización ya existe. Por favor, ingrese otro código.'); window.location.href='autorizar_medicamentos.php?docu_medico=$documento_medico&documento=$documento_paciente';</script>";
+        echo "<script>alert('El código de autorización ya existe. Por favor, ingrese otro código.'); window.location.href='autorizar_medicamentos.php?id_cita=$id_cita&docu_medico=$documento_medico&documento=$documento_paciente';</script>";
         exit();
     }
 
@@ -60,10 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Agregar el estado autorizado (13)
     $id_estado = 13;
 
-    $sql = "INSERT INTO autorizaciones (cod_auto, id_medicamento, presentacion, cantidad, fecha_venc, documento, docu_medico, fecha, id_estado) 
-            VALUES (:cod_auto, :id_medicamento, :presentacion, :cantidad, :fecha_venc, :documento, :docu_medico, :fecha, :id_estado)";
+    $sql = "INSERT INTO autorizaciones (cod_auto, id_cita, id_medicamento, presentacion, cantidad, fecha_venc, documento, docu_medico, fecha, id_estado) 
+            VALUES (:cod_auto, :id_cita, :id_medicamento, :presentacion, :cantidad, :fecha_venc, :documento, :docu_medico, :fecha, :id_estado)";
     $stmt = $con->prepare($sql);
     $stmt->bindParam(':cod_auto', $cod_auto);
+    $stmt->bindParam(':id_cita', $id_cita);
     $stmt->bindParam(':id_medicamento', $id_medicamento);
     $stmt->bindParam(':presentacion', $presentacion);
     $stmt->bindParam(':cantidad', $cantidad);

@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('America/Bogota'); // Ajusta la zona horaria según tu ubicación
+
 session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
@@ -111,16 +114,54 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
         .form-group {
             margin-bottom: 15px;
         }
-        .btn {
+
+        .btn-regresar {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #046bcc; 
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
+            position: relative; /* Para permitir la animación */
+            overflow: hidden; /* Ocultar elementos que se salgan del botón */
+        }
+        .btn-regresar:hover {
+            background-color: #0056b3; 
+        }
+        .btn-regresar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+            border-radius: 50%;
+        }
+        .btn-regresar:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .col-md-6 {
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #046bcc;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            position: relative; /* Para permitir la animación */
+            overflow: hidden; /* Ocultar elementos que se salgan del botón */
         }
         .btn:hover {
             background-color: #0056b3;
@@ -132,24 +173,33 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <div class="col-md-6">
-        <form action="../../../admins/desarrollador/autorizaciones/atender_automedicam.php">
-            <input type="submit" value="Regresar" class="btn btn-secondary"/>
+        <form action="historia_clinica.php" method="get">
+        <input type="hidden" name="id_cita" value="<?php echo $_GET['id_cita']; ?>">
+        <input type="hidden" name="documento" value="<?php echo $_GET['documento']; ?>">
+        <input type="hidden" name="docu_medico" value="<?php echo $_GET['docu_medico']; ?>">
+            <button type="submit" class="btn-regresar">Regresar</button>
         </form>
     </div>
     <div class="container">
         <h1>Autorización de Medicamentos</h1>
         <form action="autorizar.php" method="post" onsubmit="return validarCantidad()">
+        <div class="form-group">
+                <input type="hidden" id="id_cita" name="id_cita" class="form-control" value="<?php echo $_GET['id_cita']; ?>">
+        </div>
             <div class="form-group">
                 <label for="fecha">Fecha:</label>
-                <input type="text" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
+                <h4 id="fecha"><?php echo date('Y-m-d'); ?></h4>
+                <input type="hidden" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="documento">Documento del Paciente:</label>
-                <input type="text" id="documento" name="documento" value="<?php echo $documento_paciente; ?>" readonly>
+                <h4 id="fecha"><?php echo $documento_paciente; ?></h4>
+                <input type="hidden" id="documento" name="documento" value="<?php echo $documento_paciente; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="docu_medico">Documento del Médico:</label>
-                <input type="text" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
+                <h4 id="fecha"><?php echo $documento_medico; ?></h4>
+                <input type="hidden" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="cod_autorizacion">Código de la Autorización:</label>
@@ -174,7 +224,8 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="form-group">
                 <label for="fecha_venc">Fecha de Vencimiento:</label>
-                <input type="date" id="fecha_venc" name="fecha_venc" required>
+                <h4 id="fecha_venc"><?php echo date('Y-m-d', strtotime('+20 days')); ?></h4>
+                <input type="hidden" id="fecha_venc" name="fecha_venc" class="form-control" value="<?php echo date('Y-m-d', strtotime('+20 days')); ?>" readonly>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn">Autorizar</button>
@@ -239,6 +290,7 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
             };
             xhr.send('codigo_autorizacion=' + encodeURIComponent(codigo_autorizacion));
         }
+
         function validarCantidad() {
             const cantidad = document.getElementById('cantidad').value;
             const selectMedicamento = document.getElementById('id_medicamento');
@@ -267,6 +319,15 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
                 this.value = '';
             }
         });
+
+        // Calcular y establecer la fecha de vencimiento
+        window.onload = function() {
+            const fechaVencimientoInput = document.getElementById('fecha_venc');
+            const fechaActual = new Date();
+            fechaActual.setDate(fechaActual.getDate() + 19);
+            const fechaVencimiento = fechaActual.toISOString().split('T')[0];
+            fechaVencimientoInput.value = fechaVencimiento;
+        };
     </script>
 </body>
 </html>

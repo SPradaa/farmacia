@@ -25,7 +25,7 @@ $nombre_comple = $nombre . ' ' . $apellido;
 // Verificar si se encontró al usuario
 if (!$fila) {
     echo '<script>alert("Usuario no encontrado.");</script>';
-    echo '<script>window.location.href = "login.php";</script>';
+    echo '<script>window.location.href = "login.html";</script>';
     exit;
 }
 ?>
@@ -95,9 +95,9 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['fecha']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td>
-                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
+                        <td><a href="historia_clinica.php?id_cita=<?php echo $fila['id_cita']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td>
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
                     </tr>
                 <?php 
                     }
@@ -114,14 +114,16 @@ if(isset($_GET['btn_buscar'])) {
                 ?>
 
                     <tr>
+                    
+                        
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['nombre']; ?></td>
                         <td><?php echo $fila['fecha']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
-                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
+                        <td><a href="historia_clinica.php?id_cita=<?php echo $fila['id_cita']; ?>&documento=<?php echo $fila['documento']; ?>&docu_medico=<?php echo $fila['docu_medico']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
 
                 <?php 
                     }

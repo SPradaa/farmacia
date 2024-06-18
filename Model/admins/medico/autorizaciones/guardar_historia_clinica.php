@@ -4,29 +4,31 @@ $conexion = new Database();
 $con = $conexion->conectar();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_cita = $_POST['id_cita'];
     $fecha = $_POST['fecha'];
-    $paciente = $_POST['documento'];
-    $documento = $_POST['docu_medico'];
+    $documento = $_POST['documento'];
+    $docu_medico = $_POST['docu_medico'];
     $descripcion = $_POST['descripcion'];
     $diagnostico = $_POST['diagnostico'];
 
     // Validar datos si es necesario
 
-    $sql = "INSERT INTO histo_clinica (fecha, documento, docu_medico, descripcion, diagnostico) VALUES (:fecha, :documento, :docu_medico, :descripcion, :diagnostico)";
+    $sql = "INSERT INTO histo_clinica (id_cita, fecha, documento, docu_medico, descripcion, diagnostico) VALUES (:id_cita, :fecha, :documento, :docu_medico, :descripcion, :diagnostico)";
     $stmt = $con->prepare($sql);
     
     if ($stmt) {
+        $stmt->bindParam(':id_cita', $id_cita);
         $stmt->bindParam(':fecha', $fecha);
-        $stmt->bindParam(':documento', $paciente);
-        $stmt->bindParam(':docu_medico', $documento);
+        $stmt->bindParam(':documento', $documento);
+        $stmt->bindParam(':docu_medico', $docu_medico);
         $stmt->bindParam(':descripcion', $descripcion);
         $stmt->bindParam(':diagnostico', $diagnostico);
         
         if ($stmt->execute()) {
             // Actualizar el estado de la cita a "Atendido"
-            $sql_update = "UPDATE citas SET id_estado = 11 WHERE documento = :documento";
+            $sql_update = "UPDATE citas SET id_estado = 11 WHERE id_cita = :id_cita";
             $stmt_update = $con->prepare($sql_update);
-            $stmt_update->bindParam(':documento', $paciente);
+            $stmt_update->bindParam(':id_cita', $id_cita);
             $stmt_update->execute();
 
             // Mostrar la alerta después de la redirección
@@ -44,8 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Después de guardar la historia clínica, redirigir a autorizar_medicamentos.php con los parámetros del documento del paciente y del médico
-$documento_paciente = $_POST['documento'];
-$documento_medico = $_POST['docu_medico']; // Obtener el documento del médico
-header("Location: autorizar_medicamentos.php?documento=$documento_paciente&docu_medico=$documento_medico");
+$id_cita = $_POST['id_cita'];
+$documento = $_POST['documento'];
+$docu_medico = $_POST['docu_medico']; // Obtener el documento del médico
+header("Location: autorizar_medicamentos.php?id_cita=$id_cita&documento=$documento&docu_medico=$docu_medico");
 exit();
 ?>

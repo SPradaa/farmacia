@@ -1,41 +1,25 @@
 <?php
-   require_once ("../../../db/connection.php");
-   $db = new Database();
-   $con = $db ->conectar();
-//    session_start();
-?>
+require_once("../../../db/connection.php");
+$db = new Database();
+$con = $db->conectar();
 
-<?php
 require_once("../../../controller/seguridad.php");
 validarSesion();
 
-
-?>
-
-<?php
-$sql = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas WHERE medicos.id_doc = t_documento.id_doc
-AND medicos.id_rol = roles.id_rol AND medicos.id_estado = estados.id_estado AND medicos.id_esp = especializacion.id_esp AND medicos.nit = empresas.nit AND docu_medico = :docu_medico");
-$sql->bindParam(':docu_medico', $_SESSION['docu_medico']);
+$sql = $con->prepare("SELECT * FROM medicos WHERE docu_medico = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
 $sql->execute();
 $fila = $sql->fetch();
-echo "conectado";
 
-$docu_medico = $_SESSION['docu_medico'];
-
-$doc = isset($_SESSION['id_doc']) ? $_SESSION['id_doc'] : '';
-$nombre_comple = isset($_SESSION['nombre_comple']) ? $_SESSION['nombre_comple'] : '';
-$correo = isset($_SESSION['correo']) ? $_SESSION['correo'] : '';
-$telefono = isset($_SESSION['telefono']) ? $_SESSION['telefono'] : '';
-$password = isset($_SESSION['password']) ? $_SESSION['password'] : '';
-$roles = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : '';
-$estado = isset($_SESSION['id_estado']) ? $_SESSION['id_estado'] : '';
-$esp = isset($_SESSION['id_esp']) ? $_SESSION['id_esp'] : '';
-$nit = isset($_SESSION['nit']) ? $_SESSION['nit'] : '';
-
-
+$documento = $_SESSION['docu_medico'] ?? '';
+$nombre = $_SESSION['nombre_comple'] ?? '';
+$correo = $_SESSION['correo'] ?? '';
+$tipo = $_SESSION['id_rol'] ?? '';
+$estado = $_SESSION['id_estado'] ?? '';
+$especializacion = $_SESSION['id_esp'] ?? '';
+$nit = $_SESSION['nit'] ?? '';
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -162,7 +146,7 @@ if(isset($_POST['btncerrar']))
                         <li class="nav-item dropdown u-pro">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="#"
                                 id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
-                                    class="hidden-md-down"><?php echo $nombre_comple ;?> &nbsp;</span> </a>
+                                    class="hidden-md-down"><?php echo $nombre;?> &nbsp;</span> </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
                         </li>
                     </ul>

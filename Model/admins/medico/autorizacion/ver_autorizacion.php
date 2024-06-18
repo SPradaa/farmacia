@@ -4,14 +4,15 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
-$documento = $_GET['documento'];
+$id_cita = $_GET['id_cita'];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial Clínico</title>
+    <title>AUTORIZACION</title>
     <link rel="stylesheet" href="../../css/estilo.css">
     <style>
         body {
@@ -74,26 +75,28 @@ $documento = $_GET['documento'];
     <div class="contenedor">
         <img src="../../../../assets/img/log.farma.png" alt="Logo" class="logo">
         <br><br><br><br><br>
-        <h2>Autorizacion</h2>
+        <h2>AUTORIZACIÓN</h2>
         <?php
-        $consulta = $con->prepare("SELECT histo_clinica.*, 
-                                          usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
-                                          medicos.nombre_comple AS nombre_medico, medicos.telefono AS telefono_medico, medicos.correo AS correo_medico, 
-                                          t_documento.tipo AS tipo_doc,
-                                          especializacion.especializacion,
-                                          autorizaciones.cod_auto, autorizaciones.presentacion, autorizaciones.cantidad, autorizaciones.fecha, autorizaciones.fecha_venc, 
-                                          medicamentos.nombre AS nombre_medicamento
-                                   FROM histo_clinica 
-                                   JOIN usuarios ON histo_clinica.documento = usuarios.documento 
-                                   JOIN medicos ON histo_clinica.docu_medico = medicos.docu_medico
-                                   JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
-                                   JOIN especializacion ON medicos.id_esp = especializacion.id_esp
-                                   JOIN autorizaciones ON histo_clinica.documento = autorizaciones.documento
-                                   JOIN medicamentos ON autorizaciones.id_medicamento = medicamentos.id_medicamento
-                                   WHERE histo_clinica.documento = :documento");
-        $consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
+        $consulta = $con->prepare("SELECT autorizaciones.*, 
+                                    usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
+                                    medicos.nombre_comple AS nombre_medico, medicos.telefono AS telefono_medico, medicos.correo AS correo_medico, 
+                                    t_documento.tipo AS tipo_doc,
+                                    especializacion.especializacion,
+                                    autorizaciones.cod_auto, autorizaciones.id_cita, autorizaciones.presentacion, autorizaciones.cantidad, autorizaciones.fecha, autorizaciones.fecha_venc, 
+                                    medicamentos.nombre AS nombre_medicamento
+                            FROM autorizaciones 
+                            JOIN usuarios ON autorizaciones.documento = usuarios.documento 
+                            JOIN medicos ON autorizaciones.docu_medico = medicos.docu_medico
+                            JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
+                            JOIN especializacion ON medicos.id_esp = especializacion.id_esp
+                            JOIN medicamentos ON autorizaciones.id_medicamento = medicamentos.id_medicamento
+                            WHERE autorizaciones.id_cita = :id_cita");
+                            
+        $consulta->bindParam(':id_cita', $id_cita, PDO::PARAM_STR);
         $consulta->execute();
         if ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+        // Procesar resultados
+
         ?>
 
         <div class="seccion">
