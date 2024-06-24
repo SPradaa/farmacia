@@ -4,33 +4,6 @@
     $con = $conexion->conectar();
     session_start();
 ?>
-<?php
-$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-$sql->bindParam(':documento', $_SESSION['documento']);
-$sql->execute();
-$fila = $sql->fetch();
-echo"conectado";
-
-$documento=$_SESSION['documento'];
-$nombre = $_SESSION['nombre'];
-$apellido = $_SESSION['apellido'];
-$direccion = $_SESSION['direccion'];
-$telefono =$_SESSION['telefono'];
-$correo = $_SESSION['correo'];
-$rol = $_SESSION['tipo'];
-$empresa = $_SESSION[ 'nit'];
-
-$nombre_comple = $nombre .''.$apellido; 
-
-// Verificar si se encontró al usuario
-if (!$fila) {
-    echo '<script>alert("Usuario no encontrado.");</script>';
-    echo '<script>window.location.href = "login.php";</script>';
-    exit;
-
-
-}
-?>
 
 <?php
 
@@ -45,7 +18,6 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     $id_rol= $_POST['id_rol'];
     $id_estado= $_POST['id_estado'];
     $id_esp= $_POST['id_esp'];
-    $nit = $empresa;
 
     $sql= $con -> prepare ("SELECT * FROM medicos WHERE docu_medico='$docu_medico'");
     $sql -> execute();
@@ -65,7 +37,7 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     else
     {
       $pass_cifrado=password_hash($clave,PASSWORD_DEFAULT,array("pass"=>12));
-      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp, nit) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$pass_cifrado', '$id_rol', '$id_estado', '$id_esp', '$nit')");
+      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$pass_cifrado', '$id_rol', '$id_estado', '$id_esp')");
       $insertSQL -> execute();
       echo '<script> alert("REGISTRO EXITOSO");</script>';
       echo '<script>window.location="index_medico.php"</script>';
@@ -80,15 +52,85 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Medico</title>
-    <link rel="stylesheet" href="../../css/usua.css">
+    <link href="../../../../assets/img/log.png" rel="icon">
+    <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="../../desarrollador/css/crear_medico.css">
+    <style>
+        @media (max-width: 768px){
+            .regresar{
+                margin-top: -7px;
+            }
+            input[type="submit"]{
+                margin-top: 15px;
+                margin-bottom: 15px;
+                margin-left: 85px;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+            $("#docu_medico").on("input", function() {
+                validateField(/^\d{8,10}$/, this, "Debe ingresar solo números (8 a 10 dígitos)");
+            });
+
+            $("#nombre_comple").on("input", function() {
+                validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,40}$/, this, "Ingrese un nombre válido (solo letras)");
+            });
+
+            $("#telefono").on("input", function() {
+                validateField(/^\d{10}$/, this, "Debe ingresar solo números (10 dígitos)");
+            });
+
+            $("#correo").on("input", function() {
+                validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, this, "Ingrese un correo válido que lleve '@'");
+            });
+
+            $("#direccion").on("input", function() {
+                validateField(/^([a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]){5,30}$/, this, "Ingrese una dirección válida");
+            });
+
+            $("#password").on("input", function() {
+                validateField(/^[a-zA-Z0-9]{8}$/, this, "Debe ingresar solo números y letras (8 caracteres)");
+            });
+        });
+
+        function validateForm() {
+            const isDocumentoValid = validateField(/^\d{8,10}$/, document.getElementById("documento"), "Debe ingresar solo números (8 a 10 dígitos)");
+            const isNombreValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,40}$/, document.getElementById("nombre"), "Debe ingresar solo letras");const isApellidoValid = validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("apellido"), "Debe ingresar solo letras");
+            const isTelefonoValid = validateField(/^\d{10}$/, document.getElementById("telefono"), "Debe ingresar solo números (10 dígitos)");
+            const isCorreoValid = validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, document.getElementById("correo"), "Debe ser un correo válido que lleve '@'");
+            const isDireccionValid = validateField(/^([a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]){5,30}$/, document.getElementById("direccion"), "Debe ser una dirección válida");
+            const isPasswordValid = validateField(/^[a-zA-Z0-9]{8}$/, document.getElementById("password"), "Debe ingresar solo números y letras (8 caracteres)");
+
+            return isDocumentoValid && isNombreValid && isTelefonoValid && isCorreoValid && isDireccionValid && isPasswordValid;
+        }
+    </script>
 </head>
 <body>
 
-    <div class="login-box">
+<div class="regresar">
+        <div class="col-md-6">
+            <form action="index_medico.php">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        </div>
+        </div>
+        <div class="login-box">
+        <img src="../../../../assets/img/log.farma.png">
         <h1>Crear Medicos</h1>
 
         <form method="post" name="form1" id="form1"  autocomplete="off"> 
 
+        <div class="row">
         <select name="id_doc">
                 <option value ="">Seleccione el Tipo de Documento</option>
                 
@@ -103,18 +145,20 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
                 ?>
             </select>
         
-            <input type="text" name="docu_medico" id="docu_medico" pattern="[0-9]{8,11}" placeholder="Digite su Documento" title="El documento debe tener solo números de 8 a 10 dígitos">
+            <input type="text" name="docu_medico" id="docu_medico" placeholder="Digite su Documento" required>
+            </div>
+            <div class="row">
+            <input type="text" name="nombre_comple" id="nombre_comple" placeholder="Ingrese su Nombre Completo" required>
 
-            <input type="text" name="nombre_comple" id="nombre_comple" pattern="[a-zA-ZÑñ ]{8,50}" placeholder="Ingrese su Nombre Completo" title="El nombre completo debe tener solo letras">
+            <input type="text" name="telefono" id="telefono" placeholder="Ingrese su Telefono" required>
+            </div>
+            <div class="row">
+            <input type="text" name="correo" id="correo" placeholder="Ingrese su Correo">
 
-            <input type="text" name="telefono" id="telefono" pattern="[0-9]{10}" placeholder="Ingrese su Telefono" title="El telefono debe tener solo numeros (10 digitos)">
-
-            <input type="text" name="correo" id="correo" pattern="[0-9a-zA-Z.@]{7,30}" placeholder="Ingrese su Correo" title="El correo debe tener minimo 10 letras y numeros">
-
-            <input type="text" name="direccion" id="direccion" pattern="[a-zA-Z0-9#.-]{5,30}" placeholder="Ingrese la dirección">
-            
-             <input type="password" name="password" id="password" pattern="[0-9A-Za-z]{8}" placeholder="Ingrese la Contraseña" title="La contraseña debe tener numeros y letras (8)">
-             <br><br>
+            <input type="text" name="direccion" id="direccion" placeholder="Ingrese la dirección">
+            </div>
+            <div class="row">
+             <input type="password" name="password" id="password" placeholder="Ingrese la Contraseña">
 
              <select name="id_rol">
                 <option value ="">Seleccione el tipo de Usuario</option>
@@ -129,7 +173,8 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
                 } 
                 ?>
             </select>
-
+            </div>
+            <div class="row">
             <select name="id_estado">
                 <option value ="">Seleccione el Estado del Medico</option>
                 
@@ -157,11 +202,30 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
                 } 
                 ?>
             </select>
+            </div>
 
              <input type="submit" name="inicio" value="Crear Medico">
             <input type="hidden" name="MM_insert" value="formreg">
             </form>
     </div>
+    <script>
+    // Guardar los valores de los campos en el Local Storage antes de redirigir
+    $(document).on('submit', '#form1', function(){
+        var formValues = $(this).serializeArray();
+        localStorage.setItem('formValues', JSON.stringify(formValues));
+    });
+
+    // Cargar los valores guardados del Local Storage cuando la página se carga
+    $(document).ready(function(){
+        var formValues = JSON.parse(localStorage.getItem('formValues'));
+        if(formValues){
+            $.each(formValues, function(index, element){
+                $('[name="'+element.name+'"]').val(element.value);
+            });
+            localStorage.removeItem('formValues');
+        }
+    });
+    </script>
               
 </body>
 </html>

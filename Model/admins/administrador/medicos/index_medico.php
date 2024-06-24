@@ -6,33 +6,6 @@ session_start();
     
 ?>
 
-<?php
-$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
-$sql->bindParam(':documento', $_SESSION['documento']);
-$sql->execute();
-$fila = $sql->fetch();
-echo"conectado";
-
-$documento=$_SESSION['documento'];
-$nombre = $_SESSION['nombre'];
-$apellido = $_SESSION['apellido'];
-$direccion = $_SESSION['direccion'];
-$telefono =$_SESSION['telefono'];
-$correo= $_SESSION['correo'];
-$rol = $_SESSION['tipo'];
-$nit = $_SESSION[ 'nit'];
-
-$nombre_comple = $nombre .''.$apellido; 
-
-// Verificar si se encontró al usuario
-if (!$fila) {
-    echo '<script>alert("Usuario no encontrado.");</script>';
-    echo '<script>window.location.href = "login.php";</script>';
-    exit;
-
-
-}
-?>
 <?php 
     
     $sentencia_select=$con->prepare("SELECT * FROM medicos ORDER BY nombre_comple ASC");
@@ -68,7 +41,9 @@ if (!$fila) {
     <head>
         <meta charset="UTF-8">
         <title>Medicos</title>
-        <link rel="stylesheet" href="../../css/estilos.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
+        <link rel="stylesheet" href="../../desarrollador/css/medicos.css">
     </head>
     <body>
         <div class="contenedor">
@@ -92,25 +67,25 @@ if (!$fila) {
                     <a href="create_medico.php" class="btn btn_nuevo">Crear Medico</a>
                 </form>
             </div>
+            <div class="table-container">
             <table>
                 <tr class="head">
                     <td>Tipo de Documento</td>
                     <td>Documento</td>
                     <td>Nombre Completo</td>
                     <td>Correo</td>
-                    <td>empresa</td>
+                    <td>Telefono</td>
                     <td>Tipo de Usuario</td>
                     <td>Estado</td>
                     <td>Especialización</td>
-                    
                     <td colspan="2">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
                     $buscar = $_GET['buscar'];
-                    $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas
+                    $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion
                     WHERE medicos.id_doc = t_documento.id_doc AND medicos.id_estado = estados.id_estado AND
-                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp and empresas.nit = empresas.nit AND medico.nit = `$nit` AND nombre_comple LIKE ? where  ORDER BY nombre_comple ASC");
+                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp AND nombre_comple LIKE ? ORDER BY nombre_comple ASC");
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -119,13 +94,10 @@ if (!$fila) {
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['nombre_comple']; ?></td>
                         <td><?php echo $fila['correo']; ?></td>
-                        <td><?php echo $fila['empresa']; ?></td>
+                        <td><?php echo $fila['telefono']; ?></td>
                         <td><?php echo $fila['rol']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>
-                        <td><?php echo $fila['empresa']; ?></td>
-                        
-
                         <td><a href="update_medico.php?docu_medico=<?php echo $fila['docu_medico']; ?>" class="btn__update">Editar</a></td>
                         <td><a href="delete_medico.php?docu_medico=<?php echo $fila['docu_medico']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
@@ -133,9 +105,9 @@ if (!$fila) {
                     }
                 } else {
                     // Mostrar todos los registros si no se ha realizado una búsqueda
-                    $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion, empresas
+                    $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion
                     WHERE medicos.id_doc = t_documento.id_doc AND medicos.id_estado = estados.id_estado AND
-                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp and empresas.nit = empresas.nit ORDER BY nombre_comple ASC");
+                    medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp ORDER BY nombre_comple ASC");
                     $consulta->execute();
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -144,7 +116,7 @@ if (!$fila) {
                         <td><?php echo $fila['docu_medico']; ?></td>
                         <td><?php echo $fila['nombre_comple']; ?></td>
                         <td><?php echo $fila['correo']; ?></td>
-                        <td><?php echo $fila['empresa']; ?></td>
+                        <td><?php echo $fila['telefono']; ?></td>
                         <td><?php echo $fila['rol']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><?php echo $fila['especializacion']; ?></td>

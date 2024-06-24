@@ -58,10 +58,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro usuario</title>
-    <link href="assets/img/logof.png" rel="icon">
-  <link href="assets/img/logof.png" rel="apple-touch-icon">
+    <link href="assets/img/log.png" rel="icon">
+  <link href="assets/img/log.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="assets/css/registroo.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+            $("#documento").on("input", function() {
+                validateField(/^\d{8,10}$/, this, "Debe ingresar solo números (8 a 10 dígitos)");
+            });
+
+            $("#nombre").on("input", function() {
+                validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, this, "Ingrese un nombre válido (solo letras)");
+            });
+
+            $("#apellido").on("input", function() {
+                validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, this, "Ingrese un apellido válido (solo letras)");
+            });
+
+            $("#telefono").on("input", function() {
+                validateField(/^\d{10}$/, this, "Debe ingresar solo números (10 dígitos)");
+            });
+
+            $("#correo").on("input", function() {
+                validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, this, "Ingrese un correo válido que lleve '@'");
+            });
+
+            $("#direccion").on("input", function() {
+                validateField(/^[a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]*$/, this, "Ingrese una dirección válida");
+            });
+
+            $("#password").on("input", function() {
+                validateField(/^[a-zA-Z0-9]{8}$/, this, "Debe ingresar solo números y letras (8 caracteres)");
+            });
+        });
+
+        function validateForm() {
+            const isDocumentoValid = validateField(/^\d{8,10}$/, document.getElementById("documento"), "Debe ingresar solo números (8 a 10 dígitos)");
+            const isNombreValid = validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("nombre"), "Debe ingresar solo letras");
+            const isApellidoValid = validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("apellido"), "Debe ingresar solo letras");
+            const isTelefonoValid = validateField(/^\d{10}$/, document.getElementById("telefono"), "Debe ingresar solo números (10 dígitos)");
+            const isCorreoValid = validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, document.getElementById("correo"), "Debe ser un correo válido que lleve '@'");
+            const isDireccionValid = validateField(/^[a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("direccion"), "Debe ser una dirección válida");
+            const isPasswordValid = validateField(/^[a-zA-Z0-9]{8}$/, document.getElementById("password"), "Debe ingresar solo números y letras (8 caracteres)");
+
+            return isDocumentoValid && isNombreValid && isApellidoValid && isTelefonoValid && isCorreoValid && isDireccionValid && isPasswordValid;
+        }
+    </script>
 </head>
 </head>
 <body>
@@ -77,7 +129,7 @@
         <img src="assets/img/log.farma.png">
         <h1>REGISTRO USUARIO</h1>
 
-        <form method="post" name="form1" id="form1"  autocomplete="off"> 
+        <form method="post" name="form1" id="form1"  autocomplete="off" onsubmit="return validateForm()"> 
 
         <div class="row">
         <select name="id_doc">
@@ -94,13 +146,12 @@
                 ?>
             </select>
         
-            <input type="number" name="documento" id="documento" min="8" max="10" pattern="[0-9]{8,11}" placeholder="Digite su Documento" title="El documento debe tener solo números de 8 a 10 dígitos" required>
+            <input type="text" name="documento" id="documento" placeholder="Digite su Documento" required>
             </div>
 
             <div class="row">
-            <input type="text" name="nombre" id="nombre" pattern="[a-zA-ZÑ-ñ´ ]{3,30}" placeholder="Ingrese su Nombre" title="El nombre debe tener solo letras" required>
-
-            <input type="text" name="apellido" id="apellido" pattern="[a-zA-ZÑ-ñ´ ]{4,30}" placeholder="Ingrese su Apellido" title="El apellido debe tener solo letras">
+            <input type="text" name="nombre" id="nombre" placeholder="Ingrese su Nombre" required>
+            <input type="text" name="apellido" id="apellido" placeholder="Ingrese su Apellido">
             </div>
 
             <div class="row">
@@ -133,8 +184,8 @@
             </select></div>
 
             <div class="row">
-            <input type="text" name="telefono" id="telefono" pattern="[0-9]{10}" placeholder="Ingrese su Telefono" title="El telefono debe tener solo numeros (10 digitos)">
-            <input type="text" name="correo" id="correo" pattern="[0-9a-zA-Z.@_ ]{7,60}" placeholder="Ingrese su Correo" title="El correo debe ser alfanúmerico y tener caracteres especiales incluyendo el @">
+            <input type="text" name="telefono" id="telefono" placeholder="Ingrese su Telefono">
+            <input type="text" name="correo" id="correo" placeholder="Ingrese su Correo">
             </div>
 
             <div class="row">
@@ -154,14 +205,15 @@
         </div>
 
             <div class="row">
-            <input type="text" name="direccion" id="direccion" pattern="[a-zA-Z0-9#.-_´ ]{5,40}" placeholder="Ingrese la dirección" title="La dirección debe tener minimo 7 caracteres">
+            <input type="text" name="direccion" id="direccion" placeholder="Ingrese la dirección">   
             
-             <input type="password" name="password" id="password" pattern="[0-9A-Za-zÑ-ñ]{4,15}" placeholder="Ingrese la Contraseña" title="La contraseña puede tener numeros o letras minimo 4 caracteres">
+             <input type="password" name="password" id="password" placeholder="Ingrese la Contraseña">
+
             </div>
              <br><br>
 
             
-             <input type="submit" name="validar" value="Registrarme">
+             <input type="submit" name="validar"  value="Registrarme">
             <input type="hidden" name="MM_insert" value="formreg">
             </form>
     </div>
@@ -201,46 +253,6 @@
             localStorage.removeItem('formValues');
         }
     });
-</script>
-
-<script>
-    // Función de validación de correo electrónico
-    function validarCorreo() {
-        var correo = document.getElementById("correo").value;
-        if (correo.indexOf("@") == -1) {
-            alert("El correo electrónico debe contener '@'");
-            return false; // Detener el envío del formulario
-        }
-        return true; // Permitir el envío del formulario
-    }
-
-    // Asigna la función de validación al evento 'submit' del formulario
-    document.getElementById("form1").onsubmit = validarCorreo;
-
-    // var documento = document.getElementById('documento')
-    // var nombre = document.getElementById('nombre')
-    // var apellido = document.getElementById('apellido')
-    // var telefono = document.getElementById('telefono')
-    // var correo = document.getElementById('correo')
-    // var direccion = document.getElementById('direccion')
-    // var password = document.getElementById('password')
-
-    const formulario =  document.getElementById('form1')
-    const inputs = document.querySelectorAll('#form1 input')
-    const expresiones = {
-    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-	password: /^.{4,12}$/, // 4 a 12 digitos.
-	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-	telefono: /^\d{7,14}$/ // 7 a 14 numeros.
-    }
-
-    formulario.addEventListener('submit',  (e) =>{
-        e.preventDefault();
-    } ) 
-
-
-
 </script>
               
 </body>

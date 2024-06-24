@@ -8,25 +8,33 @@
 require_once("../../../controller/seguridad.php");
 validarSesion();
 ?>
-
 <?php
 $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $sql->bindParam(':documento', $_SESSION['documento']);
 $sql->execute();
 $fila = $sql->fetch();
-echo"conectado";
 
 $documento=$_SESSION['documento'];
 $nombre = $_SESSION['nombre'];
 $apellido = $_SESSION['apellido'];
 $direccion = $_SESSION['direccion'];
 $telefono =$_SESSION['telefono'];
-$correo= $_SESSION['correo'];
+$correo = $_SESSION['correo'];
 $rol = $_SESSION['tipo'];
 $empresa = $_SESSION[ 'nit'];
 
 $nombre_comple = $nombre .''.$apellido; 
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+
+
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,14 +50,19 @@ $nombre_comple = $nombre .''.$apellido;
     <meta name="robots" content="noindex,nofollow">
     <title>Usuarios</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+     <!-- Favicon icon -->
+     <link href="../../../assets/img/log.png" rel="icon">
+    <link href="../../../assets/img/log.png" rel="apple-touch-icon">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../desarrollador/css/usuarioos.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -72,84 +85,73 @@ $nombre_comple = $nombre .''.$apellido;
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
+    <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
                 <!-- Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        
-                        <!-- Logo icon -->     <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
-              
-                    </a>
+                <div class="logg">
+                            <img src="../../../assets/img/logo.png">
+                            </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse">
-                    <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                     <h1 class="rol">Administrador</h1>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
+                    <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                            <h3 class="titulo">Bienvenido/a Administrador <?php echo $nombre;?></h3>
+                        </div>
+                    </div>
                         <!-- ============================================================== -->
-                        <!-- Profile -->
+                        <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                                    class="hidden-md-down"><?php echo $nombre_comple ; ?> &nbsp;</span> </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
+                        <li class="nav-item hidden-xs-down search-box"> 
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a
+                                    class="srh-btn"></a> </form>
                         </li>
                     </ul>
+                    
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Usuarios </span></a>
+                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Usuarios</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">modulo medico</span></a>
+                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false">
+                        <i class="fas fa-briefcase-medical"></i><span class="hide-menu">Módulo Médico</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Citas</span></a>
+                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false">
+                        <i class="fas fa-map-marked-alt"></i><span class="hide-menu">Datos generales</span></a>
                         </li>
-                   
-
+                        
                     </ul>
-                    
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
+                    </ul>
+                  
+                  </nav>
+                  <div class="boton">
+                  <form method="POST" action="../../../index.html">
+                      <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                  </form>
+                </div>
+                  <!-- End Sidebar navigation -->
+                </div>
+              <!-- End Sidebar scroll-->
+            </aside>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -165,10 +167,10 @@ $nombre_comple = $nombre .''.$apellido;
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
+                    <div class="conte">
                         <h3 class="text-themecolor">usuarios</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
                             <li class="breadcrumb-item active">Usuarios</li>
                         </ol>
                     </div>
@@ -182,15 +184,7 @@ $nombre_comple = $nombre .''.$apellido;
                 <!-- ============================================================== -->
                 <div class="row">
                     <!-- column -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Modulo de Usuarios</h4>
-                                <h6 class="card-subtitle">Administra los usuarios y reasigna Roles</h6>
-
-                                
-                                <!-- modulo de usuarios -->
-                        <!-- Módulo de Usuarios y Especialización -->
+                    
 <div class="space">
     <div class="card-container">
         <!-- Carta para Usuarios -->
@@ -209,7 +203,39 @@ $nombre_comple = $nombre .''.$apellido;
             </a>
         </div>
         <!-- modulo tipos de usuario (roles) -->
-      
+        <div class="card">
+    <a href="tipo_usuario/index_tip_usu.php">
+        <div class="card_box">
+            <h3 class="car_box__title">Tipos de Usuario</h3>
+            <p class="card_box__content">Administra los diferentes roles y permisos de usuarios en este módulo.</p>
+            <div class="card__date">Haz clic para acceder y definir los diferentes tipos de usuarios</div>
+            <div class="card_box__arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+                    <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+                </svg>
+            </div>
+        </div>
+    </a>
+</div>
+
+<!-- fin modulo de tipos de usuarios  -->
+
+<!-- inicio del modulo de tipos de identifiacion -->
+<div class="card">
+    <a href="tipo_documento/index_docu.php">
+        <div class="card_box">
+            <h3 class="car_box__title">Tipos de identificación</h3>
+            <p class="card_box__content">Administra los diferentes tipos de documentos de identificación en este módulo.</p>
+            <div class="card__date">Haz clic para acceder y definir los diferentes tipos de documentos de identificación admitidos en el sistema.</div>
+            <div class="card_box__arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+                    <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+
+                </svg>
+            </div>
+        </div>
+    </a>
+</div>
 <!-- fin del modulo de tipos de identificacion -->
 
                         </div>
@@ -225,8 +251,7 @@ $nombre_comple = $nombre .''.$apellido;
                                
                         <!-- footer -->
                         <!-- ============================================================== -->
-                        <footer class="footer"> © 2021 Adminwrap by <a
-                                href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+                        <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados.</footer>
                         <!-- ============================================================== -->
                         <!-- End footer -->
                         <!-- ============================================================== -->

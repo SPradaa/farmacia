@@ -68,11 +68,11 @@ if (!$fila) {
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/images/log.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/medicamentos.css" rel="stylesheet">
+    <link href="css/medicamento.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/icon-page.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->

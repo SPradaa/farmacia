@@ -4,7 +4,7 @@
     $conexion = new Database();
     $con = $conexion->conectar();
 
-    $insertSQL = $con -> prepare("DELETE FROM usuarios WHERE documento = '".$_GET['id']."'");      
+    $insertSQL = $con -> prepare("DELETE FROM usuarios WHERE documento = '".$_GET['documento']."'");      
     $insertSQL->execute();
     echo '<script>alert ("Registro eliminado exitosamente.");</script>';
     echo '<script>window.location="index_usu.php"</script>';

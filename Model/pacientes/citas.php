@@ -30,7 +30,7 @@ validarSesion();
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/log.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -48,13 +48,11 @@ validarSesion();
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
+    
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Admin Wrap</p>
+            <p class="loader__label"></p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -155,10 +153,13 @@ validarSesion();
                 
                 </nav>
                 <div class="boton">
-                <form method="POST">
-        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
-    </form>
-    </div>
+                <form method="POST" action="../../login.html">
+                    <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                </form>
+                
+                </div>
+                
+                </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->

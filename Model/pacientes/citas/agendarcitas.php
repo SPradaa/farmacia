@@ -58,7 +58,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg"))
                 ':hora' => $hora,
                 ':id_esp' => $id_esp,
                 ':docu_medico' => $docu_medico
-]);
+            ]);
 
             echo '<script>alert("REGISTRO EXITOSO");</script>';
             echo '<script>window.location="agendarcitas.php"</script>';
@@ -73,7 +73,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg"))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Cita</title>
-    <link rel="stylesheet" href="../css/agendarcita.css">
+    <link rel="stylesheet" href="../css/agencitas.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -99,16 +99,21 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg"))
                     }
                 });
             });
+
+            // Establecer la fecha mínima en el campo de fecha
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').setAttribute('min', today);
         });
     </script>
 </head>
 <body>
 
-    <div class="regresar">
-        <button onclick="goBack()" class="return">
-            <span class="btxt">Regresar</span><i class="animate"></i>
-        </button>
-    </div>
+ <div class="regresar">
+    <button onclick="goBack()" class="return">
+        <span class="btxt">Regresar</span><i class="animate"></i>
+    </button>
+        
+</div>
 
     <div class="login-box">
         <img src="../../../assets/img/log.farma.png">

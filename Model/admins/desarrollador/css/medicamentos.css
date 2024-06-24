@@ -1,0 +1,266 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    background: #fdfdfd;
+}
+
+a{
+    text-decoration: none;
+}
+
+.contenedor{
+    width: 93%;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+h2{
+    display: block;
+    margin-top: 1px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #555;
+}
+
+.barra__bucador{
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+
+.formulario{
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+form .input_text{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: medium none;
+}   
+
+select{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: medium none;
+
+}
+
+
+form .input_text:focus{
+    border: 1px solid #1b743c;
+}
+form .form-group{
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+form .form-group .input_text{
+    max-width: 45% !important;
+}
+
+
+form .btn{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #046bcc;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: medium none;
+    cursor: pointer;
+}
+form .btn:hover{
+    background-color: #1a84e7;
+    color: white;
+}
+.btn__nuevo{
+    background: #1b743c !important;
+}
+
+.btn__group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn__primary {
+    background: #046bcc;
+}
+
+.btn__danger {
+    background: #8a0505 !important;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table .head {
+    background: #05a0b8;
+}
+
+table .head td {
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+
+table tr td {
+    border: 1px solid #ccc;
+    padding: 7px;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+}
+
+.btn__update {
+    display: inline-block;
+    font-size: 14px;
+    background: #046bcc;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn__update:hover {
+    background-color: #1788f3;
+}
+
+.btn__delete {
+    display: inline-block;
+    font-size: 14px;
+    background: #f00f0f;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn__delete:hover {
+    background-color: #f32f2f;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .contenedor {
+        width: 98%;
+    }
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        flex-direction: column;
+    }
+    form .input_text, select, form .btn {
+        max-width: 100%;
+        margin-right: 0;
+    }
+    form .form-group {
+        flex-direction: column;
+    }
+    form .form-group .input_text {
+        max-width: 100% !important;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .barra__bucador {
+        margin-top: 30px;
+        margin-bottom: 5px;
+    }
+    h2 {
+        font-size: 18px;
+    }
+    .btn__group {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    h2 {
+        font-size: 16px;
+    }
+    table .head td, table tr td {
+        font-size: 12px;
+    }
+    .contenedor {
+        width: 100%;
+        padding: 10px;
+    }
+    .btn__nuevo {
+        float: none;
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+    }
+    .btn__group {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn__group .btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .formulario {
+        align-items: center;
+    }
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Ensure horizontal scrolling */
+    }
+    table {
+        width: 100%; /* Ensure table takes full width */
+    }
+}

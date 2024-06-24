@@ -63,7 +63,7 @@ if (!$fila) {
     <head>
         <meta charset="UTF-8">
         <title>Usuarios</title>
-        <link rel="stylesheet" href="../../css/usuarios.css">
+        <link rel="stylesheet" href="../css/usuarios.css">
     </head>
     <body>
         <div class="contenedor">
@@ -87,8 +87,9 @@ if (!$fila) {
                     
                 </form>
             </div>
-            <table>
-                <tr class="head">
+            <div class="table-responsive">
+                <table>
+                    <tr class="head">
                     <td>Tipo de Documento</td>
                     <td>Documento</td>
                     <td>Nombre</td>
@@ -154,6 +155,7 @@ if (!$fila) {
                 ?>
             </table>
         </div>
+            </div>
     </body>
     </html>
 

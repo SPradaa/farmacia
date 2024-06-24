@@ -41,7 +41,9 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Tipos de Medicamentos</title>
-        <link rel="stylesheet" href="../../css/estilos.css">
+        <link rel="stylesheet" href="../../desarrollador/css/tip_usu.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     </head>
     <body>
         <div class="contenedor">
@@ -80,7 +82,6 @@ session_start();
                     <tr>
                         <td><?php echo $fila['clasificacion']; ?></td>
                         <td><a href="update_tip_medicam.php?id_cla=<?php echo $fila['id_cla']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_tip_medicam.php?id_cla=<?php echo $fila['id_cla']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php 
                     }

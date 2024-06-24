@@ -8,7 +8,7 @@ session_start();
 
 <?php 
     
-    $sentencia_select=$con->prepare("SELECT * FROM estados ORDER BY id_estado ASC");
+    $sentencia_select=$con->prepare("SELECT * FROM estados ORDER BY estado ASC");
     
     $sentencia_select->execute();
     $resultado=$sentencia_select->fetchAll();
@@ -18,7 +18,7 @@ session_start();
         $buscar = $_GET['buscar'];
     
         // Preparar la consulta SQL
-        $consulta = $con->prepare("SELECT * FROM estados WHERE id_estado LIKE :buscar");
+        $consulta = $con->prepare("SELECT * FROM estados WHERE estado LIKE :buscar ORDER BY estado ASC");
     
         // Asignar valor al parámetro
         $buscar = "%$buscar%";
@@ -41,56 +41,57 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Estados</title>
-        <link rel="stylesheet" href="../../css/estilos.css">
+        <link rel="stylesheet" href="../../desarrollador/css/tip_usu.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     </head>
     <body>
         <div class="contenedor">
             <h2>TIPOS DE ESTADOS</h2>
             <div class="row mt-3">
         <div class="col-md-6">
-            <form action="../index.php">
+        <?php if(isset($_GET['btn_buscar'])): ?>
+            <form action="index_est.php" method="get">
                 <input type="submit" value="Regresar" class="btn btn-secondary"/>
             </form>
+        <?php else: ?>
+            <form action="../datosgenerales.php">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        <?php endif; ?>
         </div>
             <div class="barra_buscador">
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Estado" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="insert_est.php" class="btn btn_nuevo">Crear Estado</a>
                 </form>
             </div>
             <table>
                 <tr class="head">
-                    <td>Id_estado</td>
                     <td>Estado</td>
-                    <td colspan="2">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
                     $buscar = $_GET['buscar'];
-                    $consulta = $con->prepare("SELECT * FROM estados WHERE id_estado LIKE ?");
+                    $consulta = $con->prepare("SELECT * FROM estados WHERE estado LIKE ? ORDER BY estado ASC");
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                     <tr>
-                        <td><?php echo $fila['id_estado']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="update_est.php?id_estado=<?php echo $fila['id_estado']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_est.php?id_estado=<?php echo $fila['id_estado']; ?>" class="btn__delete">Eliminar</a></td>
+                       
                     </tr>
                 <?php 
                     }
                 } else {
                     // Mostrar todos los registros si no se ha realizado una búsqueda
-                    $consulta = $con->prepare("SELECT * FROM estados");
+                    $consulta = $con->prepare("SELECT * FROM estados ORDER BY estado ASC");
                     $consulta->execute();
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                     <tr>
-                        <td><?php echo $fila['id_estado']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="update_est.php?id_estado=<?php echo $fila['id_estado']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_est.php?id_estado=<?php echo $fila['id_estado']; ?>" class="btn__delete">Eliminar</a></td>
+                        
                     </tr>
                 <?php 
                     }

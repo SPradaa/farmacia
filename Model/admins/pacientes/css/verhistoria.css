@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 100px;
+    margin-left: 8%;
+    margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
+    margin-bottom: 60px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 60px;
+    color: #333;
+    margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
+}
+
+.seccion {
+    margin-bottom: 20px;
+}
+
+.seccion h3 {
+    background-color: #2dcac1;
+    color: #fff;
+    padding: 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.datos {
+    border-collapse: collapse;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.datos th, .datos td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.datos th {
+    background-color: #f2f2f2;
+}
+
+.boton-descargar {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #a20000;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px; /* Ajusta este valor para subir o bajar el botón */
+}
+
+@media (max-width: 800px) {
+    .contenedor {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .logo {
+        width: 90px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
+    }
+
+    .seccion h3 {
+        padding: 8px;
+    }
+
+    .boton-descargar {
+        width: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .logo {
+        width: 80px;
+        margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
+    }
+
+    .seccion h3 {
+        font-size: 1.1em;
+        padding: 6px;
+    }
+
+    .boton-descargar {
+        width: 160px;
+    }
+}
+
+@media (max-width: 400px) {
+    .contenedor {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .logo {
+        width: 70px;
+        margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
+    }
+
+    h2 {
+        font-size: 1.2em;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
+    }
+
+    .seccion h3 {
+        font-size: 1em;
+        padding: 4px;
+    }
+
+    .datos th, .datos td {
+        padding: 5px;
+    }
+
+    .boton-descargar {
+        width: 140px;
+        padding: 8px;
+    }
+}

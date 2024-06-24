@@ -3,47 +3,42 @@ session_start();
 require_once("../../../../db/connection.php"); 
 $conexion = new Database();
 $con = $conexion->conectar();
-?>
 
-<?php
-$sql = $con->prepare("SELECT * FROM medicos WHERE docu_medico = :documento");
-$sql->bindParam(':documento', $_SESSION['documento']);
-$sql->execute();
-$fila = $sql->fetch();
+// Configurar la zona horaria a Colombia
+date_default_timezone_set('America/Bogota');
 
-$documento=$_SESSION['documento'];
-$nombre = $_SESSION['nombre'];
-$apellido = $_SESSION['apellido'];
-$direccion = $_SESSION['direccion'];
-$telefono =$_SESSION['telefono'];
-$correo= $_SESSION['correo'];
-$rol = $_SESSION['tipo'];
-$empresa = $_SESSION[ 'nit'];
+// Obtener la hora actual
+$hora_actual = date('H:i:s');
 
-$nombre_comple = $nombre . ' ' . $apellido; 
+// Obtener el documento del médico logueado
+$docu_medico = $_SESSION['documento'];
 
-// Verificar si se encontró al usuario
-if (!$fila) {
-    echo '<script>alert("Usuario no encontrado.");</script>';
-    echo '<script>window.location.href = "login.php";</script>';
-    exit;
-}
-?>
-
-<?php 
-$sentencia_select = $con->prepare("SELECT * FROM citas WHERE DATE(fecha) = CURDATE() ORDER BY hora ASC");
+// Consulta para obtener las citas del día actual con id_estado = 1 y docu_medico del médico logueado
+$sentencia_select = $con->prepare("SELECT * FROM citas WHERE DATE(fecha) = CURDATE() AND id_estado = 1 AND docu_medico = :docu_medico ORDER BY hora ASC");
+$sentencia_select->bindParam(':docu_medico', $docu_medico);
 $sentencia_select->execute();
 $resultado = $sentencia_select->fetchAll();
 
-if(isset($_GET['btn_buscar'])) {
-    $buscar = $_GET['buscar'];
-    $consulta = $con->prepare("SELECT * FROM citas WHERE documento LIKE :buscar AND DATE(fecha) = CURDATE() ORDER BY hora ASC");
-    $buscar = "%$buscar%";
-    $consulta->bindParam(':buscar', $buscar, PDO::PARAM_STR);
-    $consulta->execute();
-    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+foreach ($resultado as $fila) {
+    $hora = $fila['hora'];
+    $id_cita = $fila['id_cita'];
+    $id_estado = $fila['id_estado'];
+    
+    // Sumar 5 minutos a la hora de la cita
+    $hora_dt = new DateTime($hora);
+    $hora_dt->add(new DateInterval('PT5M')); // Suma 5 minutos
+    $hora_mas_5min = $hora_dt->format('H:i:s');
+    
+    // Comparar si la cita está dentro del rango de 5 minutos y está pendiente
+    $hora_actual = date('H:i:s');
+    if ($hora_actual >= $hora_mas_5min && $id_estado == 1) {
+        // Actualizar el estado de la cita a Cancelada (id_estado = 6)
+        $actualizar_estado = $con->prepare("UPDATE citas SET id_estado = 6 WHERE id_cita = :id_cita");
+        $actualizar_estado->bindParam(':id_cita', $id_cita);
+        $actualizar_estado->execute();
+    }
 }
-?>
+?>    
 
 <!DOCTYPE html>
 <html lang="es">
@@ -54,7 +49,7 @@ if(isset($_GET['btn_buscar'])) {
 </head>
 <body>
     <div class="contenedor">
-        <h2>CITAS AGENDADAS MEDICO <?php echo $nombre; ?></h2>
+        <h2>CITAS AGENDADAS MEDICO <?php echo $_SESSION['nombre']; ?></h2>
         <div class="row mt-3">
             <div class="col-md-6">
                 <form action="../modulomedico.php">
@@ -84,8 +79,9 @@ if(isset($_GET['btn_buscar'])) {
                            JOIN especializacion e ON c.id_esp = e.id_esp
                            JOIN estados es ON c.id_estado = es.id_estado
                            JOIN usuarios us ON c.documento = us.documento
-                           WHERE c.documento LIKE ? AND DATE(c.fecha) = CURDATE()
+                           WHERE c.documento LIKE ? AND DATE(c.fecha) = CURDATE() AND c.id_estado = 1 AND c.docu_medico = :docu_medico
                            ORDER BY c.hora ASC");
+                    $consulta->bindParam(':docu_medico', $docu_medico);
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -95,9 +91,9 @@ if(isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['fecha']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td>
-                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
+                        <td><a href="historia_clinica.php?id_cita=<?php echo $fila['id_cita']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td>
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
                     </tr>
                 <?php 
                     }
@@ -107,22 +103,22 @@ if(isset($_GET['btn_buscar'])) {
                            JOIN especializacion e ON c.id_esp = e.id_esp
                            JOIN estados es ON c.id_estado = es.id_estado
                            JOIN usuarios us ON c.documento = us.documento
-                           WHERE DATE(c.fecha) = CURDATE()
+                           WHERE DATE(c.fecha) = CURDATE() AND c.id_estado = 1 AND c.docu_medico = :docu_medico
                            ORDER BY c.hora ASC");
+                    $consulta->bindParam(':docu_medico', $docu_medico);
                     $consulta->execute();
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
-
                     <tr>
                         <td><?php echo $fila['documento']; ?></td>
                         <td><?php echo $fila['nombre']; ?></td>
                         <td><?php echo $fila['fecha']; ?></td>
                         <td><?php echo $fila['hora']; ?></td>
                         <td><?php echo $fila['estado']; ?></td>
-                        <td><a href="atender_automedicam.php?documento=<?php echo $fila['documento']; ?>" class="btn__atender">Atender</a></td>
-                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
-                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?documento=<?php echo $fila['documento'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
-
+                        <td><a href="historia_clinica.php?id_cita=<?php echo $fila['id_cita']; ?>&documento=<?php echo $fila['documento']; ?>&docu_medico=<?php echo $fila['docu_medico']; ?>" class="btn__atender">Atender</a></td>
+                        <td><a href="" class="btn__autorizar" onclick="window.open('../histo_clinica/verhisto_clinica.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver His.Clinica</a></td> 
+                        <td><a href="" class="btn__auto" onclick="window.open('../autorizacion/ver_autorizacion.php?id_cita=<?php echo $fila['id_cita'] ?>','','width=1000,height=700,toolbar=NO');void(null);">Ver Autorizacion</a></td>
+                    </tr>
                 <?php 
                     }
                 }
@@ -130,5 +126,17 @@ if(isset($_GET['btn_buscar'])) {
             </table>
         </div>
     </div>
+    <script>
+    // Función para recargar la página cada 5 segundos
+    function recargarPagina() {
+        setTimeout(function() {
+            location.reload();
+        }, 5000);
+    }
+
+    // Llamar a la función para iniciar la recarga automática
+    recargarPagina();
+</script>
+
 </body>
 </html>

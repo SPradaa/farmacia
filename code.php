@@ -30,9 +30,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verificación de código</title>
-<link href="assets/img/logof.png" rel="icon">
-<link href="assets/img/logof.png" rel="apple-touch-icon">
+<link href="assets/img/log.png" rel="icon">
+<link href="assets/img/log.png" rel="apple-touch-icon">
 <link rel="stylesheet" href="assets/css/code.css">
+
 </head>
 <body>
 <div class="regresar">

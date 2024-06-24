@@ -1,0 +1,199 @@
+/* Reset y estilos generales */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Raleway, sans-serif;
+}
+
+body {
+  background: linear-gradient(90deg, #ffffff, rgb(149, 238, 243));
+}
+
+/* Estilos para el botón de regresar */
+.regresar {
+  display: flex;
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.return {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 10px 15px;
+  transition: 0.5s;
+  position: relative;
+  font-size: 17px;
+  background: rgb(41, 204, 210);
+  border: 1px solid black;
+  color: #070708;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 0 45px rgb(79, 240, 245);
+  margin-left: 30px;
+}
+
+.return:hover {
+  letter-spacing: 0.25em;
+  background: rgb(255, 255, 255);
+  color: rgb(8, 9, 9);
+  box-shadow: 0 0 45px rgb(48, 174, 179);
+}
+
+.return:active {
+  transform: translate(0.07em, 0.07em);
+}
+
+.return::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #51d2e0;
+}
+
+.return .btxt {
+  position: relative;
+  z-index: 1;
+}
+
+.return .animate {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.return .animate::before {
+  content: '';
+  position: absolute;
+  border: 2px solid rgb(2, 109, 112);
+  width: 7px;
+  height: 4px;
+  top: -3.5px;
+  left: 80%;
+  background: #222222;
+  transform: translateX(-50%);
+  transition: 0.5s;
+}
+
+.return:hover .animate::before {
+  width: 20px;
+  left: 20%;
+}
+
+.return .animate::after {
+  content: '';
+  position: absolute;
+  border: 2px solid rgb(2, 109, 112);
+  width: 7px;
+  height: 4px;
+  bottom: -3.5px;
+  left: 20%;
+  background: #222222;
+  transform: translateX(-50%);
+  transition: 0.5s;
+}
+
+.return:hover .animate::after {
+  width: 20px;
+  left: 80%;
+}
+
+/* Estilos para el contenedor principal del formulario */
+.login-box {
+  width: 90%;
+  max-width: 740px; /* Ajuste máximo de ancho */
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+  margin-top: 30px; /* Ajuste según diseño */
+  margin-bottom: -10px; /* Ajuste según diseño */
+}
+
+img {
+  width: 90px;
+  height: 70px;
+  margin-left: 20px;
+}
+
+p {
+  text-align: center;
+  font-size: large;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  margin-top: 16px;
+  color: #333;
+  font-family: Raleway, sans-serif;
+}
+
+/* Estilos para los campos de formulario */
+.row {
+  margin-bottom: 20px;
+}
+
+label{
+  margin-left: 5px;
+  font-weight: 600;
+  
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #02e8f8;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 5px; /* Ajuste para evitar superposiciones */
+}
+
+input[type="submit"] {
+  width: 60%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #3cb1b7;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px; /* Ajuste para separación */
+  margin-left: 130px;
+}
+
+input[type="submit"]:hover {
+  background-color: #36acbc;
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  .login-box {
+      width: 90%;
+      margin-top: 23px;
+  }
+
+  .regresar {
+      margin-top: 20px;
+      margin-bottom: 14px;
+      margin-left: -5px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  select {
+      width: calc(100% - 10px);
+      margin-left: 5px;
+  }
+
+  input[type="submit"] {
+      width: 60%;
+      margin-left: 80px;
+  }
+}

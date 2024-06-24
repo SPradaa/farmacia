@@ -1,0 +1,272 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    background: #fdfdfd;
+}
+
+a {
+    text-decoration: none;
+}
+
+.contenedor {
+    width: 90%;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+h2 {
+    display: block;
+    margin: 1px 0 2px 0;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #555;
+}
+
+.barra_buscador {
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+
+.formulario {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+form .input_text {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: none;
+}
+
+
+form .btn {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #046bcc;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+form .btn:hover {
+    background-color: #1a84e7;
+    color: white;
+}
+
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table .head {
+    background: #05a0b8;
+}
+
+table .head td {
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+
+table tr td {
+    border: 1px solid #ccc;
+    padding: 7px;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .contenedor {
+        width: 95%;
+    }
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    form .input_text {
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    form .btn {
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn.btn-danger {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 140%;
+        margin-top: 60px;
+        margin-left: -10px;
+    }
+
+    .btn.btn.btn-success {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 110%;
+        margin-top: 60px;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 18px;
+    }
+
+    form .input_text {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    form .btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    table tr td {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .btn.btn-danger {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 140%;
+        margin-top: 60px;
+        margin-left: -10px;
+    }
+
+    .btn.btn.btn-success {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 110%;
+        margin-top: 60px;
+    }
+
+
+}
+
+@media (max-width: 576px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-top: -10px;
+    }
+
+    .contenedor {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .formulario {
+        width: 100%;
+    }
+
+    form .input_text{
+        margin-right: 0;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    form .btn {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .btn.btn-danger {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 140%;
+        margin-top: 60px;
+        margin-left: -10px;
+    }
+
+    .btn.btn.btn-success {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 110%;
+        margin-top: 60px;
+    }
+
+
+}
+
+.text {
+    margin-top: -30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.espacios {
+    margin-top: -68px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.btn.btn-danger {
+    background-color: red;
+    border: 1px solid red;
+}
+
+.btn.btn-danger:hover {
+    background-color: #f01a1a;
+    border: 1px solid red;
+}
+
+.btn.btn-success {
+    background-color: rgb(7, 163, 7);
+    border: 1px solid green;
+}
+
+.btn.btn-success:hover {
+    background-color: green;
+    border: 1px solid green;
+}

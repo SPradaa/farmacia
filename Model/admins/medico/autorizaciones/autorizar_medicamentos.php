@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('America/Bogota'); // Ajusta la zona horaria según tu ubicación
+
 session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
@@ -41,11 +44,7 @@ if (isset($_GET['documento'])) {
     $historias = $stmt_historias->fetchAll(PDO::FETCH_ASSOC);
 
     // Consultar autorizaciones del paciente
-    $sql_autorizaciones = "SELECT cod_auto, fecha, docu_medico, id_medicamento, presentacion, cantidad, fecha_venc FROM autorizaciones WHERE documento = :documento";
-    $stmt_autorizaciones = $con->prepare($sql_autorizaciones);
-    $stmt_autorizaciones->bindParam(':documento', $documento_paciente);
-    $stmt_autorizaciones->execute();
-    $autorizaciones = $stmt_autorizaciones->fetchAll(PDO::FETCH_ASSOC);
+   
 } else {
     // Manejar el caso en el que no se haya proporcionado el documento del paciente
     $documento_paciente = "Documento no encontrado";
@@ -61,11 +60,75 @@ $medicos_stmt = $con->prepare($medicos_sql);
 $medicos_stmt->execute();
 $medicos = $medicos_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Consultar datos de medicamentos
-$medicamentos_sql = "SELECT id_medicamento, nombre, cantidad FROM medicamentos";
-$medicamentos_stmt = $con->prepare($medicamentos_sql);
-$medicamentos_stmt->execute();
-$medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Consultar datos de medicamentos
+    $medicamentos_sql = "SELECT id_medicamento, nombre, cantidad FROM medicamentos";
+    $medicamentos_stmt = $con->prepare($medicamentos_sql);
+    $medicamentos_stmt->execute();
+    $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
+?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['term'])) {
+  
+
+    try {
+        $con = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $term = "%" . $_GET['term'] . "%";
+
+        $medicamentos_sql = "SELECT id_medicamento, nombre FROM medicamentos WHERE id_medicamento LIKE :term OR nombre LIKE :term";
+        $medicamentos_stmt = $con->prepare($medicamentos_sql);
+        $medicamentos_stmt->bindParam(':term', $term);
+        $medicamentos_stmt->execute();
+        $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode($medicamentos);
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    $con = null;
+    exit();
+}
+?>
+<?php
+if ((isset($_POST['validar']) && $_POST['MM_insert'] == "formreg")) {
+    $cod_auto = $_POST['cod_autorizacion'];
+    $id_cita = $_POST['id_cita'];
+    $id_medicamento_json = $_POST['medicamentos']; // JSON con los IDs de los medicamentos
+    $fecha_venc = $_POST['fecha_venc'];
+    $documento_paciente = $_POST['documento'];
+    $documento_medico = $_POST['docu_medico'];
+    $fecha = $_POST['fecha'];    
+
+    // Verificar si el JSON recibido es una cadena
+    if (is_array($id_medicamento_json)) {
+        // Convertir el array de medicamentos a una cadena JSON
+        $id_medicamento_json = json_encode($id_medicamento_json);
+    }
+
+    // Agregar el estado autorizado (13)
+    $id_estado = 13;
+
+    $sql = "INSERT INTO autorizaciones (cod_auto, id_cita, documento, docu_medico, medicamento, fecha_venc, fecha, id_estado) 
+            VALUES (:cod_auto, :id_cita, :documento, :docu_medico, :id_medicamento_json, :fecha_venc, :fecha, :id_estado)";
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(':cod_auto', $cod_auto);
+    $stmt->bindParam(':id_cita', $id_cita);
+    $stmt->bindParam(':documento', $documento_paciente);
+    $stmt->bindParam(':docu_medico', $documento_medico);
+    $stmt->bindParam(':id_medicamento_json', $id_medicamento_json); // Usamos la variable con la cadena JSON
+    $stmt->bindParam(':fecha_venc', $fecha_venc);
+    $stmt->bindParam(':fecha', $fecha);
+    $stmt->bindParam(':id_estado', $id_estado);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Autorización guardada exitosamente.'); window.location.href='index_automedicam.php';</script>";
+    } else {
+        echo "Error: " . $sql . "<br>" . $stmt->errorInfo()[2];
+    }
+}
 
 ?>
 
@@ -75,198 +138,114 @@ $medicamentos = $medicamentos_stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autorización Médica</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f7f7f7;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type="text"], input[type="date"], input[type="datetime-local"], select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .col-md-6 {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/autorizar_medicamentos.css">
 </head>
 <body>
     <div class="col-md-6">
-        <form action="../../../admins/desarrollador/autorizaciones/atender_automedicam.php">
-            <input type="submit" value="Regresar" class="btn btn-secondary"/>
+      
+            <input type="hidden" name="id_cita" value="<?php echo $_GET['id_cita']; ?>">
+            <input type="hidden" name="documento" value="<?php echo $_GET['documento']; ?>">
+            <input type="hidden" name="docu_medico" value="<?php echo $_GET['docu_medico']; ?>">
+            <button type="submit" class="btn-regresar">Regresar</button>
         </form>
     </div>
     <div class="container">
         <h1>Autorización de Medicamentos</h1>
-        <form action="autorizar.php" method="post" onsubmit="return validarCantidad()">
+        <form method="post" name="form1" id="form1" autocomplete="off"> 
+    
+            <div class="form-group">
+                <input type="hidden" id="id_cita" name="id_cita" class="form-control" value="<?php echo $_GET['id_cita']; ?>">
+            </div>
             <div class="form-group">
                 <label for="fecha">Fecha:</label>
-                <input type="text" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
+                <h4 id="fecha"><?php echo date('Y-m-d'); ?></h4>
+                <input type="hidden" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="documento">Documento del Paciente:</label>
-                <input type="text" id="documento" name="documento" value="<?php echo $documento_paciente; ?>" readonly>
+                <h4 id="fecha"><?php echo $documento_paciente; ?></h4>
+                <input type="hidden" id="documento" name="documento" value="<?php echo $documento_paciente; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="docu_medico">Documento del Médico:</label>
-                <input type="text" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
+                <h4 id="fecha"><?php echo $documento_medico; ?></h4>
+                <input type="hidden" id="docu_medico" name="docu_medico" value="<?php echo $documento_medico; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="id_medicamento">Medicamento:</label>
+                <input type="hidden" id="id_medicamento" name="id_medicamento" class="form-control">
+                <div id="myModal" class="modal">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <input type="text" id="search" class="form-control" placeholder="Buscar por nombre...">
+                            <div id="searchResults" class="list-group"></div>
+                        </div>
+                        <div class="scrollable-div">
+                            <table class="table table-bordered" style="display: none;">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombre</th>
+                                        <th>Presentacion</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTable">
+                                    <?php
+                                    // Código PHP para cargar las filas
+                                    $empresa = $_SESSION['nit'];
+                                    $consulta = "SELECT * FROM medicamentos";  
+                                    $resultado = $con->query($consulta);
+
+                                    while ($fila = $resultado->fetch()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $fila["id_medicamento"] . "</td>";
+                                        echo "<td>" . $fila["nombre"] . "</td>";
+                                        echo "<td>" . $fila["presentacion"] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="presentacion">Lista de medicamentos seleccionados</label>
+                            <table id="selectedMedicamentos" class="table table-bordered">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th class="header">ID</th>
+                                        <th class="header">Nombre</th>
+                                        <th class="header">Presentacion</th>
+                                        <th class="header">Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Aquí se agregarán dinámicamente las filas de medicamentos seleccionados -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="cod_autorizacion">Código de la Autorización:</label>
                 <input type="text" id="cod_autorizacion" name="cod_autorizacion" required maxlength="3" onkeypress="validateNumberInput(event)" onblur="checkCodeExists()">
             </div>
             <div class="form-group">
-                <label for="id_medicamento">Medicamento:</label>
-                <select id="id_medicamento" name="id_medicamento" required>
-                    <option value="">Seleccione un medicamento</option>
-                    <?php foreach ($medicamentos as $medicamento): ?>
-                        <option value="<?php echo $medicamento['id_medicamento']; ?>" data-cantidad="<?php echo $medicamento['cantidad']; ?>"><?php echo $medicamento['nombre']; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="presentacion">Presentación:</label>
-                <input type="text" id="presentacion" name="presentacion" required>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad:</label>
-                <input type="text" id="cantidad" name="cantidad" required pattern="\d*" title="Por favor ingrese solo números">
-            </div>
+    <label for="cod_autorizacion">Cadena de texto</label>
+    <input type="text" id="cadenaMedicamentos" name="medicamentos">
+</div>
+
             <div class="form-group">
                 <label for="fecha_venc">Fecha de Vencimiento:</label>
-                <input type="date" id="fecha_venc" name="fecha_venc" required>
+                <h4 id="fecha_venc"><?php echo date('Y-m-d', strtotime('+20 days')); ?></h4>
+                <input type="hidden" id="fecha_venc" name="fecha_venc" class="form-control" value="<?php echo date('Y-m-d', strtotime('+20 days')); ?>" readonly>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn">Autorizar</button>
+                <input type="submit" name="validar" value="Autorizar">
+                <input type="hidden" name="MM_insert" value="formreg">
             </div>
         </form>
     </div>
-    <script>
-        // Lista de medicamentos con sus presentaciones permitidas
-        const presentacionesPermitidas = {
-            '1': ['tableta'],
-            '2': ['tableta'],
-            '3': ['tableta', 'jarabe']
-            // Agrega más medicamentos y presentaciones según sea necesario
-        };
-
-        // Función para validar la presentación basada en el medicamento seleccionado
-        function validarPresentacion() {
-            const medicamento = document.getElementById('id_medicamento').value;
-            const presentacion = document.getElementById('presentacion').value.toLowerCase();
-
-            if (medicamento && presentacion) {
-                const presentaciones = presentacionesPermitidas[medicamento] || [];
-                if (!presentaciones.includes(presentacion)) {
-                    alert('Presentación no válida para el medicamento seleccionado.');
-                    document.getElementById('presentacion').value = '';
-                }
-            }
-        }
-
-        // Agregar el evento change al campo select del medicamento
-        document.getElementById('id_medicamento').addEventListener('change', function() {
-            document.getElementById('presentacion').value = '';
-        });
-
-        // Agregar el evento blur al campo de presentación para validar la presentación
-        document.getElementById('presentacion').addEventListener('blur', validarPresentacion);
-
-        function validateNumberInput(event) {
-            const input = event.target;
-            const value = input.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
-            input.value = value;
-        }
-
-        // Función para verificar si el código ya existe en la base de datos
-        function checkCodeExists() {
-            const codigo_autorizacion = document.getElementById('codigo_autorizacion').value;
-
-            // Realizar una solicitud AJAX para verificar el código
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'verificar_codigo.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        const response = xhr.responseText;
-                        if (response === 'existe') {
-                            alert('El código de autorización ya existe. Por favor, ingrese otro código.');
-                            document.getElementById('codigo_autorizacion').value = '';
-                        }
-                    }
-                }
-            };
-            xhr.send('codigo_autorizacion=' + encodeURIComponent(codigo_autorizacion));
-        }
-        function validarCantidad() {
-            const cantidad = document.getElementById('cantidad').value;
-            const selectMedicamento = document.getElementById('id_medicamento');
-            const cantidadDisponible = selectMedicamento.selectedOptions[0].getAttribute('data-cantidad');
-
-            if (isNaN(cantidad) || parseInt(cantidad) <= 0) {
-                alert('Por favor, ingrese un valor numérico mayor a cero en el campo Cantidad.');
-                return false;
-            }
-
-            if (parseInt(cantidad) > parseInt(cantidadDisponible)) {
-                alert('La cantidad ingresada no puede ser mayor a la cantidad disponible (' + cantidadDisponible + ').');
-                return false;
-            }
-
-            return true;
-        }
-
-        document.getElementById('cantidad').addEventListener('input', function() {
-            const cantidad = this.value;
-            const selectMedicamento = document.getElementById('id_medicamento');
-            const cantidadDisponible = selectMedicamento.selectedOptions[0].getAttribute('data-cantidad');
-
-            if (parseInt(cantidad) > parseInt(cantidadDisponible)) {
-                alert('La cantidad ingresada no puede ser mayor a la cantidad disponible (' + cantidadDisponible + ').');
-                this.value = '';
-            }
-        });
-    </script>
+    <script src="js/autorizar_medicamentos.js"></script>
 </body>
 </html>

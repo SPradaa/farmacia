@@ -52,12 +52,85 @@ if(isset($_POST["update"]))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar</title>
-    <link rel="stylesheet" href="../../css/updateu.css">
+    <link rel="stylesheet" href="../css/edi_usu.css">
+    <style>
+        @media (max-width: 768px){
+            .regresar{
+                margin-top: 7px;
+            }
+            input[type="submit"]{
+                margin-top: -1px;
+                margin-bottom: 2px;
+                margin-left: 105px;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+            $("#docu_medico").on("input", function() {
+                validateField(/^\d{8,10}$/, this, "Debe ingresar solo números (8 a 10 dígitos)");
+            });
+
+            $("#nombre_comple").on("input", function() {
+                validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,40}$/, this, "Ingrese un nombre válido (solo letras)");
+            });
+
+            $("#telefono").on("input", function() {
+                validateField(/^\d{10}$/, this, "Debe ingresar solo números (10 dígitos)");
+            });
+
+            $("#correo").on("input", function() {
+                validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, this, "Ingrese un correo válido que lleve '@'");
+            });
+
+            $("#direccion").on("input", function() {
+                validateField(/^([a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]){5,30}$/, this, "Ingrese una dirección válida");
+            });
+
+            $("#password").on("input", function() {
+                validateField(/^[a-zA-Z0-9]{8}$/, this, "Debe ingresar solo números y letras (8 caracteres)");
+            });
+        });
+
+        function validateForm() {
+            const isDocumentoValid = validateField(/^\d{8,10}$/, document.getElementById("documento"), "Debe ingresar solo números (8 a 10 dígitos)");
+            const isNombreValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,40}$/, document.getElementById("nombre"), "Debe ingresar solo letras");const isApellidoValid = validateField(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("apellido"), "Debe ingresar solo letras");
+            const isTelefonoValid = validateField(/^\d{10}$/, document.getElementById("telefono"), "Debe ingresar solo números (10 dígitos)");
+            const isCorreoValid = validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, document.getElementById("correo"), "Debe ser un correo válido que lleve '@'");
+            const isDireccionValid = validateField(/^([a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]){5,30}$/, document.getElementById("direccion"), "Debe ser una dirección válida");
+            const isPasswordValid = validateField(/^[a-zA-Z0-9]{8}$/, document.getElementById("password"), "Debe ingresar solo números y letras (8 caracteres)");
+
+            return isDocumentoValid && isNombreValid && isTelefonoValid && isCorreoValid && isDireccionValid && isPasswordValid;
+        }
+    </script>
+    <style>
+        .login-box{
+            margin-top: 9px;
+        }
+    </style>
 </head>
 <body>
-    <div class="formulario">
+<div class="regresar">
+        <div class="col-md-6">
+            <form action="index_medico.php">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        </div>
+        </div>
+        <div class="login-box">
+        <img src="../../../../assets/img/log.farma.png">
         <h1>Editar Medico</h1>
         <form method="POST" name="formreg" autocomplete="off">
+            <div class="row">
         <select name="id_doc">
             <option value="<?php echo $usua['id_doc']?>"><?php echo $usua['tipo']?></option>
             <?php
@@ -69,18 +142,17 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
-            <div class="campos">
-                <input type="text" name="docu_medico" value="<?php echo $usua['docu_medico']?>" readonly> 
+                <input type="text" name="docu_medico" id="docu_medico" value="<?php echo $usua['docu_medico']?>" readonly> 
             </div>
-            <div class="campos">
-                <input type="text" name="nombre_comple" pattern="[a-zA-Z ]{8,50}" title="El nombre debe tener solo letras" value="<?php echo $usua['nombre_comple']?>">
+            <div class="row">
+                <input type="text" name="nombre_comple" id="nombre_comple" value="<?php echo $usua['nombre_comple']?>" readonly>
                 
-                <input type="text" name="telefono" pattern="[0-9]{10}" title="El telefono debe tener solo numeros (10 digitos)" value="<?php echo $usua['telefono']?>">
+                <input type="text" name="telefono" id="telefono" value="<?php echo $usua['telefono']?>">
             </div>
-            <div class="campos">
-                <input type="text" name="correo" pattern="[a-zA-Z0-9.-@]{7,30}" title="El correo debe tener minimo 7 caracteres" value="<?php echo $usua['correo']?>">
-            </div>
-            <select name="id_rol">
+            <div class="row">
+                <input type="text" name="correo" id="correo" value="<?php echo $usua['correo']?>">
+            
+                <select name="id_rol">
             <option value="<?php echo $usua['id_rol']?>"><?php echo $usua['rol']?></option>
             <?php
           
@@ -92,6 +164,8 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
+            </div>
+            <div class="row">
             <select name="id_estado">
             <option value="<?php echo $usua['id_estado']?>"><?php echo $usua['estado']?></option>
             <?php
@@ -115,8 +189,7 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
-
-            <br><br>
+        </div>
             <input type="submit" name="update" value="Actualizar">
         </form>
     </div>

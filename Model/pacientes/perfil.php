@@ -10,6 +10,28 @@ $con = $conexion->conectar();
 validarSesion();
 
 // Obtener datos del usuario de la sesión
+$documento = $_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono = $_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$empresa = $_SESSION['nit'];
+$nombre_comple = $nombre . ' ' . $apellido;
+
+// Consultar datos del usuario
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+}
 
 $sql = $con -> prepare ("SELECT * FROM usuarios, municipios, departamentos
 WHERE usuarios.id_municipio = municipios.id_municipio AND municipios.id_depart = departamentos.id_depart");
@@ -87,30 +109,17 @@ if (isset($_POST['update'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, AdminWrap lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, AdminWrap lite design, AdminWrap lite dashboard bootstrap 5 dashboard template">
-    <meta name="description"
-        content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, AdminWrap lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, AdminWrap lite design, AdminWrap lite dashboard bootstrap 5 dashboard template">
+    <meta name="description" content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Perfil</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
-    <!-- Bootstrap Core CSS -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/log.png">
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Custom CSS -->
-    <link href="css/perfil.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
+    <link href="css/perfiil.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
@@ -136,7 +145,7 @@ if (isset($_POST['update'])) {
                 <!-- Logo -->
                 <div class="navbar-header">
                 <div class="logg">
-                            <img src="../../assets/img/log.farma.png">
+                            <img src="../../assets/img/logo.png">
                             </div>
                 </div>
                 <div class="navbar-collapse">
@@ -196,7 +205,7 @@ if (isset($_POST['update'])) {
                   
                 </nav>
                 <div class="boton">
-                <form method="POST">
+                <form method="POST" action="../../../login.html">
         <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
     </form>
     </div>
@@ -282,43 +291,37 @@ if (isset($_POST['update'])) {
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label>Correo:</label>
-                        <input type="text" pattern="[A-Za-z0-9@._-]{7,60}" title="El correo debe contener el @ y debe ser alfanumerico" value ="<?php echo $correo ;?>"
-                        class="form-control form-control-line" name="correo" >
+                        <input type="text" name="correo" id="correo" pattern="[0-9a-zA-Z@_.-]{7,60}" title="El correo debe contener un @ y debe contener minimo 7 digitos" value ="<?php echo $correo ;?>" class="form-control form-control-line">
                     </div>
                     <div class="col-md-6">
                         <label>Telefono:</label>
-                        <input type="text" pattern="[0-9]{10}" title="El telefono debe tener solo numeros (10 digitos)" value="<?php echo $telefono ; ?>"
-                        class="form-control form-control-line" name="telefono" >
+                        <input type="text" name="telefono" id="telefono" pattern="[0-9]{10}" title="El telefono debe contener solo numeros (10 digitos)" value="<?php echo $telefono ; ?>" class="form-control form-control-line">
                     </div>
                 </div>
                 <div class="form-group row">
-    <div class="col-md-6">
-        <label>Departamento:</label>
-        <select id="id_depart" name="id_depart" class="form-control form-control-line">
-            <option value="<?php echo $_SESSION['id_depart']?>"><?php echo $_SESSION['depart']?></option>
-            <?php
-                $control = $con->prepare("SELECT * FROM departamentos");
-                $control->execute();
-                while ($fila = $control->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<option value=" . $fila['id_depart'] . ">" . $fila['depart'] . "</option>";
-                }
-            ?>
-        </select>
-    </div>
-    <div class="col-md-6">
-        <label>Municipio:</label>
-        <select id="id_municipio" name="id_municipio" class="form-control form-control-line">
-            <option value="<?php echo $_SESSION['id_municipio']?>"><?php echo $_SESSION['municipio']?></option>
-        </select>
-    </div>
-</div>
-
-
-
+                <div class="col-md-6">
+                    <label>Departamento:</label>
+                    <select id="id_depart" name="id_depart" class="form-control form-control-line">
+                        <option value="<?php echo $_SESSION['id_depart']?>"><?php echo $_SESSION['depart']?></option>
+                        <?php
+                            $control = $con->prepare("SELECT * FROM departamentos");
+                            $control->execute();
+                            while ($fila = $control->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<option value=" . $fila['id_depart'] . ">" . $fila['depart'] . "</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
                     <div class="col-md-6">
+                        <label>Municipio:</label>
+                        <select id="id_municipio" name="id_municipio" class="form-control form-control-line">
+                            <option value="<?php echo $_SESSION['id_municipio']?>"><?php echo $_SESSION['municipio']?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
                         <label>Dirección:</label>
-                        <input type="text" pattern="[A-Za-z0-9._-´# ]{7,40}" title="La dirección debe tener minimo 5 caracteres" value="<?php echo $direccion ?>"
-                        class="form-control form-control-line" name="direccion">
+                        <input type="text" pattern="[0-9a-zA-ZÑñ#.,_-´ ]{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
                 <div class="form-group">
@@ -331,45 +334,81 @@ if (isset($_POST['update'])) {
     </div>
 </div>
 
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
             <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function(){
-    $('#id_depart').change(function(){
-        var id_depart = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "municipio.php",
-            data: {id_depart: id_depart},
-            success: function(response){
-                $('#id_municipio').html(response);
-            }
+
+    <script>
+    $(document).ready(function(){
+        $('#id_depart').change(function(){
+            var id_depart = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "municipio.php",
+                data: {id_depart: id_depart},
+                success: function(response){
+                    $('#id_municipio').html(response);
+                }
+            });
         });
     });
-});
-</script>
+    </script>
 
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
+    <!-- Modal de Autorizaciones -->
+<div class="modal fade" id="autorizacionesModal" tabindex="-1" aria-labelledby="autorizacionesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center fw-600 w-100" id="autorizacionesModalLabel">Buscar Autorizaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="autorizacionesForm">
+                    <div class="mb-3 text-center">
+                        <label for="documentoPaciente" class="form-label text-dark">Documento del Paciente:</label><br>
+                        <input type="text" name="documento" class="form-control mx-auto" id="documentoPaciente" pattern="[0-9]{8,10}" placeholder="Digite el documento" title="El documento debe contener solo numeros (8 a 10 digitos)"  style="max-width: 300px;">
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" onclick="buscarAutorizacion()">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .modal-title {
+        font-size: 24px; /* Ajusta el tamaño del título según tu preferencia */
+        font-weight: 600;
+        margin-left: 20px;
+    }
+
+    .modal-content {
+        border: 2px solid #343a40; /* Color de borde oscuro */
+    }
+
+    .form-label {
+        font-weight: 600; /* Peso de la fuente del label */
+    }
+
+    .form-control {
+        border-color: #343a40; /* Color de borde oscuro para el input */
+    }
+
+    .btn-primary {
+        background-color: rgb(123, 245, 245); /* Color de fondo azul claro */
+        color: black; /* Color de texto blanco */
+        border: 1px solid rgb(123, 245, 245);
+        margin-top: 20px;
+        margin-left: -3px;
+        margin-bottom: 20px;
+    }
+</style>
+
     <script src="assets/node_modules/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/node_modules/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -382,7 +421,34 @@ $(document).ready(function(){
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
 
+    <!-- Script para manejo de búsqueda de autorizaciones -->
+    <script>
+        function buscarAutorizacion() {
+            var documento = document.getElementById("documentoPaciente").value;
 
+            if (documento === "") {
+                alert("El campo está vacío, digite un número de documento.");
+                return;
+            }
+
+            // Realizar solicitud AJAX para verificar el documento
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "buscar_autorizacion.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.responseText === "no_existe") {
+                        alert("El documento no existe, cámbielo.");
+                    } else {
+                        window.location.href = "autorizaciones_resultado.php?documento=" + documento;
+                    }
+                }
+            };
+            xhr.send("documento=" + documento);
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

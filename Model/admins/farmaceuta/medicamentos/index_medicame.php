@@ -151,6 +151,45 @@ function getRowClass($fila) {
             border: 1px solid green;
         }
 
+        .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        @media (max-width: 768px) {
+            .espacios {
+                flex-direction: row;
+                gap: 10px;
+                margin-top: 0;
+                margin-left: 3px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container{
+                margin-left: 82px;
+                width: 280px;
+                
+            }
+        }
+        @media (max-width: 768px) {
+            .naranja{
+                margin-top: 30px;
+                margin-left: 82px;
+            }
+        }
+        @media (max-width: 768px) {
+            .rojo{
+                margin-top: 30px;
+                margin-left: 82px;
+                width: 280px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -215,8 +254,9 @@ function getRowClass($fila) {
             </div>
             </div><br>
             
-            <table class="tabla">
-                <tr class="head">
+            <div class="table-responsive">
+                <table>
+                    <tr class="head">
                     <td>Nombre</td>
                     <td>Tipo de Medicamento</td>
                     <td>Cantidad_Unidad</td>
@@ -239,7 +279,7 @@ function getRowClass($fila) {
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                            <img src="../../desarrollador/medicamentos/images/<?= $fila["codigo_barras"] ?>.png">
+                            <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
@@ -265,7 +305,7 @@ function getRowClass($fila) {
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                            <img src="../../desarrollador/medicamentos/images/<?= $fila["codigo_barras"] ?>.png">
+                            <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>

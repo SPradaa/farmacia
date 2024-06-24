@@ -26,7 +26,7 @@ if (isset($_GET['btn_buscar'])) {
 <head>
     <meta charset="UTF-8">
     <title>Medicamentos</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../css/medicamentos.css">
     <style>
         .codigo-barras-container {
             text-align: center;
@@ -60,10 +60,12 @@ if (isset($_GET['btn_buscar'])) {
                     <a href="registro.php" class="btn btn_nuevo">Crear Medicamento</a>
                 </form>
             </div>
+            <div class="table-container">
             <table>
                 <tr class="head">
                     <td>Nombre</td>
                     <td>Tipo de Medicamento</td>
+                    <td>Presentacion</td>
                     <td>Cantidad</td>
                     <td>Medida Cantidad</td>
                     <td>Laboratorio</td>
@@ -84,17 +86,18 @@ if (isset($_GET['btn_buscar'])) {
                     <tr>
                         <td><?php echo $fila['nombre']; ?></td>
                         <td><?php echo $fila['clasificacion']; ?></td>
+                        <td><?php echo $fila['presentacion']; ?></td>
                         <td><?php echo $fila['cantidad']; ?></td>
                         <td><?php echo $fila['medida_cant']; ?></td>
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                        <img src="images/<?= $fila["codigo_barras"] ?>.png">
+                        <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="update_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__update">Editar</a></td>
-                      
+                        <td><a href="delete_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php
                     }
@@ -108,17 +111,18 @@ if (isset($_GET['btn_buscar'])) {
                     <tr>
                         <td><?php echo $fila['nombre']; ?></td>
                         <td><?php echo $fila['clasificacion']; ?></td>
+                        <td><?php echo $fila['presentacion']; ?></td>
                         <td><?php echo $fila['cantidad']; ?></td>
                         <td><?php echo $fila['medida_cant']; ?></td>
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                        <img src="images/<?= $fila["codigo_barras"] ?>.png">
+                        <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
                         <td><a href="update_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__update">Editar</a></td>
-                        
+                        <td><a href="delete_medicame.php?id_medicamento=<?php echo $fila['id_medicamento']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php
                     }

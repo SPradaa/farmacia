@@ -50,18 +50,37 @@ if(isset($_POST["update"]))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../../../assets/img/log.png" rel="icon">
+    <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     <title>Actualizar</title>
-    <link rel="stylesheet" href="../../css/updateu.css">
+    <link rel="stylesheet" href="../../desarrollador/css/edi_medicamento.css">
+    <style>
+        @media (max-width: 768px){
+            input[type="date"]{
+                width: 195.7px;
+            }
+        }
+        .login-box{
+            margin-top: 13px;
+        }
+    </style>
 </head>
 <body>
-    <div class="formulario">
-        <h1>Editar Usuario</h1>
+<div class="regresar">
+        <div class="col-md-6">
+            <form action="../medicamentos/index_medicame.php">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        </div>
+    </div>
+    
+    <div class="login-box">
+    <img src="../../../../assets/img/log.farma.png">
+    <h1>Editar Medicamento</h1>
         <form method="POST" name="formreg" autocomplete="off">
 
-            <div class="campos">
-                <input type="text" name="id_medicamento" value="<?php echo $usua['id_medicamento']?>" readonly> 
+            <div class="row"> 
                 <input type="text" name="nombre" pattern="[a-zA-Z ]{3,30}" title="El nombre debe tener solo letras" value="<?php echo $usua['nombre']?>">
-            </div>
             <select name="id_cla">
             <option value="<?php echo $usua['id_cla']?>"><?php echo $usua['clasificacion']?></option>
             <?php
@@ -73,10 +92,13 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
-            <div class="campos">
-                <input type="text" name="cantidad" pattern="[a-zA-Z0-9 ]{4,20}" title="Debe tener letras Y numeros" value="<?php echo $usua['cantidad']?>">
-                <input type="text" name="medida_cant" pattern="[0-9a-zA-Z]{5,30}" title="Debe tener numeros y letras" value="<?php echo $usua['medida_cant']?>">
             </div>
+            <div class="row">
+                <input type="text" name="presentacion" pattern="[a-zA-Z ]{3,30}" title="La presentacion debe tener solo letras" value="<?php echo $usua['presentacion']?>">
+                <input type="text" name="cantidad" pattern="[a-zA-Z0-9 ]{4,20}" title="Debe tener letras Y numeros" value="<?php echo $usua['cantidad']?>">
+            </div>
+            <div class="row">
+                <input type="text" name="medida_cant" pattern="[0-9a-zA-Z]{5,30}" title="Debe tener numeros y letras" value="<?php echo $usua['medida_cant']?>">
             <select name="id_lab">
             <option value="<?php echo $usua['id_lab']?>"><?php echo $usua['laboratorio']?></option>
             <?php
@@ -88,11 +110,10 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
-            <div class="campos">
-                <input type="text" name="f_vencimiento" value="<?php echo $usua['f_vencimiento']?>">
-                <input type="text" name="lote" pattern="[0-9a-zA-Z]{4,8}" title="Debe tener numeros y letras" value="<?php echo $usua['lote']?>">
             </div>
-            
+            <div class="row">
+                <input type="date" name="f_vencimiento" value="<?php echo $usua['f_vencimiento']?>">
+
             <select name="id_estado">
             <option value="<?php echo $usua['id_estado']?>"><?php echo $usua['estado']?></option>
             <?php
@@ -105,8 +126,8 @@ if(isset($_POST["update"]))
             }
             ?>
             </select>
+            </div>
 
-            <br><br>
             <input type="submit" name="update" value="Actualizar">
         </form>
     </div>

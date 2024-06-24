@@ -68,11 +68,11 @@ if (!$fila) {
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/img/log.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -169,7 +169,7 @@ if (!$fila) {
                   
                 </nav>
                 <div class="boton">
-                <form method="POST" action="../../../login.html">
+                <form method="POST" action="../../../index.html">
                     <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
                 </form>
     </div>

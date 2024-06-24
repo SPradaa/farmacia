@@ -53,9 +53,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario de Cambio de Contraseña</title>
-<link href="assets/img/logof.png" rel="icon">
-<link href="assets/img/logof.png" rel="apple-touch-icon">
+<link href="assets/img/log.png" rel="icon">
+<link href="assets/img/log.png" rel="apple-touch-icon">
 <link rel="stylesheet" href="assets/css/contrasenaa.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+          $("#contrasena").on("input", function() {
+                validateField(/^[a-zA-Z0-9]{8}$/, this, "Debe ingresar solo números y letras (8 caracteres)");
+            });
+          });
+
+        function validateForm() {
+          const isContrasenaValid = validateField(/^[a-zA-Z0-9]{8}$/, document.getElementById("contrasena"), "Debe ingresar solo números y letras (8 caracteres)");
+          return isContrasenaValid;
+        }
+    </script>
 </head>
 <body>
 <div class="regresar">

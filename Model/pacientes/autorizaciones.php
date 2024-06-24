@@ -154,11 +154,12 @@ validarSesion();
                         
                     </ul>
                     </nav>
-                <div class="boton">
-                <form method="POST">
-        <button class="botones" type="submit" name="btncerrar">Cerrar sesión</button>
-    </form>
-    </div>
+                    <div class="boton">
+                <form method="POST" action="../../login.html">
+                    <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                </form>
+                
+                </div>
                 
                 </nav>
                 <!-- End Sidebar navigation -->

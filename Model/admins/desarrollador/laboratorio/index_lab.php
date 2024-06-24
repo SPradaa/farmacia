@@ -41,7 +41,9 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Laboratorio</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <link rel="stylesheet" href="../css/tip_usu.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     </head>
     <body>
         <div class="contenedor">

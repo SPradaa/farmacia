@@ -4,14 +4,15 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
-$documento = $_GET['documento'];
+$id_cita = $_GET['id_cita'];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial Clínico</title>
+    <title>HISTORIAL CLINICO</title>
     <link rel="stylesheet" href="../../css/estilo.css">
     <style>
         body {
@@ -74,7 +75,7 @@ $documento = $_GET['documento'];
     <div class="contenedor">
         <img src="../../../../assets/img/log.farma.png" alt="Logo" class="logo">
         <br><br><br><br><br>
-        <h2>Historial Clínico</h2>
+        <h2>HISTORIA CLÍNICA</h2>
         <?php
         $consulta = $con->prepare("SELECT histo_clinica.*, 
                                           usuarios.documento AS doc_usuario, usuarios.nombre AS nombre_usuario, usuarios.apellido AS apellido_usuario, usuarios.telefono AS telefono_usuario, usuarios.correo AS correo_usuario, usuarios.direccion AS direccion_usuario,
@@ -87,8 +88,8 @@ $documento = $_GET['documento'];
                                    JOIN medicos ON histo_clinica.docu_medico = medicos.docu_medico
                                    JOIN t_documento ON usuarios.id_doc = t_documento.id_doc 
                                    JOIN especializacion ON medicos.id_esp = especializacion.id_esp
-                                   WHERE histo_clinica.documento = :documento");
-        $consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
+                                   WHERE histo_clinica.id_cita = :id_cita");
+        $consulta->bindParam(':id_cita', $id_cita, PDO::PARAM_STR);
         $consulta->execute();
         if ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
         ?>

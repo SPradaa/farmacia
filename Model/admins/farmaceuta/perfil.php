@@ -114,10 +114,10 @@ if (isset($_POST['update'])) {
     <meta name="description" content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Perfil</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/img/log.png">
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="css/perfil.css" rel="stylesheet">
+    <link href="css/perf.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
 
 </head>

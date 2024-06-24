@@ -1,0 +1,310 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    background: #fdfdfd;
+}
+
+a {
+    text-decoration: none;
+}
+
+.contenedor {
+    width: 106%;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+h2 {
+    display: block;
+    margin: 1px 0 2px 0;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #555;
+}
+
+.barra_buscador {
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+
+.formulario {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+form .input_text {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: none;
+}
+
+select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #848688;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    max-width: 30%;
+    margin-right: 10px;
+    outline: none;
+}
+
+form .input_text:focus {
+    border: 1px solid #1b743c;
+}
+
+form .form-group {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+form .form-group .input_text {
+    max-width: 45% !important;
+}
+
+form .btn {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    background: #046bcc;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+form .btn:hover {
+    background-color: #1a84e7;
+    color: white;
+}
+
+.btn__nuevo {
+    background: #1b743c !important;
+}
+
+.btn__group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 10px; /* Añade espacio entre los botones */
+    margin-left: auto; /* Empuja el grupo de botones a la derecha */
+}
+
+.btn__primary {
+    background: #046bcc;
+}
+
+.btn__danger {
+    background: #8a0505 !important;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table .head {
+    background: #05a0b8;
+}
+
+table .head td {
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+
+table tr td {
+    border: 1px solid #ccc;
+    padding: 7px;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+}
+
+.btn__update {
+    display: inline-block;
+    font-size: 14px;
+    background: #046bcc;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn__update:hover {
+    background-color: #1788f3;
+}
+
+.btn__delete {
+    display: inline-block;
+    font-size: 14px;
+    background: #f00f0f;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn__delete:hover {
+    background-color: #f32f2f;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .contenedor {
+        width: 95%;
+    }
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    form .input_text, select {
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    form .btn {
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn__group {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 18px;
+    }
+
+    form .input_text, select {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    form .btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    table tr td {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .btn__update, .btn__delete {
+        padding: 3px 5px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .contenedor {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .formulario {
+        width: 100%;
+    }
+
+    form .input_text, select {
+        margin-right: 0;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    form .btn {
+        padding: 7px 10px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .btn__group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.text {
+    margin-top: -30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.espacios {
+    margin-top: -10px;
+    margin-bottom: 15px;
+    margin-left: 30px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.btn.btn-danger {
+    background-color: red;
+    border: 1px solid red;
+}
+
+.btn.btn-danger:hover {
+    background-color: #f01a1a;
+    border: 1px solid red;
+}
+
+.btn.btn-success {
+    background-color: rgb(7, 163, 7);
+    border: 1px solid green;
+}
+
+.btn.btn-success:hover {
+    background-color: green;
+    border: 1px solid green;
+}

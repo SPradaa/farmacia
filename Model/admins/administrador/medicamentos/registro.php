@@ -9,6 +9,7 @@ use Picqer\Barcode\BarcodeGeneratorPNG;
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
     $nombre = $_POST['nombre'];
     $clasificacion = $_POST['id_cla'];
+    $presentacion = $_POST['presentacion'];
     $cantidad = $_POST['cantidad'];
     $cant = $_POST['medida_cant'];
     $laboratorio = $_POST['id_lab'];
@@ -20,10 +21,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
     $generator = new BarcodeGeneratorPNG();
     $codigo_barras_imagen = $generator->getBarcode($codigo_barras, $generator::TYPE_CODE_128);
 
-    file_put_contents(__DIR__ . '/images/' . $codigo_barras . '.png', $codigo_barras_imagen);
+    file_put_contents(__DIR__ . '/../../images/' . $codigo_barras . '.png', $codigo_barras_imagen);
 
-    $insertsql = $conectar->prepare("INSERT INTO medicamentos (nombre, id_cla, cantidad, medida_cant, id_lab, f_vencimiento, id_estado, codigo_barras) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $insertsql->execute([$nombre, $clasificacion, $cantidad, $cant, $laboratorio, $fecha, $estado, $codigo_barras]);
+    $insertsql = $conectar->prepare("INSERT INTO medicamentos (nombre, id_cla, presentacion, cantidad, medida_cant, id_lab, f_vencimiento, id_estado, codigo_barras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $insertsql->execute([$nombre, $clasificacion, $presentacion, $cantidad, $cant, $laboratorio, $fecha, $estado, $codigo_barras]);
     echo '<script>alert("Registro exitoso.");</script>';
     echo '<script>window.location="index_medicame.php"</script>';
     exit();
@@ -37,11 +38,57 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Medicamentos</title>
-    <link rel="stylesheet" href="">
+    <link href="../../../../assets/img/log.png" rel="icon">
+    <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="../css/registromed.css">
+    <style>
+        @media (max-width: 768px){
+            .regresar{
+                margin-top: 7px;
+                margin-bottom: 70px;
+            }
+            input[type="submit"]{
+                width: 70%;
+                margin-top: -1px;
+                margin-bottom: 2px;
+                margin-left: 33px;
+            }
+            h1{
+                margin-top: -60px; 
+                margin-bottom: 50px; 
+            }
+            .login-box{
+            margin-top: -5px;
+            margin-bottom: -72px;
+        }
+        }
+        .login-box{
+            margin-top: -11px;
+
+        }
+        h1{
+            margin-top: -40px;
+            margin-bottom: 50px;
+        }
+        input[type="submit"]{
+            margin-bottom: 20px;
+            width: 60%;
+            margin-left: 140px;
+        -}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
-    <div class="login-box">
+    <div class="regresar">
+        <div class="col-md-6">
+            <form action="index_medicame.php">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        </div>
+        </div>
+        <div class="login-box">
+        <img src="../../../../assets/img/log.farma.png">
         <h1>Crear Medicamento</h1>
 
         <form method="post" name="form1" id="form1" autocomplete="off"> 
@@ -59,9 +106,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
                 ?>
             </select>
 
-            <input type="text" name="cantidad" id="cantidad" pattern="[0-9a-zA-Z]{4,20}" placeholder="Ingrese la cantidad" title="La cantidad debe tener números y letras">
+            <input type="text" name="presentacion" id="presentacion" pattern="[a-zA-Z0-9 ]{3,30}" placeholder="Ingrese la presentacion del medicamento" title="La presentacion debe tener solo letras">
 
-            <input type="text" name="medida_cant" id="medida_cant" pattern="[0-9a-zA-Z]{5,30}" placeholder="Ingrese la cantidad de medida" title="La cantidad de medida debe tener solo letras y números">
+            <input type="text" name="cantidad" id="cantidad" pattern="[0-9a-zA-Z]{2,20}" placeholder="Ingrese la cantidad" title="La cantidad debe tener números y letras">
+
+            <input type="text" name="medida_cant" id="medida_cant" pattern="[0-9a-zA-Z]{2,30}" placeholder="Ingrese la cantidad de medida" title="La cantidad de medida debe tener solo letras y números">
 
             <select name="id_lab">
                 <option value="">Seleccione el laboratorio</option>

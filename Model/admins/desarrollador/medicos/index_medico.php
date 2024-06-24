@@ -41,7 +41,9 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Medicos</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
+        <link rel="stylesheet" href="../css/medicos.css">
     </head>
     <body>
         <div class="contenedor">
@@ -65,6 +67,7 @@ session_start();
                     <a href="create_medico.php" class="btn btn_nuevo">Crear Medico</a>
                 </form>
             </div>
+            <div class="table-container">
             <table>
                 <tr class="head">
                     <td>Tipo de Documento</td>
@@ -101,7 +104,6 @@ session_start();
                 <?php 
                     }
                 } else {
-                    // Mostrar todos los registros si no se ha realizado una búsqueda
                     $consulta = $con->prepare("SELECT * FROM medicos, t_documento, roles, estados, especializacion
                     WHERE medicos.id_doc = t_documento.id_doc AND medicos.id_estado = estados.id_estado AND
                     medicos.id_rol = roles.id_rol AND medicos.id_esp = especializacion.id_esp ORDER BY nombre_comple ASC");
@@ -127,5 +129,5 @@ session_start();
             </table>
         </div>
     </body>
-    </html>
+</html>
 

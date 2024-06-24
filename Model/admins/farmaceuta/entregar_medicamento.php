@@ -1,190 +1,38 @@
-<?php
-require_once("../../../db/connection.php");
-$conexion = new Database();
-$con = $conexion->conectar();
-
-
-
-if (isset($_GET['cod_auto'])) {
-    $cod_auto = $_GET['cod_auto'];
-
-    $sql = $con->prepare("
-        SELECT 
-            autorizaciones.cod_auto, 
-            autorizaciones.fecha, 
-            usuarios.documento, 
-            usuarios.nombre, 
-            usuarios.apellido, 
-            medicos.nombre_comple, 
-            medicamentos.id_medicamento,
-            medicamentos.nombre AS medicamento, 
-            medicamentos.cantidad AS cantidad_disponible, 
-            autorizaciones.presentacion,
-            autorizaciones.cantidad,
-            autorizaciones.fecha_hora_auto,
-            autorizaciones.fecha_venc,
-            estados.estado 
-        FROM 
-            autorizaciones
-        JOIN 
-            usuarios ON autorizaciones.documento = usuarios.documento
-        JOIN 
-            medicos ON autorizaciones.docu_medico = medicos.docu_medico
-        JOIN 
-            medicamentos ON autorizaciones.id_medicamento = medicamentos.id_medicamento
-        JOIN 
-            estados ON autorizaciones.id_estado = estados.id_estado
-        WHERE 
-            autorizaciones.cod_auto = :cod_auto
-    ");
-    $sql->bindParam(':cod_auto', $cod_auto);
-    $sql->execute();
-    $autorizacion = $sql->fetch();
-
-    if (!$autorizacion) {
-        echo "<p>No se encontró la autorización.</p>";
-        exit;
-    }
-} else {
-    echo "<p>Código de autorización no proporcionado.</p>";
-    exit;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $cantidad_entregada = $autorizacion['cantidad'];
-    $id_medicamento = $autorizacion['id_medicamento'];
-
-    // Restar la cantidad del medicamento
-    $update_medicamento_sql = $con->prepare("
-        UPDATE medicamentos 
-        SET cantidad = cantidad - :cantidad_entregada 
-        WHERE id_medicamento = :id_medicamento
-    ");
-    $update_medicamento_sql->bindParam(':cantidad_entregada', $cantidad_entregada);
-    $update_medicamento_sql->bindParam(':id_medicamento', $id_medicamento);
-    $update_medicamento_sql->execute();
-
-    // Actualizar el estado de la autorización a entregado (o el id correspondiente en la tabla)
-    $update_sql = $con->prepare("
-        UPDATE autorizaciones 
-        SET id_estado = 2 
-        WHERE cod_auto = :cod_auto
-    ");
-    $update_sql->bindParam(':cod_auto', $cod_auto);
-    $update_sql->execute();
-
-    // Mostrar mensaje de éxito usando JavaScript y redirigir
-    echo "<script>
-        alert('Medicamentos entregados exitosamente.');
-        window.location.href = 'autorizaciones_resultado.php?documento=" . $autorizacion['documento'] . "';
-    </script>";
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Entregar Medicamentos</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="usuarios/css/entregar_medicamento.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        .contenedor {
-            width: 60%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-top: -37px;
-        }
-
-        h1 {
-            text-align: center;
-            font-family: 'Arial Black', sans-serif;
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            margin-top: -1px;
-        }
-
-        table {
-            width: 70%;
+    <style>  <style>
+        .table-medicamentos {
+            width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            margin-left: 15%;
         }
-
-        table, th, td {
+        .table-medicamentos th, .table-medicamentos td {
             border: 1px solid #ddd;
-        }
-
-        td {
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            padding: 12px;
+            padding: 8px;
             text-align: left;
-            width: 55%;
         }
-
-        label {
-            margin-left: 15%;
+        .table-medicamentos th {
+            background-color: #f2f2f2;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            outline: none;
-            color: #fff;
-            background-color: #046bcc;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 4px #999;
-            margin-left: 40.5%;
+        .disponible {
+            color: green;
+            font-weight: bold;
         }
-
-        .btn:hover {background-color: #046bcc}
-
-        .btn:active {
-            background-color: #046bcc;
-            box-shadow: 0 2px #666;
-            transform: translateY(2px);
+        .no-disponible {
+            color: red;
+            font-weight: bold;
         }
-
-        .btn-secondary {
-            background-color: #046bcc;
+        .btn[disabled] {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
         }
-
-        .btn-secondary:hover {
-            background-color: #046bcc;
-        }
-
-        .btn-secondary:active {
-            background-color: #046bcc;
-        }
-
-        .boton {
-            margin-left: -60%;
-            margin-top: 10px;
-        }
-    </style>
+    </style></style>
 </head>
 <body>
 <div class="boton">
@@ -193,8 +41,126 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="contenedor">
     <h1>Confirmar Entrega de Medicamentos</h1>
+    <?php
+    require_once("../../../db/connection.php");
+    $conexion = new Database();
+    $con = $conexion->conectar();
+
+    if (isset($_GET['cod_auto'])) {
+        $cod_auto = filter_input(INPUT_GET, 'cod_auto', FILTER_SANITIZE_STRING);
+
+        if (empty($cod_auto)) {
+            echo "<p>Código de autorización no proporcionado o inválido.</p>";
+            exit;
+        }
+
+        $sql = $con->prepare("SELECT 
+               *
+            FROM 
+                autorizaciones
+            JOIN 
+                usuarios ON autorizaciones.documento = usuarios.documento
+            JOIN 
+                medicos ON autorizaciones.docu_medico = medicos.docu_medico
+            JOIN 
+                estados ON autorizaciones.id_estado = estados.id_estado
+            WHERE 
+                autorizaciones.cod_auto = :cod_auto
+        ");
+        $sql->bindParam(':cod_auto', $cod_auto);
+        $sql->execute();
+        $autorizacion = $sql->fetch();
+
+        if (!$autorizacion) {
+            echo "<p>No se encontró la autorización.</p>";
+            exit;
+        }
+
+        // Desencripta y decodifica el campo medicamento
+        function decrypt($data) {
+            // Implementa tu lógica de desencriptación aquí
+            return $data; // Placeholder
+        }
+
+        $medicamentos_json = decrypt($autorizacion['medicamento']);
+        $medicamentos = json_decode($medicamentos_json, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo "<p>Error al decodificar la información de los medicamentos.</p>";
+            exit;
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            try {
+                // Inicia una transacción para asegurar la consistencia de las operaciones
+                $con->beginTransaction();
+
+                // Actualizar el estado de la autorización a 2 (Entregado)
+                $update_autorizacion_sql = $con->prepare("
+                    UPDATE autorizaciones 
+                    SET id_estado = 2 
+                    WHERE cod_auto = :cod_auto
+                ");
+                $update_autorizacion_sql->bindParam(':cod_auto', $cod_auto);
+                $update_autorizacion_sql->execute();
+
+                // Actualizar las cantidades de los medicamentos en la tabla medicamentos
+                foreach ($medicamentos as $medicamento) {
+                    $id_medicamento = $medicamento['id'];
+
+                    // Obtener la cantidad actual del medicamento en la base de datos
+                    $sql_cantidad = $con->prepare("
+                        SELECT cantidad
+                        FROM medicamentos
+                        WHERE id_medicamento = :id_medicamento
+                    ");
+                    $sql_cantidad->bindParam(':id_medicamento', $id_medicamento);
+                    $sql_cantidad->execute();
+                    $row = $sql_cantidad->fetch(PDO::FETCH_ASSOC);
+                    $cantidad_bd = $row['cantidad'];
+
+                    // Extraer la cantidad numérica de la base de datos (ej. 100UND -> 100)
+                    $cantidad_numerica_bd = intval(preg_replace('/[^0-9]/', '', $cantidad_bd));
+
+                    // Calcular la nueva cantidad restando la cantidad a entregar
+                    $cantidad_a_entregar = intval($medicamento['cantidad']);
+                    $nueva_cantidad_numerica = $cantidad_numerica_bd - $cantidad_a_entregar;
+
+                    // Construir la nueva cantidad con "UND" al final
+                    $nueva_cantidad = $nueva_cantidad_numerica . "UND";
+
+                    // Actualizar la cantidad en la base de datos
+                    $update_medicamento_sql = $con->prepare("
+                        UPDATE medicamentos 
+                        SET cantidad = :nueva_cantidad 
+                        WHERE id_medicamento = :id_medicamento
+                    ");
+                    $update_medicamento_sql->bindParam(':nueva_cantidad', $nueva_cantidad);
+                    $update_medicamento_sql->bindParam(':id_medicamento', $id_medicamento);
+                    $update_medicamento_sql->execute();
+                }
+
+                // Confirmar la transacción
+                $con->commit();
+
+                echo "<script>
+                    alert('Medicamentos entregados exitosamente.');
+                    window.location.href = 'autorizaciones_resultado.php?documento=" . $autorizacion['documento'] . "';
+                </script>";
+                exit;
+            } catch (Exception $e) {
+                // Revertir la transacción en caso de error
+                $con->rollback();
+                echo "<p>Error al confirmar la entrega: " . $e->getMessage() . "</p>";
+            }
+        }
+    } else {
+        echo "<p>Código de autorización no proporcionado.</p>";
+        exit;
+    }
+    ?>
     <form method="POST">
-        <table>
+        <table class="table-medicamentos">
             <tr>
                 <th>Código Autorización</th>
                 <td><?php echo htmlspecialchars($autorizacion['cod_auto']); ?></td>
@@ -205,37 +171,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </tr>
             <tr>
                 <th>Nombre del Paciente</th>
-                <td><?php echo htmlspecialchars($autorizacion['nombre']); ?></td>
+                <td><?php echo htmlspecialchars($autorizacion['nombre'] ?? 'N/A'); ?></td>
             </tr>
             <tr>
                 <th>Apellido del Paciente</th>
-                <td><?php echo htmlspecialchars($autorizacion['apellido']); ?></td>
+                <td><?php echo htmlspecialchars($autorizacion['apellido'] ?? 'N/A'); ?></td>
             </tr>
             <tr>
                 <th>Nombre del Médico</th>
-                <td><?php echo htmlspecialchars($autorizacion['nombre_comple']); ?></td>
+                <td><?php echo htmlspecialchars($autorizacion['nombre_comple'] ?? 'N/A'); ?></td>
             </tr>
             <tr>
-                <th>Nombre del Medicamento</th>
-                <td><?php echo htmlspecialchars($autorizacion['medicamento']); ?></td>
-            </tr>
-            <tr>
-                <th>Presentación</th>
-                <td><?php echo htmlspecialchars($autorizacion['presentacion']); ?></td>
-            </tr>
-            <tr>
-                <th>Cantidad</th>
-                <td><?php echo htmlspecialchars($autorizacion['cantidad']); ?></td>
+                <th>Medicamentos</th>
+                <td>
+                    <table class="table-medicamentos">
+                        <tr>
+                            <th class="selector">ID</th>
+                            <th class="selector">Nombre</th>
+                            <th class="selector">Presentación</th>
+                            <th class="selector">Cantidad</th>
+                            <th class="selector">Disponibilidad</th>
+                        </tr>
+                        <?php foreach ($medicamentos as $medicamento): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($medicamento['id']); ?></td>
+                                <td><?php echo isset($medicamento['name']) ? htmlspecialchars($medicamento['name']) : 'N/A'; ?></td>
+                                <td><?php echo isset($medicamento['presentacion']) ? htmlspecialchars($medicamento['presentacion']) : 'N/A'; ?></td>
+                                <td><?php echo isset($medicamento['cantidad']) ? htmlspecialchars($medicamento['cantidad']) : 'N/A'; ?></td>
+                                <?php
+                                $id_medicamento = $medicamento['id'];
+                                $cantidad_medicamento = intval($medicamento['cantidad']);
+                                $sql_disponibilidad = $con->prepare("
+                                    SELECT cantidad
+                                    FROM medicamentos
+                                    WHERE id_medicamento = :id_medicamento
+                                ");
+                                $sql_disponibilidad->bindParam(':id_medicamento', $id_medicamento);
+                                $sql_disponibilidad->execute();
+                                $resultado = $sql_disponibilidad->fetch(PDO::FETCH_ASSOC);
+                                $cantidad_disponible = intval(preg_replace('/[^0-9]/', '', $resultado['cantidad']));
+
+                                if ($cantidad_disponible >= $cantidad_medicamento) {
+                                    $disponibilidad_texto = "Disponible";
+                                    $disponibilidad_class = "disponible";
+                                } else {
+                                    $disponibilidad_texto = "No disponible";
+                                    $disponibilidad_class = "no-disponible";
+                                }
+                                ?>
+                                <td class="<?php echo $disponibilidad_class; ?>"><?php echo $disponibilidad_texto; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+
+                        
+                    </table>
+                </td>
             </tr>
             <tr>
                 <th>Fecha de Autorización</th>
-                <td><?php echo htmlspecialchars($autorizacion['fecha_hora_auto']); ?></td>
+                <td><?php echo htmlspecialchars($autorizacion['fecha']); ?></td>
             </tr>
             <tr>
                 <th>Fecha de Vencimiento</th>
                 <td><?php echo htmlspecialchars($autorizacion['fecha_venc']); ?></td>
             </tr>
         </table>
+        
         <p>
             <label>
                 <input type="checkbox" name="confirmar_entrega" required>
@@ -243,9 +244,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </label>
         </p>
         <p>
-            <input type="submit" value="Confirmar Entrega" class="btn">
+            <button type="submit" class="btn btn-primary">Confirmar Entrega</button>
         </p>
-    </form>
-</div>
-</body>
+               </form>
+        </div>
+    </body>
 </html>
+

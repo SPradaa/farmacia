@@ -41,7 +41,9 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Tipos de Usuario</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
+        <link rel="stylesheet" href="../css/tip_usu.css">
     </head>
     <body>
         <div class="contenedor">

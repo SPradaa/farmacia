@@ -40,8 +40,10 @@ session_start();
     <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Documento</title>
-        <link rel="stylesheet" href="../../css/estilo.css">
+        <title>Tipos de dentificación</title>
+        <link rel="stylesheet" href="../css/tip_usu.css">
+        <link href="../../../../assets/img/log.png" rel="icon">
+        <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     </head>
     <body>
         <div class="contenedor">

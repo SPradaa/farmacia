@@ -1,0 +1,208 @@
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;	
+	font-family: Raleway, sans-serif;
+}
+
+body {
+	background: linear-gradient(90deg, #ffffff, rgb(149, 238, 243));	
+}
+
+
+.login-box {
+    width: 740px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    margin-top: -24px;
+    margin-bottom: -10px;
+}
+
+img{
+  width: 90px;
+  height: 70px;
+  margin-left: 45px;
+
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 55px;
+    margin-top: -60px;
+    color: #333;
+    font-family: Raleway, sans-serif;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+label{
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+input[type="text"] {
+    width: calc(47% - 10px);
+    padding: 10px;
+    border: 2px solid #02e8f8;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+select{
+    width: calc(47% - 10px);
+    padding: 10px;
+    border: 2px solid #02e8f8;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+input[type="number"] {
+    width: calc(47% - 10px);
+    padding: 10px;
+    border: 2px solid #02e8f8;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-right: 11px;
+}
+
+input[type="date"]{
+  margin-left: 18px;
+  border: 2px solid #02e8f8;
+  height: 30px;
+  width: 120px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+input[type="password"]
+ {
+    width: calc(45% - 10px);
+    padding: 10px;
+    border: 2px solid #02e8f8;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 28px;
+    margin-bottom: -12px;
+}
+
+input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #3cb1b7;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 172px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+input[type="submit"]:hover {
+    background-color: #36acbc;
+}
+
+.generate{
+  background-color: #3cb1b7;
+  border:1px solid #3cb1b7;
+  height: 40px;
+  width: 150px;
+  border-radius: 5px;
+  margin-left: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+.generate:hover{
+    background-color: #4cbdc3;
+}
+
+.regresar{
+    display: flex;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+.regresar {
+  margin-top: -2px;
+  margin-left: -50px;
+  }
+  
+
+  @media (max-width: 768px) {
+    input[type="text"],
+    select{
+        width: calc(49% - 10px);
+        margin-left: 8px;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    .login-box{
+        width: 460px;
+        margin-top: -25px;
+    }
+  }
+
+  @media (max-width: 486px) {
+    .login-box{
+        width: 460px;
+        margin-top: -85px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1{
+        font-size: 20px;
+        
+    }
+  }
+
+  @media (max-width: 768px) {
+    img{
+        margin-left: 5px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .regresar{
+        margin-top: 5px;
+        margin-bottom: 38px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    input[type="password"]{
+        width: calc(49% - 10px);
+        margin-left: 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    input[type="submit"]{
+        margin-left: 75px;
+        margin-bottom: 6px;
+        margin-top: -38px;
+    }
+  }
+  .error {
+    border: 2px solid red;
+}
+.error-message {
+    color: red;
+    display: none;
+}

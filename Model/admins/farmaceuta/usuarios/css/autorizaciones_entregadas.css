@@ -1,0 +1,89 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #05a0b8;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color:#046bcc;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px #999;
+        }
+
+        .btn:hover {background-color: #046bcc}
+
+        .btn:active {
+            background-color:#046bcc;
+            box-shadow: 0 2px #666;
+            transform: translateY(2px);
+        }
+
+        .btn-secondary {
+            background-color: #046bcc;
+        }
+
+        .btn-secondary:hover {
+            background-color: #046bcc;
+        }
+
+        .btn-secondary:active {
+            background-color: #046bcc;
+        }
+    

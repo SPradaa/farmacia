@@ -28,17 +28,32 @@ if(isset($_GET['btn_buscar'])) {
     <title>Lista de Empresas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/estilo.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link href="../../../../assets/img/log.png" rel="icon">
+    <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
 </head>
+<style>
+@media (max-width: 768px) {
+.contenedor{
+    width: 150%;
+    margin-left: 4px;
+}}
+</style>
 <body>
 
 <div class="contenedor">
     <h2>EMPRESAS</h2>
     <div class="row mt-3">
         <div class="col-md-6">
+        <?php if(isset($_GET['btn_buscar'])): ?>
+            <form action="index_emp.php" method="get">
+                <input type="submit" value="Regresar" class="btn btn-secondary"/>
+            </form>
+        <?php else: ?>
             <form action="../index.php">
                 <input type="submit" value="Regresar" class="btn btn-secondary"/>
             </form>
+        <?php endif; ?>
         </div>
         <div class="barra_buscador">
             <form action="" class="formulario" method="GET">
@@ -47,6 +62,7 @@ if(isset($_GET['btn_buscar'])) {
                 <a href="create_emp.php" class="btn btn_nuevo">Crear Empresa</a>
             </form>
         </div>
+        <div class="table-container"></div>
         <table>
             <tr class="head">
                 <td>Nit</td>
@@ -80,7 +96,7 @@ if(isset($_GET['btn_buscar'])) {
                 }
             } else {
                 // Mostrar todos los registros si no se ha realizado una búsqueda
-                $consulta = $con->prepare("SELECT * FROM empresas, estados WHERE empresas.id_estado = estados.id_estado");
+                $consulta = $con->prepare("SELECT * FROM empresas, estados WHERE empresas.id_estado = estados.id_estado ORDER BY empresa");
                 $consulta->execute();
                 while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
             ?>
@@ -100,6 +116,7 @@ if(isset($_GET['btn_buscar'])) {
             }
             ?>
         </table>
+     </div>
     </div>
 </div>
 </body>

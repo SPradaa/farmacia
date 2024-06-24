@@ -11,7 +11,7 @@ $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // Configurar el documento
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Tu Nombre');
+$pdf->SetAuthor('VitalFarma');
 $pdf->SetTitle('Reporte de Usuarios');
 $pdf->SetSubject('Reporte generado automáticamente');
 $pdf->SetKeywords('TCPDF, PDF, reporte, usuarios');
@@ -62,14 +62,33 @@ th {
                 </tr>
             </thead>
             <tbody>';
+            
 
-$consulta = $con->prepare("SELECT usuarios.*, t_documento.tipo, municipios.municipio, rh.rh, roles.rol, estados.estado
+        
+
+$documento=$_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono =$_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$empresa = $_SESSION[ 'nit'];
+
+
+
+// Verificar si se encontró al usuario
+
+
+
+$consulta = $con->prepare("SELECT usuarios.*, t_documento.tipo, municipios.municipio, rh.rh, roles.rol, estados.estado, empresas.nit
                           FROM usuarios
                           JOIN t_documento ON usuarios.id_doc = t_documento.id_doc
                           JOIN municipios ON usuarios.id_municipio = municipios.id_municipio
                           JOIN rh ON usuarios.id_rh = rh.id_rh
                           JOIN roles ON usuarios.id_rol = roles.id_rol
-                          JOIN estados ON usuarios.id_estado = estados.id_estado
+                          JOIN empresas ON usuarios.nit = empresas.nit
+                          JOIN estados ON usuarios.id_estado = estados.id_estado Where usuarios.nit = $empresa
                           ORDER BY nombre ASC");
 $consulta->execute();
 

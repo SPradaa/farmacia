@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+input[type="text"], input[type="date"], input[type="datetime-local"], select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-regresar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #046bcc; 
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    position: relative; /* Para permitir la animación */
+    overflow: hidden; /* Ocultar elementos que se salgan del botón */
+}
+.btn-regresar:hover {
+    background-color: #0056b3; 
+}
+.btn-regresar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+.btn-regresar:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+.col-md-6 {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #046bcc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    position: relative; /* Para permitir la animación */
+    overflow: hidden; /* Ocultar elementos que se salgan del botón */
+}
+.btn:hover {
+    background-color: #0056b3;
+}
+.col-md-6 {
+    margin-bottom: 20px;
+}
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+.header{
+    background: #1295c5 ;
+}
+input[name="id_medicamento"] {
+border: none;
+outline: none; /* Remover el contorno al hacer clic */
+box-shadow: none; /* Remover la sombra */
+background-color: transparent; /* Hacer el fondo transparente */
+}

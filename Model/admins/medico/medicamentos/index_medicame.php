@@ -26,7 +26,7 @@ if (isset($_GET['btn_buscar'])) {
 <head>
     <meta charset="UTF-8">
     <title>Medicamentos</title>
-    <link rel="stylesheet" href="../../css/estilo.css">
+    <link rel="stylesheet" href="../../desarrollador/css/medicamentos.css">
     <style>
         .codigo-barras-container {
             text-align: center;
@@ -60,6 +60,7 @@ if (isset($_GET['btn_buscar'])) {
                     <a href="registro.php" class="btn btn_nuevo">Crear Medicamento</a>
                 </form>
             </div>
+            <div class="table-container">
             <table>
                 <tr class="head">
                     <td>Nombre</td>
@@ -89,7 +90,7 @@ if (isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                        <img src="images/<?= $fila["codigo_barras"] ?>.png">
+                        <img src="<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>

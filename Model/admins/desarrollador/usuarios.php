@@ -13,7 +13,6 @@ $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $sql->bindParam(':documento', $_SESSION['documento']);
 $sql->execute();
 $fila = $sql->fetch();
-echo"conectado";
 
 $documento=$_SESSION['documento'];
 $nombre = $_SESSION['nombre'];
@@ -51,14 +50,19 @@ if (!$fila) {
     <meta name="robots" content="noindex,nofollow">
     <title>Usuarios</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
+     <!-- Favicon icon -->
+     <link href="../../../assets/img/log.png" rel="icon">
+    <link href="../../../assets/img/log.png" rel="apple-touch-icon">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/usuarioos.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -81,86 +85,73 @@ if (!$fila) {
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
+    <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
                 <!-- Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-                        
-                        <!-- Logo icon -->     <h5 class="logg">Vital<spam class="sombra" >Farma</spam></h5>
-              
-                    </a>
+                <div class="logg">
+                            <img src="../../../assets/img/logo.png">
+                            </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse">
-                    <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                     <h1 class="rol">Desarrollador</h1>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
+                    <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                            <h3 class="titulo">Bienvenido/a Desarrollador <?php echo $nombre;?></h3>
+                        </div>
+                    </div>
                         <!-- ============================================================== -->
-                        <!-- Profile -->
+                        <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                                    class="hidden-md-down"> <?php echo $nombre_comple ?></span> &nbsp;</span> </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
+                        <li class="nav-item hidden-xs-down search-box"> 
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a
+                                    class="srh-btn"></a> </form>
                         </li>
                     </ul>
+                    
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Usuarios </span></a>
+                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="hide-menu">Usuarios</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">modulo medico</span></a>
+                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false">
+                        <i class="fas fa-briefcase-medical"></i><span class="hide-menu">Módulo Médico</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Citas</span></a>
+                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false">
+                        <i class="fas fa-map-marked-alt"></i><span class="hide-menu">Datos generales</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false"><i
-                                    class="fa fa-bookmark-o"></i><span class="hide-menu">Datos generales</span></a>
-                        </li>
-
+                        
                     </ul>
-                    
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
+                    </ul>
+                  
+                  </nav>
+                  <div class="boton">
+                  <form method="POST" action="../../../index.html">
+                      <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                  </form>
+                </div>
+                  <!-- End Sidebar navigation -->
+                </div>
+              <!-- End Sidebar scroll-->
+            </aside>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -176,10 +167,10 @@ if (!$fila) {
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
+                    <div class="medicamentos">
                         <h3 class="text-themecolor">usuarios</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
                             <li class="breadcrumb-item active">Usuarios</li>
                         </ol>
                     </div>
@@ -193,15 +184,7 @@ if (!$fila) {
                 <!-- ============================================================== -->
                 <div class="row">
                     <!-- column -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Modulo de Usuarios</h4>
-                                <h6 class="card-subtitle">Administra los usuarios y reasigna Roles</h6>
-
-                                
-                                <!-- modulo de usuarios -->
-                        <!-- Módulo de Usuarios y Especialización -->
+                    
 <div class="space">
     <div class="card-container">
         <!-- Carta para Usuarios -->
@@ -241,7 +224,7 @@ if (!$fila) {
 <div class="card">
     <a href="tipo_documento/index_docu.php">
         <div class="card_box">
-            <h3 class="car_box__title">Tipos de identificacion</h3>
+            <h3 class="car_box__title">Tipos de identificación</h3>
             <p class="card_box__content">Administra los diferentes tipos de documentos de identificación en este módulo.</p>
             <div class="card__date">Haz clic para acceder y definir los diferentes tipos de documentos de identificación admitidos en el sistema.</div>
             <div class="card_box__arrow">
@@ -268,8 +251,7 @@ if (!$fila) {
                                
                         <!-- footer -->
                         <!-- ============================================================== -->
-                        <footer class="footer"> © 2021 Adminwrap by <a
-                                href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+                        <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados.</footer>
                         <!-- ============================================================== -->
                         <!-- End footer -->
                         <!-- ============================================================== -->

@@ -24,12 +24,13 @@ validarSesion();
     <meta name="robots" content="noindex,nofollow">
     <title>Modulo Medico</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="../../../assets/img/log.png" rel="icon">
+    <link href="../../../assets/img/log.png" rel="apple-touch-icon">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../desarrollador/css/usuarioos.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/icon-page.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -43,125 +44,82 @@ validarSesion();
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
+   
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">VitalFarma</p>
+        </div>
+    </div>
+    
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
+    <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
                 <!-- Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
-
-                        <!-- Logo icon -->
-                        <h5 class="logg">Vital<spam class="sombra">Farma</spam>
-                        </h5>
-
-                    </a>
+                <div class="logg">
+                            <img src="../../../assets/img/logo.png">
+                            </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse">
-                    <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
-                                href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
+                    <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                            <h3 class="titulo">Bienvenido/a Medico<?php echo $_SESSION['nombre']; ?></h3>
+                        </div>
+                    </div>
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item hidden-xs-down search-box"> <a
-                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
-                                    class="fa fa-search"></i></a>
+                        <li class="nav-item hidden-xs-down search-box"> 
                             <form class="app-search">
                                 <input type="text" class="form-control" placeholder="Search & enter"> <a
-                                    class="srh-btn"><i class="fa fa-times"></i></a>
-                            </form>
+                                    class="srh-btn"></a> </form>
                         </li>
                     </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="../assets/images/users/1.jpg" alt="user" class="" /> <span
-                                    class="hidden-md-down">Mark Sanders &nbsp;</span> </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
-                        </li>
-                    </ul>
+                    
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i
-                                    class="fa fa-tachometer"></i><span class="hide-menu">Principal</span></a>
+                        <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
+                        <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false"><i
-                                    class="fa fa-user-circle-o"></i><span class="hide-menu">Perfil</span></a>
+                        <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false"><i
-                                    class="fa fa-table"></i><span class="hide-menu">Usuarios </span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false"><i
-                                    class="fa fa-smile-o"></i><span class="hide-menu">modulo medico</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="citas.php" aria-expanded="false"><i
-                                    class="fa fa-globe"></i><span class="hide-menu">Citas</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false"><i
-                                    class="fa fa-bookmark-o"></i><span class="hide-menu">Datos generales</span></a>
+                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false">
+                        <i class="fas fa-briefcase-medical"></i><span class="hide-menu">Módulo Médico</span></a>
                         </li>
 
                     </ul>
 
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+                    </nav>
+                  <div class="boton">
+                  <form method="POST" action="../../../index.html">
+                      <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
+                  </form>
+                </div>
+                  <!-- End Sidebar navigation -->
+                </div>
+              <!-- End Sidebar scroll-->
+            </aside>
+
+            <div class="page-wrapper">
+            
             <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
+                
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
+                    <div class="medicamentos">
                         <h3 class="text-themecolor">Control De Modulo Medico </h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -170,24 +128,17 @@ validarSesion();
                     </div>
 
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
+                
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Modulos de control y edicion del espacio medico</h4>
-                                <h6 class="card-subtitle">interfaz encargada del area medica
-                                </h6>
-                                <div class="space">
+    <!-- column -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
 
-                                   
-                                    <!-- modulo medicamentos  -->
-                                    <div class="card">
+                <div class="card-container">
+                    <!-- Carta para el módulo de citas -->
+                    <div class="card">
 
                                         <a href="medicamentos/index_medicame.php">
                                             <div class="card_box">
@@ -211,21 +162,11 @@ validarSesion();
                                     </div>
 
 
-                                    <!-- fin modulo  medicamentos   -->
-                                    
-
-                                    <!-- <div class="space"> -->
-
-                                                                       
-                                    <!-- modulo historia clinica -->
-
-
                                     <div class="card">
 
                                     <a href="autorizaciones/index_automedicam.php">
                                         <div class="card_box">
-                                    <h3 class="car_box__title">Citas
-                                    </h3>
+                                    <h3 class="car_box__title">Citas</h3>
                                         <p class="card_box__content">Accede a la gestión de datos relacionados
                                         con citas </p>
                                             <div class="card__date">
@@ -246,66 +187,17 @@ validarSesion();
                                     <!-- fin modulo  Historia clinica -->
 
 
-                                    <!-- modulo autorizacion -->
-
-
-                                    <div class="card">
-
-                                        <a href="/historiasclinicas.php">
-                                            <div class="card_box">
-                                        <h3 class="car_box__title">Historias clínicas
-                                        </h3>
-                                            <p class="card_box__content">Accede a la gestión de datos relacionados
-                                            con Historias clínicas </p>
-                                                <div class="card__date">
-                                                Haz clic para verificar las historias clinicas.
-                                    </div>
-                                    <div class="card_box__arrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" height="15" width="15">
-                                            <path fill="#fff"
-                                            d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </a>
-</div>
-
-                                    <!-- fin modulo  Autorización -->
-
-
                                 </div>
 
 
 
                             </div>
-                            <!-- ============================================================== -->
-                            <!-- End PAge Content -->
-                            <!-- ============================================================== -->
                         </div>
-                        <!-- ============================================================== -->
-                        <!-- End Container fluid  -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- footer -->
-                        <!-- ============================================================== -->
-                        <footer class="footer"> © 2021 Adminwrap by <a
-                                href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
-                        <!-- ============================================================== -->
-                        <!-- End footer -->
-                        <!-- ============================================================== -->
+                         <footer class="footer"> © 2024 EPS Vitalfarma Todos los derechos reservados. </footer>
+                        
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- End Page wrapper  -->
-                    <!-- ============================================================== -->
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Wrapper -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- All Jquery -->
-                <!-- ============================================================== -->
+
                 <script src="assets/node_modules/jquery/jquery.min.js"></script>
                 <!-- Bootstrap tether Core JavaScript -->
                 <script src="assets/node_modules/bootstrap/js/bootstrap.bundle.min.js"></script>

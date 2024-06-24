@@ -48,9 +48,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restablecer Contraseña</title>
-  <link href="assets/img/logof.png" rel="icon">
-  <link href="assets/img/logof.png" rel="apple-touch-icon">
+  <link href="assets/img/log.png" rel="icon">
+  <link href="assets/img/log.png" rel="apple-touch-icon">
   <link rel="stylesheet" href="assets/css/recuperar.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+          $("#correo").on("input", function() {
+                validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, this, "Ingrese un correo válido que lleve '@'");
+            });
+        });
+
+        function validateForm() {
+          const isCorreoValid = validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, document.getElementById("correo"), "Debe ser un correo válido que lleve '@'");
+
+          return isCorreoValid;
+        }
+    </script>
 </head>
 <body>
 <div class="regresar">
