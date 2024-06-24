@@ -231,8 +231,8 @@ if ((isset($_POST['validar']) && $_POST['MM_insert'] == "formreg")) {
                 <input type="text" id="cod_autorizacion" name="cod_autorizacion" required maxlength="3" onkeypress="validateNumberInput(event)" onblur="checkCodeExists()">
             </div>
             <div class="form-group">
-    <label for="cod_autorizacion">Cadena de texto</label>
-    <input type="text" id="cadenaMedicamentos" name="medicamentos">
+    <!-- <label for="cod_autorizacion">Cadena de texto</label> -->
+    <input type="hidden" id="cadenaMedicamentos" name="medicamentos">
 </div>
 
             <div class="form-group">
