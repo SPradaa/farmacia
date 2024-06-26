@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,6 +46,14 @@
     require_once("../../../db/connection.php");
     $conexion = new Database();
     $con = $conexion->conectar();
+
+
+require_once("../../../controller/seguridad.php");
+validarSesion();
+
+
+
+
 
     if (isset($_GET['cod_auto'])) {
         $cod_auto = filter_input(INPUT_GET, 'cod_auto', FILTER_SANITIZE_STRING);

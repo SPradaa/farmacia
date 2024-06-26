@@ -1,8 +1,15 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php"); 
 $conexion = new Database();
 $con = $conexion->conectar();
+
+require_once("../../../../controller/seg.php");
+validarSesion();
+
+
+// Obtener el documento del médico de la sesión
+$docu_medico = $_SESSION['documento'];
 
 // Configurar la zona horaria a Colombia
 date_default_timezone_set('America/Bogota');
@@ -10,11 +17,8 @@ date_default_timezone_set('America/Bogota');
 // Obtener la hora actual
 $hora_actual = date('H:i:s');
 
-// Obtener el documento del médico logueado
-$docu_medico = $_SESSION['documento'];
-
-// Consulta para obtener las citas del día actual con id_estado = 1 y docu_medico del médico logueado
-$sentencia_select = $con->prepare("SELECT * FROM citas WHERE DATE(fecha) = CURDATE() AND id_estado = 1 AND docu_medico = :docu_medico ORDER BY hora ASC");
+// Consulta para obtener las citas del día actual del médico y con id_estado = 1
+$sentencia_select = $con->prepare("SELECT * FROM citas WHERE DATE(fecha) = CURDATE() AND docu_medico = :docu_medico AND id_estado = 1 ORDER BY hora ASC");
 $sentencia_select->bindParam(':docu_medico', $docu_medico);
 $sentencia_select->execute();
 $resultado = $sentencia_select->fetchAll();
@@ -79,9 +83,8 @@ foreach ($resultado as $fila) {
                            JOIN especializacion e ON c.id_esp = e.id_esp
                            JOIN estados es ON c.id_estado = es.id_estado
                            JOIN usuarios us ON c.documento = us.documento
-                           WHERE c.documento LIKE ? AND DATE(c.fecha) = CURDATE() AND c.id_estado = 1 AND c.docu_medico = :docu_medico
+                           WHERE c.documento LIKE ? AND DATE(c.fecha) = CURDATE() AND c.docu_medico = :docu_medico AND c.id_estado = 1
                            ORDER BY c.hora ASC");
-                    $consulta->bindParam(':docu_medico', $docu_medico);
                     $consulta->execute(array("%$buscar%"));
                     while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 ?>
@@ -103,7 +106,7 @@ foreach ($resultado as $fila) {
                            JOIN especializacion e ON c.id_esp = e.id_esp
                            JOIN estados es ON c.id_estado = es.id_estado
                            JOIN usuarios us ON c.documento = us.documento
-                           WHERE DATE(c.fecha) = CURDATE() AND c.id_estado = 1 AND c.docu_medico = :docu_medico
+                           WHERE DATE(c.fecha) = CURDATE() AND c.docu_medico = :docu_medico AND c.id_estado = 1
                            ORDER BY c.hora ASC");
                     $consulta->bindParam(':docu_medico', $docu_medico);
                     $consulta->execute();
@@ -136,7 +139,9 @@ foreach ($resultado as $fila) {
 
     // Llamar a la función para iniciar la recarga automática
     recargarPagina();
-</script>
-
+    </script>
 </body>
 </html>
+
+
+

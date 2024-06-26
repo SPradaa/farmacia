@@ -3,6 +3,10 @@ require_once("../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
+require_once("../../../controller/seguridad.php");
+validarSesion();
+
+
 $titulo = "Autorizaciones"; // Definir un título por defecto
 $documento = isset($_GET['documento']) ? $_GET['documento'] : null;
 
@@ -122,3 +126,4 @@ function generarListaMedicamentos($medicamento) {
     </div>
 </body>
 </html>
+

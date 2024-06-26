@@ -2,9 +2,12 @@
 require_once("../../db/connection.php"); 
 $db = new Database();
 $con = $db->conectar();
-session_start();
+// session_start();
 ?>
-
+<?php
+require_once("../../controller/seguridad_code.php");
+validarSesion();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

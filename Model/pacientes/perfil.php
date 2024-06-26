@@ -119,6 +119,41 @@ if (isset($_POST['update'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="css/perfiil.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+
+            $("#telefono").on("input", function() {
+                validateField(/^\d{10}$/, this, "Debe ingresar solo números (10 dígitos)");
+            });
+
+            $("#correo").on("input", function() {
+                validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, this, "Ingrese un correo válido que lleve '@'");
+            });
+
+            $("#direccion").on("input", function() {
+                validateField(/^[a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]*$/, this, "Ingrese una dirección válida");
+            });
+
+            
+        });
+
+        function validateForm() {
+            const isTelefonoValid = validateField(/^\d{10}$/, document.getElementById("telefono"), "Debe ingresar solo números (10 dígitos)");
+            const isCorreoValid = validateField(/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/, document.getElementById("correo"), "Debe ser un correo válido que lleve '@'");
+            const isDireccionValid = validateField(/^[a-zA-Z0-9#.,\-_áéíóúÁÉÍÓÚñÑ\s]*$/, document.getElementById("direccion"), "Debe ser una dirección válida");
+
+            return isTelefonoValid && isCorreoValid && isDireccionValid && isPasswordValid;
+        }
+    </script>
 
 </head>
 
@@ -291,11 +326,11 @@ if (isset($_POST['update'])) {
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label>Correo:</label>
-                        <input type="text" name="correo" id="correo" pattern="[0-9a-zA-Z@_.-]{7,60}" title="El correo debe contener un @ y debe contener minimo 7 digitos" value ="<?php echo $correo ;?>" class="form-control form-control-line">
+                        <input type="text" name="correo" id="correo"  value ="<?php echo $correo ;?>" class="form-control form-control-line">
                     </div>
                     <div class="col-md-6">
                         <label>Telefono:</label>
-                        <input type="text" name="telefono" id="telefono" pattern="[0-9]{10}" title="El telefono debe contener solo numeros (10 digitos)" value="<?php echo $telefono ; ?>" class="form-control form-control-line">
+                        <input type="text" name="telefono" id="telefono" value="<?php echo $telefono ; ?>" class="form-control form-control-line">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -321,7 +356,7 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="col-md-6">
                         <label>Dirección:</label>
-                        <input type="text" pattern="[0-9a-zA-ZÑñ#.,_-´ ]{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
+                        <input type="text" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
                 <div class="form-group">
@@ -346,7 +381,7 @@ if (isset($_POST['update'])) {
             var id_depart = $(this).val();
             $.ajax({
                 type: "POST",
-                url: "municipio.php",
+                url: "../admins/farmaceuta/municipio.php",
                 data: {id_depart: id_depart},
                 success: function(response){
                     $('#id_municipio').html(response);

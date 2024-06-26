@@ -1,11 +1,14 @@
 <?php
-session_start();
+// session_start();
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
     
 ?>
-
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
 <?php 
     
     $sentencia_select=$con->prepare("SELECT * FROM roles ORDER BY rol ASC");
@@ -64,13 +67,11 @@ session_start();
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Tipo de Usuario" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
-                    <a href="create_tip_usu.php" class="btn btn_nuevo">Crear Tipo de Usuario</a>
                 </form>
             </div>
             <table>
                 <tr class="head">
                     <td>Tipo de Usuario</td>
-                    <td colspan="2">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -81,8 +82,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['rol']; ?></td>
-                        <td><a href="update_tip_usu.php?id_rol=<?php echo $fila['id_rol']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_tip_usu.php?id_rol=<?php echo $fila['id_rol']; ?>" class="btn__delete">Eliminar</a></td>
+                       
                     </tr>
                 <?php 
                     }
@@ -94,8 +94,7 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['rol']; ?></td>
-                        <td><a href="update_tip_usu.php?id_rol=<?php echo $fila['id_rol']; ?>" class="btn__update">Editar</a></td>
-                        <td><a href="delete_tip_usu.php?id_rol=<?php echo $fila['id_rol']; ?>" class="btn__delete">Eliminar</a></td>
+                      
                     </tr>
                 <?php 
                     }

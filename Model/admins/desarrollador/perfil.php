@@ -228,12 +228,7 @@ if (isset($_POST['update'])) {
                         <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
                         <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false">
-                        <i class="fas fa-briefcase-medical"></i><span class="hide-menu">Módulo Médico</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false">
-                        <i class="fas fa-map-marked-alt"></i><span class="hide-menu">Datos generales</span></a>
-                        </li>
+                        
                        
                         
                     </ul>
@@ -358,7 +353,7 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="col-md-6">
                         <label>Dirección:</label>
-                        <input type="text" id="direccion" pattern="[0-9a-zA-ZÑñ#.,_-´ ]{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
+                        <input type="text" id="direccion" pattern="{10,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
                 <div class="form-group">

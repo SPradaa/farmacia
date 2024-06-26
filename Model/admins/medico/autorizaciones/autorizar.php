@@ -3,6 +3,9 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
+require_once("../../../../controller/seg.php");
+validarSesion();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cod_auto = $_POST['cod_autorizacion'];
     $id_cita = $_POST['id_cita'];

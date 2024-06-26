@@ -18,16 +18,16 @@ body {
     display: block;
     margin: 0 auto 20px auto;
     width: 100px;
-    margin-left: 50px;
-    margin-top: 50px
+    margin-left: 8%;
+    margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
+    margin-bottom: 60px;
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     color: #333;
-    margin-top: -220px;
-    padding: 50px;
+    margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
 }
 
 .seccion {
@@ -84,8 +84,7 @@ h2 {
 
     h2 {
         font-size: 1.2em;
-        margin-right: -50px;
-        margin-top: -200px;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
     }
 
     .seccion h3 {
@@ -104,14 +103,13 @@ h2 {
     }
 
     .logo {
-        width: 100px;
-        margin-left: 20px;
+        width: 80px;
+        margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
     }
 
     h2 {
         font-size: 1.2em;
-        margin-right: -20px;
-        margin-top: -210px;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
     }
 
     .seccion h3 {
@@ -132,14 +130,12 @@ h2 {
 
     .logo {
         width: 70px;
-        margin-left: 10px;
-        
+        margin-top: 10px; /* Ajusta este valor para controlar el espacio superior */
     }
 
     h2 {
         font-size: 1.2em;
-        margin-right: -80px;
-        margin-top: -200px;
+        margin-top: -15%; /* Ajusta este valor para controlar el espacio superior */
     }
 
     .seccion h3 {

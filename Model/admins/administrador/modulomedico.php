@@ -96,7 +96,7 @@ if (!$fila) {
                     <ul class="navbar-nav me-auto">
                     <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                            <h3 class="titulo">Bienvenido/a Desarrollador <?php echo $nombre;?></h3>
+                            <h3 class="titulo">Bienvenido/a Administrador <?php echo $nombre;?></h3>
                         </div>
                     </div>
                         <!-- ============================================================== -->

@@ -6,6 +6,11 @@ session_start();
 ?>
 
 <?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
+
+<?php
 
     if(isset($_GET['id_esp'])){
         $id_esp=(int) $_GET['id_esp'];

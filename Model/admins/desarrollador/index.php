@@ -73,6 +73,63 @@ if ($estupdate->execute()) {
 }
 ?>
 
+<?php
+
+if (isset($_POST['update'])) { // Comprueba si se ha enviado el formulario
+    $documento = $_POST['documento']; // Campo oculto para identificar al usuario
+    $id_rol = $_POST['id_rol']; // Rol a actualizar
+    $id_estado = $_POST['id_estado']; // Estado a actualizar
+
+    // Verificación de datos requeridos
+    if (empty($documento) || empty($id_rol) || empty($id_estado)) {
+        echo '<script>alert("EXISTEN DATOS VACÍOS");</script>';
+        echo '<script>window.location="index.php"</script>';
+    } else {
+        // Consulta para actualizar el rol y el estado
+        $estupdate = $con->prepare("UPDATE usuarios 
+                                    SET id_rol = :id_rol, id_estado = :id_estado 
+                                    WHERE documento = :documento");
+
+        // Asignar valores a los parámetros
+        $estupdate->bindParam(':documento', $documento, PDO::PARAM_INT);
+        $estupdate->bindParam(':id_rol', $id_rol, PDO::PARAM_INT);
+        $estupdate->bindParam(':id_estado', $id_estado, PDO::PARAM_INT);
+
+        // Ejecutar la actualización
+        if ($estupdate->execute()) {
+            echo '<script> alert("ACTUALIZACIÓN EXITOSA");</script>';
+
+            // Obtener el correo electrónico del usuario actualizado
+            $stmt = $con->prepare("SELECT correo FROM usuarios WHERE documento = :documento");
+            $stmt->bindParam(':documento', $documento, PDO::PARAM_INT);
+            $stmt->execute();
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $correo = $fila["correo"];
+
+            $paracorreo = "$correo";
+            $titulo ="activacion de usuario";
+            $msj = "Bienvenido a nuestra plataforma, usted ha sido activado exitosamente";
+            
+            $tucorreo="From:vitalfarma9@gmail.com";
+            if(mail($paracorreo, $titulo, $msj, $tucorreo))
+            {
+              echo '<script> alert ("Su codigo ha sido enviado al correo anteriormente digitado");</script>';
+            //   echo '<script>window.location="code.php"</script>';
+            }
+            else{
+                echo "Error";
+            }
+
+            echo '<script>window.location="index.php"</script>';
+        } else {
+            echo '<script> alert("ERROR AL ACTUALIZAR");</script>';
+            echo '<script>window.location="index.php"</script>';
+        }
+    }
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -191,15 +248,7 @@ if(isset($_POST['btncerrar']))
                         <li> <a class="waves-effect waves-dark" href="perfil.php" aria-expanded="false">
                         <i class="fa fa-user-circle-o"></i><span class="hide-menu" id="perf">Perfil</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="usuarios.php" aria-expanded="false">
-                        <i class="fas fa-users"></i><span class="hide-menu">Usuarios</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="modulomedico.php" aria-expanded="false">
-                        <i class="fas fa-briefcase-medical"></i><span class="hide-menu">Módulo Médico</span></a>
-                        </li>
-                        <li> <a class="waves-effect waves-dark" href="datosgenerales.php" aria-expanded="false">
-                        <i class="fas fa-map-marked-alt"></i><span class="hide-menu">Datos generales</span></a>
-                        </li>
+                        
                         
                     </ul>
                     </ul>
@@ -230,18 +279,35 @@ if(isset($_POST['btncerrar']))
                     </div>
                    
                 </div> -->
-<div class="row">
+                <div class="row">
+    <!-- Módulo de Citas -->
+    <div class="row">
+    <!-- column -->
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-               
+                
+
                 <div class="card-container">
-                    <!-- Carta para Ciudad -->
+                    <!-- Carta para el módulo de citas -->
                     <div class="card">
                         <a href="empresa/index_emp.php">
                             <div class="card_box">
                                 <h3 class="emp">Empresas</h3>
                                 <div class="card__date">Haz clic para acceder, gestionar y crear empresas.</div>
+                                <div class="card_box__arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+                                        <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card">
+                        <a href="usuarios/registro.php">
+                            <div class="card_box">
+                                <h3 class="emp">Crear Administradores</h3>
+                                <div class="card__date">Haz clic para acceder, gestionar y administradores.</div>
                                 <div class="card_box__arrow">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
                                         <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
@@ -286,11 +352,10 @@ if(isset($_POST['btncerrar']))
             // Asegúrate de tener una conexión de base de datos válida en $con
             $consulta = "SELECT *
                          FROM usuarios
-                        --  JOIN ciudad ON usuarios.id_ciudad = ciudad.id_ciudad
                          JOIN empresas ON usuarios.nit = empresas.nit
                          JOIN estados ON usuarios.id_estado = estados.id_estado
                          JOIN roles ON usuarios.id_rol = roles.id_rol
-                        ";  // Condición para filtrar por empresa
+                         WHERE usuarios.id_rol = 2";  // Filtrar por id_rol = 1
             $resultado = $con->query($consulta);
 
             while ($fila = $resultado->fetch()) {
@@ -306,7 +371,7 @@ if(isset($_POST['btncerrar']))
                 echo "<select name='id_rol'>";
                 echo "<option value='" . $fila['id_rol'] . "'>" . $fila['rol'] . "</option>";
 
-                $control = $con->prepare("SELECT * FROM roles");
+                $control = $con->prepare("SELECT * FROM roles Where id_rol = 1");
                 $control->execute();
 
                 while ($rol = $control->fetch(PDO::FETCH_ASSOC)) {
@@ -344,29 +409,25 @@ if(isset($_POST['btncerrar']))
     </table>
 </div>
 
+<!-- Script para el buscador -->
+<script>
+    document.getElementById("search").addEventListener("keyup", function() {
+        var searchTerm = this.value.toLowerCase();
+        var rows = document.querySelectorAll("#userTable tr");
 
-
-                <!-- </div> -->
-            
-                <!-- Script para el buscador -->
-                <script>
-                    document.getElementById("search").addEventListener("keyup", function() {
-                        var searchTerm = this.value.toLowerCase();
-                        var rows = document.querySelectorAll("#userTable tr");
-            
-                        rows.forEach(function(row) {
-                            var documentColumn = row.querySelector("td:first-child");
-                            if (documentColumn) {
-                                var documentValue = documentColumn.textContent.toLowerCase();
-                                if (documentValue.includes(searchTerm)) {
-                                    row.style.display = "";
-                                } else {
-                                    row.style.display = "none";
-                                }
-                            }
-                        });
-                    });
-                </script>
+        rows.forEach(function(row) {
+            var documentColumn = row.querySelector("td:first-child");
+            if (documentColumn) {
+                var documentValue = documentColumn.textContent.toLowerCase();
+                if (documentValue.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        });
+    });
+</script>
 
 
             <!-- footer -->

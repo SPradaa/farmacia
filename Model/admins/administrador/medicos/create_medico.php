@@ -3,8 +3,20 @@
     $conexion = new Database();
     $con = $conexion->conectar();
     session_start();
+    
+    $documento = $_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono = $_SESSION['telefono'];
+$correo = $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$empresa = $_SESSION['nit'];
 ?>
-
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
 <?php
 
 if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
@@ -18,6 +30,7 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     $id_rol= $_POST['id_rol'];
     $id_estado= $_POST['id_estado'];
     $id_esp= $_POST['id_esp'];
+    
 
     $sql= $con -> prepare ("SELECT * FROM medicos WHERE docu_medico='$docu_medico'");
     $sql -> execute();
@@ -37,7 +50,7 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
     else
     {
       $pass_cifrado=password_hash($clave,PASSWORD_DEFAULT,array("pass"=>12));
-      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$pass_cifrado', '$id_rol', '$id_estado', '$id_esp')");
+      $insertSQL = $con->prepare("INSERT INTO medicos(id_doc, docu_medico, nombre_comple, telefono, correo, password, id_rol, id_estado, id_esp, nit) VALUES('$id_doc', '$docu_medico', '$nombre_comple', '$telefono', '$correo', '$pass_cifrado', '$id_rol', '$id_estado', '$id_esp','$empresa')");
       $insertSQL -> execute();
       echo '<script> alert("REGISTRO EXITOSO");</script>';
       echo '<script>window.location="index_medico.php"</script>';
@@ -126,7 +139,7 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
         </div>
         <div class="login-box">
         <img src="../../../../assets/img/log.farma.png">
-        <h1>Crear Medicos</h1>
+        <h1>Crear Medicos  </h1>
 
         <form method="post" name="form1" id="form1"  autocomplete="off"> 
 
@@ -208,24 +221,6 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
             <input type="hidden" name="MM_insert" value="formreg">
             </form>
     </div>
-    <script>
-    // Guardar los valores de los campos en el Local Storage antes de redirigir
-    $(document).on('submit', '#form1', function(){
-        var formValues = $(this).serializeArray();
-        localStorage.setItem('formValues', JSON.stringify(formValues));
-    });
 
-    // Cargar los valores guardados del Local Storage cuando la página se carga
-    $(document).ready(function(){
-        var formValues = JSON.parse(localStorage.getItem('formValues'));
-        if(formValues){
-            $.each(formValues, function(index, element){
-                $('[name="'+element.name+'"]').val(element.value);
-            });
-            localStorage.removeItem('formValues');
-        }
-    });
-    </script>
-              
 </body>
 </html>

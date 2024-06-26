@@ -1,8 +1,12 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
+
+require_once("../../../../controller/seg.php");
+validarSesion();
+
 
 $sentencia_select = $con->prepare("SELECT medicamentos.*, tipo_medicamento.clasificacion, laboratorio.laboratorio, estados.estado
                                    FROM medicamentos

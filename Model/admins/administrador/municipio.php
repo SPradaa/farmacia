@@ -1,5 +1,6 @@
 <?php
-$conexion = new mysqli("localhost", "u762650701_proyectofarma", "Vitalfarma2480", "u762650701_vitalfarma");
+
+$conexion = new mysqli("localhost", "root", "", "vitalfarma");
 
 if ($conexion->connect_error) {
     die("La conexión ha fallado: " . $conexion->connect_error);

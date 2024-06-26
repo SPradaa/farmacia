@@ -1,9 +1,13 @@
 <?php
-session_start();
+// session_start();
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
     
+?>
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
 ?>
 
 <?php 
@@ -41,7 +45,7 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Especializacion</title>
-        <link rel="stylesheet" href="../../desarrollador/css/tip_usu.css">
+        <link rel="stylesheet" href="../css/tip_usu.css">
         <link href="../../../../assets/img/log.png" rel="icon">
         <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     </head>
@@ -65,11 +69,13 @@ session_start();
                 <form action="" class="formulario" method="GET">
                     <input type="text" name="buscar" placeholder="Buscar Especializacion" class="input_text">
                     <input type="submit" class="btn" name="btn_buscar" value="Buscar">
+                    <a href="insert_esp.php" class="btn btn_nuevo">Crear Especialización</a>
                 </form>
             </div>
             <table>
                 <tr class="head">
                     <td>Especializacion</td>
+                    <td colspan="2">Acción</td>
                 </tr>
                 <?php 
                 if(isset($_GET['btn_buscar'])) {
@@ -80,7 +86,8 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['especializacion']; ?></td>
-                        
+                        <td><a href="update_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__update">Editar</a></td>
+                        <td><a href="delete_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php 
                     }
@@ -92,7 +99,8 @@ session_start();
                 ?>
                     <tr>
                         <td><?php echo $fila['especializacion']; ?></td>
-                        
+                        <td><a href="update_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__update">Editar</a></td>
+                        <td><a href="delete_esp.php?id_esp=<?php echo $fila['id_esp']; ?>" class="btn__delete">Eliminar</a></td>
                     </tr>
                 <?php 
                     }

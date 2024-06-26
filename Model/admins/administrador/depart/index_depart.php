@@ -5,7 +5,10 @@ session_start();
     $con = $conexion->conectar();
     
 ?>
-
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
 <?php 
     
     $sentencia_select=$con->prepare("SELECT * FROM departamentos ORDER BY depart ASC");

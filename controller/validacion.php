@@ -81,19 +81,19 @@ if(isset($_POST["inicio"])) {
         // Redirigir según el tipo de usuario
         if($tipo == 1) {
             // Redirigir al dashboard del desarrollador
-            header("Location: ../model/admins/desarrollador/index.php");
+            header("Location: ../Model/admins/desarrollador/index.php");
             exit();
         } elseif($tipo == 2 ) {
             // Redirigir al dashboard del administrador
-            header("Location: ../model/admins/administrador/index.php");
+            header("Location: ../Model/admins/administrador/index.php");
             exit();
         } elseif($tipo == 3) {
             // Redirigir al dashboard del profesional médico
-            header("Location: ../model/admins/medico/index.php");
+            header("Location: ../Model/admins/medico/index.php");
             exit();
         } elseif($tipo == 4) {
             // Redirigir al dashboard del farmacéutico
-            header("Location: ../model/admins/farmaceuta/index.php");
+            header("Location: ../Model/admins/farmaceuta/index.php");
             exit();
         }
     } else {

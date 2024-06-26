@@ -1,55 +1,57 @@
 <?php
+
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
-    // session_start();
+    session_start();
 ?>
+
 <?php
 require_once("../../../../controller/seg.php");
 validarSesion();
 ?>
+
 <?php
 
 if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
 {
-    $clasificacion = $_POST['clasificacion'];
+    $especializacion = $_POST['especializacion'];
 
-    $sql= $con -> prepare ("SELECT * FROM tipo_medicamento WHERE clasificacion='$clasificacion'");
+    $sql= $con -> prepare ("SELECT * FROM especializacion WHERE especializacion='$especializacion'");
     $sql -> execute();
     $fila = $sql -> fetchAll(PDO::FETCH_ASSOC);
 
     if ($fila){
-    echo '<script>alert ("TIPO DE USUARIO YA EXISTE //CAMBIELO//");</script>';
-    echo '<script>window.location="create_tip_medicam.php"</script>';
+    echo '<script>alert ("TIPO DE ESPECIALIZACIÓN YA EXISTE //CAMBIELO//");</script>';
+    echo '<script>window.location="insert_esp.php"</script>';
     }
     else
 
-    if ($clasificacion=="")
+    if ($especializacion=="")
     {
     echo '<script>alert ("EXISTEN DATOS VACIOS");</script>';
-    echo '<script>window.location="create_tip_medicam.php"</script>';
+    echo '<script>window.location="insert_esp.php"</script>';
     }
     else
     {
-    $insertSQL = $con->prepare("INSERT INTO tipo_medicamento(clasificacion) VALUES('$clasificacion')");
+    $insertSQL = $con->prepare("INSERT INTO especializacion(especializacion) VALUES('$especializacion')");
     $insertSQL -> execute();
-    echo '<script> alert("Tipo de Medicamento registrado exitosamente");</script>';
-    echo '<script>window.location="index_medicam.php"</script>';
+    echo '<script> alert("Tipo de Especialización registrado exitosamente");</script>';
+    echo '<script>window.location="index_esp.php"</script>';
     
     } 
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva especializacion</title>
     <link href="../../../../assets/img/log.png" rel="icon">
     <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="../../css/tip_usua.css">
-    <title>Crear Medicamentos</title>
+    <title>Registro</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
     <script>
         function validateField(regex, input, errorMessage) {
@@ -62,15 +64,15 @@ if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
 
         $(document).ready(function() {
 
-            $("#clasificacion").on("input", function() {
+            $("#especializacion").on("input", function() {
                 validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,30}$/, this, "Ingrese un nombre válido (solo letras)");
             });
         });
 
         function validateForm() {
-            const isClasificacionnValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,30}$/, document.getElementById("clasificacion"), "Ingrese un nombre válido (solo letras)");
+            const isEspecializacionValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){5,30}$/, document.getElementById("especializacion"), "Ingrese un nombre válido (solo letras)");
 
-            return isClasificacionValid;
+            return isEspecializacionValid;
         }
     </script>
     <style>
@@ -103,10 +105,9 @@ img{
     margin-top: -15px;
     margin-bottom: 30px;
 }
-.login-box h1 {
+.login-box h2 {
     margin: 0 0 20px;
-    margin-left: 100px;
-    font-size: 25px;
+    margin-left: 23%;
     color: #333;
     margin-bottom: 70px;
     margin-top: -100px;
@@ -209,10 +210,11 @@ form .btn:hover {
 }
 
 @media screen and (max-width: 767px) {
-    .login-box h1 {
+    .login-box h2 {
+        margin-left: 130px;
         margin-top: -100px; /* Ajusta este valor según sea necesario */
         margin-bottom: 70px; /* Ajusta este valor según sea necesario */
-        font-size: 18px; /* Tamaño de fuente más pequeño para pantallas pequeñas */
+        font-size: 22px; /* Tamaño de fuente más pequeño para pantallas pequeñas */
     }
 }
 
@@ -221,18 +223,16 @@ form .btn:hover {
 <body>
     <div class="login-box">
     <img src="../../../../assets/img/log.farma.png">
-        <h1>Crear Tipo de Medicamento</h1>
-        <form method="POST" name="formreg" autocomplete="off">
-            <div class="campos">
-                <input type="text" name="clasificacion" id="clasificacion" pattern="[a-zA-Z ]{3,20}" title="El tipo de medicamento debe tener solo letras" placeholder="Ingrese el medicamento">
+        <h2>Crear Especialización</h2>
+        <form action="" method="post">
+            <div class="row">
+                <input type="text" name="especializacion" id="especializacion" placeholder="Especialización" class="input__text">
             </div>
-            
-            
-            <a href="index_medicam.php" class="btn btn__danger">Cancelar</a>
+
+            <a href="index_esp.php" class="btn btn__danger">Cancelar</a>
             <input type="submit" name="inicio" value="Crear">
             <input type="hidden" name="MM_insert" value="formreg">
         </form>
-        
-
+    </div>
 </body>
 </html>

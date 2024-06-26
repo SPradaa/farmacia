@@ -13,6 +13,48 @@ validarSesion();
 
 ?>
 
+<?php
+$sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
+$sql->bindParam(':documento', $_SESSION['documento']);
+$sql->execute();
+$fila = $sql->fetch();
+
+$documento=$_SESSION['documento'];
+$nombre = $_SESSION['nombre'];
+$apellido = $_SESSION['apellido'];
+$direccion = $_SESSION['direccion'];
+$telefono =$_SESSION['telefono'];
+$correo= $_SESSION['correo'];
+$rol = $_SESSION['tipo'];
+$empresa = $_SESSION[ 'nit'];
+
+$nombre_comple = $nombre .''.$apellido; 
+
+// Verificar si se encontró al usuario
+if (!$fila) {
+    echo '<script>alert("Usuario no encontrado.");</script>';
+    echo '<script>window.location.href = "login.php";</script>';
+    exit;
+
+
+}
+
+// Variables para el usuario
+
+
+
+    // $_SESSION['documento'] = $fila['documento'];
+    // $_SESSION['nombre'] = $fila['nombre'];
+    // $_SESSION[ 'apellido'] = $fila['apellido'];
+    // $_SESSION[ 'direccion'] = $fila['direccion'];
+    // $_SESSION['telefono'] = $fila['telefono'];
+    // $_SESSION['correo'] = $fila['correo'];
+    // $_SESSION['password'] = $fila['password'];
+    // $_SESSION['tipo'] = $fila['id_rol'];
+    // $_SESSION['nit'] = $fila['nit'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,15 +68,15 @@ validarSesion();
     <meta name="description"
         content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Citas</title>
+    <title>Autorizaciones</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/log.png">
     <!-- Bootstrap Core CSS -->
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/stylee.css" rel="stylesheet">
     <!-- page css -->
     <link href="css/pages/google-vector-map.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -48,93 +90,58 @@ validarSesion();
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
+<div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Admin Wrap</p>
+            <p class="loader__label">VitalFarma</p>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
+    
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
+        
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                  <!-- Logo icon --><b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <div class="logg">
-                                <img src="../../assets/img/log.farma.png">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <div class="navbar-header">
+                <div class="logg">
+                            <img src="../../assets/img/logo.png">
                             </div>
-                            <!-- Dark Logo icon -->
-                
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text --><span>
-                            <!-- dark Logo text -->
-                            <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
-                            
-                            <!-- Light Logo text -->
-
-                            <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> -->
-                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse">
+                
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
-                                href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
+                    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h3 class="titulo">Bienvenido/a Paciente <?php echo $nombre;?></h3>
+        </div>
+    </div>
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class="nav-item hidden-xs-down search-box"> <a
-                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
-                                    class="fa fa-search"></i></a>
+                        <li class="nav-item hidden-xs-down search-box"> 
                             <form class="app-search">
                                 <input type="text" class="form-control" placeholder="Search & enter"> <a
-                                    class="srh-btn"><i class="fa fa-times"></i></a> </form>
+                                    class="srh-btn"></a> </form>
                         </li>
                     </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="../assets/images/users/1.jpg" alt="user" class="" /> <span
-                                    class="hidden-md-down">Mark Sanders &nbsp;</span> </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul>
-                        </li>
-                    </ul>
+                    
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
+
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                <ul id="sidebarnav">
+                    <ul id="sidebarnav">
                 <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false">
                         <i class="fas fa-heart"></i><span class="hide-menu">Principal</span></a>
                         </li>
@@ -155,7 +162,7 @@ validarSesion();
                     </ul>
                     </nav>
                     <div class="boton">
-                <form method="POST" action="../../login.html">
+                <form method="POST" action="../../index.html">
                     <button class="btn" type="submit" name="btncerrar">Cerrar sesión</button>
                 </form>
                 
@@ -181,8 +188,8 @@ validarSesion();
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Autorizaciones</h3>
+                <div class="medicamentos">
+                <h3 class="text-themecolor">Autorizaciones</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Principal</a></li>
                             <li class="breadcrumb-item active">Modulo Autorizaciones</li>
@@ -197,8 +204,6 @@ validarSesion();
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Módulos de autorizaciones</h4>
-                <h6 class="card-subtitle">Administra tus autorizaciones aquí</h6>
 
                 <div class="card-container">
 
@@ -206,7 +211,7 @@ validarSesion();
                     <div class="card">
                         <a href="autorizaciones/autorizaciones.php">
                             <div class="card_box">
-                                <h3 >Autorizaciones</h3>
+                                <h3 class="car_box__title">Autorizaciones</h3>
                                 <p class="card_box__content">Visualiza tus autorizaciones en este módulo.</p>
                                 <div class="card__date">Haz clic para acceder y ver tus autorizaciones.</div>
                                 <div class="card_box__arrow">
@@ -228,7 +233,7 @@ validarSesion();
 
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer"> © 2021 Adminwrap by <a href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+            <footer class="footer">  © 2024 EPS Vitalfarma Todos los derechos reservados.  </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

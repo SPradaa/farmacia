@@ -81,7 +81,7 @@ function generarTablaMedicamentos($medicamentos) {
     <meta charset="UTF-8">
     <title>AUTORIZACION</title>
     <link rel="stylesheet" href="../../css/estilo.css">
-    <link rel="stylesheet" href="css/ver_autorizacion.css">
+    <link rel="stylesheet" href="../css/verauto.css">
 </head>
 <body>
     <div class="contenedor">
@@ -170,6 +170,7 @@ function generarTablaMedicamentos($medicamentos) {
                 </tr>
             </table>
         </div>
+        <a href="generar_autorizaciones_pdf.php?id_cita=<?php echo urlencode($id_cita); ?>" class="boton-descargar">Descargar en PDF</a>
     </div>
 </body>
 </html>

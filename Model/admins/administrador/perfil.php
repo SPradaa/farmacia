@@ -361,7 +361,7 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="col-md-6">
                         <label>Dirección:</label>
-                        <input type="text" id="direccion" pattern="[0-9a-zA-ZÑñ#.,_-´ ]{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
+                        <input type="text" id="direccion" pattern="{5,40}" title="La dirección debe ser verdadera (minimo 5 caracteres)" value="<?php echo $direccion ?>"class="form-control form-control-line" name="direccion">
                     </div>
                 </div>
                 <div class="form-group">
@@ -386,7 +386,7 @@ if (isset($_POST['update'])) {
             var id_depart = $(this).val();
             $.ajax({
                 type: "POST",
-                url: "../desarrollador/municipio.php",
+                url: " municipio.php",
                 data: {id_depart: id_depart},
                 success: function(response){
                     $('#id_municipio').html(response);

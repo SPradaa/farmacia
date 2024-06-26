@@ -4,6 +4,10 @@ require_once("../../../../db/connection.php");
 $db = new Database();
 $conectar = $db->conectar();
 
+
+require_once("../../../../controller/seg.php");
+validarSesion();
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
@@ -41,6 +45,44 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
     <link href="../../../../assets/img/log.png" rel="icon">
     <link href="../../../../assets/img/log.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="../css/registromed.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
+    <script>
+        function validateField(regex, input, errorMessage) {
+            const value = input.value;
+            const isValid = regex.test(value);
+            input.setCustomValidity(isValid ? "" : errorMessage);
+            input.reportValidity();
+            return isValid;
+        }
+
+        $(document).ready(function() {
+            $("#nombre").on("input", function() {
+                validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){4,30}$/, this, "Ingrese un nombre válido (solo letras)");
+            });
+
+            $("#presentacion").on("input", function() {
+                validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){4,20}$/, this, "Ingrese un presentación válida de medicamentos (solo letras)");
+            });
+
+            $("#cantidad").on("input", function() {
+                validateField(/^([a-zA-Z0-9\s]){4,15}$/, this, "Debe ingresar una cantidad válida(numeros y letras)");
+            });
+
+            $("#medida_cant").on("input", function() {
+                validateField(/^([a-zA-Z0-9\s]){4,15}$/, this, "Debe ingresar una cantidad válida(numeros y letras)");
+            });
+
+        });
+
+        function validateForm() {
+            const isNombreValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){4,30}$/, document.getElementById("nombre"), "ingrese un nombre válido (solo letras)");
+            const isPresentacionValid = validateField(/^([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]){4,20}$/, document.getElementById("presentacion"), "Ingrese un presentación válida de medicamentos (solo letras)");
+            const isCantidadValid = validateField(/^([a-zA-Z0-9\s]){4,15}$/, document.getElementById("cantidad"), "Debe ingresar una cantidad válida(numeros y letras");
+            const isMedida_cantValid = validateField(/^([a-zA-Z0-9\s]){4,15}$/, document.getElementById("medida_cant"), "Debe ingresar una cantidad válida(numeros y letras)");
+
+            return isNombreValid && isNombreValid && isCantidadValid && isMedida_cantValid;
+        }
+    </script>
     <style>
         @media (max-width: 768px){
             .regresar{
@@ -76,7 +118,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
             margin-left: 140px;
         -}
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
 </head>
 <body>
 
@@ -93,9 +135,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
 
         <form method="post" name="form1" id="form1" autocomplete="off"> 
 
-            <input type="text" name="nombre" id="nombre" pattern="[a-zA-Z0-9 ]{3,30}" placeholder="Ingrese el nombre del medicamento" title="El nombre debe tener solo letras">
+            <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre del medicamento">
 
-            <select name="id_cla">
+            <select name="id_cla" required>
                 <option value="">Seleccione el Tipo de Medicamento</option>
                 <?php
                     $control = $conectar->prepare("SELECT * FROM tipo_medicamento");
@@ -106,11 +148,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
                 ?>
             </select>
 
-            <input type="text" name="presentacion" id="presentacion" pattern="[a-zA-Z0-9 ]{3,30}" placeholder="Ingrese la presentacion del medicamento" title="La presentacion debe tener solo letras">
+            <input type="text" name="presentacion" id="presentacion" placeholder="Ingrese la presentacion del medicamento">
 
-            <input type="text" name="cantidad" id="cantidad" pattern="[0-9a-zA-Z]{2,20}" placeholder="Ingrese la cantidad" title="La cantidad debe tener números y letras">
+            <input type="text" name="cantidad" id="cantidad" pattern="[0-9a-zA-Z]{2,20}" placeholder="Ingrese la cantidad">
 
-            <input type="text" name="medida_cant" id="medida_cant" pattern="[0-9a-zA-Z]{2,30}" placeholder="Ingrese la cantidad de medida" title="La cantidad de medida debe tener solo letras y números">
+            <input type="text" name="medida_cant" id="medida_cant" placeholder="Ingrese la cantidad de medida">
 
             <select name="id_lab">
                 <option value="">Seleccione el laboratorio</option>
@@ -123,15 +165,27 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {
                 ?>
             </select>
 
-            <label for="f_vencimiento">Fecha de Vencimiento</label>
-            <input type="date" name="f_vencimiento" id="f_vencimiento">
+          <label for="f_vencimiento">Fecha de Vencimiento</label>
+<input type="date" name="f_vencimiento" id="f_vencimiento">
+
+<script>
+    // Obtener el elemento del campo de fecha
+    var fechaVencimiento = document.getElementById('f_vencimiento');
+
+    // Obtener la fecha actual del sistema en formato ISO (YYYY-MM-DD)
+    var fechaActual = new Date().toISOString().split('T')[0];
+
+    // Establecer el atributo 'min' del campo de fecha para que no permita fechas pasadas
+    fechaVencimiento.setAttribute('min', fechaActual);
+</script>
+
 
             <br><br>
 
             <select name="id_estado">
                 <option value="">Seleccione el estado del medicamento</option>
                 <?php
-                    $control = $conectar->prepare("SELECT * FROM estados WHERE id_estado IN (1, 2, 7, 8)");
+                    $control = $conectar->prepare("SELECT * FROM estados WHERE id_estado IN ( 7, 8)");
                     $control->execute();
                     while ($fila = $control->fetch(PDO::FETCH_ASSOC)) {
                         echo "<option value=" . $fila['id_estado'] . ">" . $fila['estado'] . "</option>";

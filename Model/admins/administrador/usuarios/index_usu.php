@@ -2,7 +2,11 @@
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
-    session_start();
+    // session_start();
+?>
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
 ?>
 <?php
 $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");

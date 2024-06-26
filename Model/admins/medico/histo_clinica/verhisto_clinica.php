@@ -1,11 +1,16 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
+
 $id_cita = $_GET['id_cita'];
 
+?>
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
 ?>
 
 <!DOCTYPE html>

@@ -3,6 +3,10 @@ require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
+require_once("../../../../controller/seg.php");
+validarSesion();
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_cita = $_POST['id_cita'];
     $fecha = $_POST['fecha'];

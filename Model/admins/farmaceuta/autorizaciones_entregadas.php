@@ -3,6 +3,12 @@ require_once("../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 
+
+require_once("../../../controller/seguridad.php");
+validarSesion();
+
+
+
 $titulo = "Autorizaciones Entregadas"; // Título por defecto
 
 // Obtener documento del paciente desde el GET

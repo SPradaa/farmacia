@@ -4,6 +4,9 @@ require_once("../../../../db/connection.php");
 $db = new Database();
 $conectar = $db->conectar();
 
+require_once("../../../../controller/seg.php");
+validarSesion();
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "formreg")) {

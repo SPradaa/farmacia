@@ -1,11 +1,15 @@
+<?php
+    require_once("../../../../db/connection.php"); 
+    $conexion = new Database();
+    $con = $conexion->conectar();
+    // session_start();
+?>
 
 <?php
-
-   require_once ("db/connection.php");
-   $db = new Database();
-   $con = $db ->conectar();
-   session_start();
+require_once("../../../../controller/seg.php");
+validarSesion();
 ?>
+
 <?php
 
    if ((isset($_POST["MM_insert"]))&&($_POST["MM_insert"]=="formreg"))
@@ -21,7 +25,7 @@
       $ciudad= $_POST['id_municipio'];
       $direccion=$_POST['direccion'];
       $clave= $_POST['password'];
-      $id_rol= 5;
+      $id_rol= 2;
       $estado= 4;
 
       $sql= $con -> prepare ("SELECT * FROM usuarios WHERE documento='$documento'");
@@ -45,7 +49,7 @@
         $insertSQL = $con->prepare("INSERT INTO usuarios(documento, id_doc, nombre, apellido, id_rh, telefono, correo, id_municipio, direccion, password, id_rol, id_estado, nit) VALUES('$documento', '$id_doc', '$nombre', '$apellido',  '$id_rh', '$telefono', '$correo', '$ciudad', '$direccion', '$pass_cifrado', '$id_rol', '$estado', '$nit')");
         $insertSQL -> execute();
         echo '<script> alert("REGISTRO EXITOSO");</script>';
-        echo '<script>window.location="login.html"</script>';
+        echo '<script>window.location="../index.php"</script>';
         
     } 
 }
@@ -58,9 +62,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro usuario</title>
-    <link href="assets/img/log.png" rel="icon">
+    <link href="../../../../../assets/img/log.png" rel="icon">
   <link href="assets/img/log.png" rel="apple-touch-icon">
-    <link rel="stylesheet" href="assets/css/registroo.css">
+    <link rel="stylesheet" href="../../../../assets/css/registroo.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Añade jQuery -->
     <script>
@@ -126,8 +130,8 @@
 </div>
 
     <div class="login-box">
-        <img src="assets/img/log.farma.png">
-        <h1>REGISTRO USUARIO</h1>
+        <img src="../../../../assets/img/log.farma.png">
+        <h1>REGISTRO ADMINISTRADOR</h1>
 
         <form method="post" name="form1" id="form1"  autocomplete="off" onsubmit="return validateForm()"> 
 
@@ -220,7 +224,7 @@
 
     <script>
     function goBack() {
-        window.location.href = 'login.html';
+        window.location.href = '../index.php';
     }
 
     $(document).ready(function(){
@@ -228,7 +232,7 @@
             var id_depart = $(this).val();
             $.ajax({
                 type: "POST",
-                url: "municipio.php",
+                url: "../../../../municipio.php",
                 data: {id_depart: id_depart},
                 success: function(response){
                     $('#id_municipio').html(response);

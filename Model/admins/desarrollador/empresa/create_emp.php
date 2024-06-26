@@ -3,8 +3,13 @@
    require_once ("../../../../db/connection.php");
    $db = new Database();
    $con = $db ->conectar();
-   session_start();
+//   session_start();
 ?>
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
+
 
 <?php
 
@@ -24,7 +29,7 @@
       $fila = $sql -> fetchAll(PDO::FETCH_ASSOC);
  
       if ($fila){
-         echo '<script>alert ("El NIT DE LA EMPRESA YA EXISTE //CAMBIELO//");</script>';
+         echo '<script>alert ("El NIT DE LA EMPRESA YA EXISTE CAMBIELO");</script>';
          echo '<script>window.location="create_emp.php"</script>';
       }
 
@@ -33,7 +38,7 @@
       $fila = $sql -> fetchAll(PDO::FETCH_ASSOC);
  
       if ($fila){
-         echo '<script>alert ("ESTA EMPRESA YA EXISTE //CAMBIELA//");</script>';
+         echo '<script>alert ("ESTA EMPRESA YA EXISTE CAMBIELA);</script>';
          echo '<script>window.location="create_emp.php"</script>';
       }
       else
@@ -173,13 +178,22 @@
                     <button type="button" onclick="generate()" required>Generar Licencia</button>
             </div>
             <div class="row">
-                    <label for="inicio">Fecha inicio licencia:</label>
-                    <input type="date" name="inicio" id="inicio" value="<?php echo date('Y-m-d'); ?>" required>
+            <label for="inicio">Fecha inicio licencia:</label>
+<input type="date" name="inicio" id="inicio" value="<?php echo date('Y-m-d'); ?>" required readonly>
+
+<script>
+// Obtener la fecha del sistema en formato YYYY-MM-DD
+var fechaSistema = new Date().toISOString().slice(0, 10);
+
+// Establecer el atributo min del campo de fecha
+document.getElementById("inicio").setAttribute("min", fechaSistema);
+</script>
+
                     <label for="fin" class="fin">Fecha fin licencia:</label>
                     <?php
                         $fechaInicio = date('Y-m-d');
                         $fechaFin = date('Y-m-d', strtotime('+1 year', strtotime($fechaInicio)));
-                        echo '<input type="date" name="fin" id="fin" value="' . $fechaFin . '" required>';
+                        echo '<input type="date" name="fin" id="fin" value="' . $fechaFin . '" required readonly>';
                     ?>
                     </div>
                     <div class="row">
@@ -212,23 +226,6 @@
         }
     </script>
 
-    <script>
-            // Guardar los valores de los campos en el Local Storage antes de redirigir
-    $(document).on('submit', '#form1', function(){
-        var formValues = $(this).serializeArray();
-        localStorage.setItem('formValues', JSON.stringify(formValues));
-    });
-
-    // Cargar los valores guardados del Local Storage cuando la página se carga
-    $(document).ready(function(){
-        var formValues = JSON.parse(localStorage.getItem('formValues'));
-        if(formValues){
-            $.each(formValues, function(index, element){
-                $('[name="'+element.name+'"]').val(element.value);
-            });
-            localStorage.removeItem('formValues');
-        }
-    });
-    </script>
+    
 </body>
 </html>

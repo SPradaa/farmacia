@@ -11,12 +11,12 @@ if (!isset($_SESSION['documento'])) {
     die("Usuario no autenticado.");
 }
 
-// Verificar si el parámetro 'documento' está presente en la URL
-if (!isset($_GET['documento'])) {
-    die("Documento no especificado.");
+// Verificar si el parámetro 'id_cita' está presente en la URL
+if (!isset($_GET['id_cita'])) {
+    die("ID de cita no especificado.");
 }
 
-$documento = $_GET['documento'];
+$id_cita = $_GET['id_cita'];
 
 // Crear una instancia de TCPDF
 $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -42,17 +42,19 @@ $pdf->Cell(0, 15, 'Autorización Médica', 0, 1, 'C');
 // Obtener datos de la autorización médica
 $consulta = $con->prepare("SELECT autorizaciones.*, 
                                   usuarios.documento AS doc_paciente, usuarios.nombre AS nombre_paciente, usuarios.apellido AS apellido_paciente, usuarios.telefono AS telefono_paciente, usuarios.direccion AS direccion_paciente,
-                                  medicos.docu_medico, medicos.nombre_comple AS nombre_medico, medicamentos.nombre AS nombre_medicamento
+                                  medicos.docu_medico, medicos.nombre_comple AS nombre_medico, especializacion.especializacion
                            FROM autorizaciones 
                            JOIN usuarios ON autorizaciones.documento = usuarios.documento 
                            JOIN medicos ON autorizaciones.docu_medico = medicos.docu_medico
-                           JOIN medicamentos ON autorizaciones.id_medicamento = medicamentos.id_medicamento
-                           WHERE autorizaciones.documento = :documento");
-$consulta->bindParam(':documento', $documento, PDO::PARAM_STR);
+                           JOIN especializacion ON medicos.id_esp = especializacion.id_esp
+                           WHERE autorizaciones.id_cita = :id_cita");
+$consulta->bindParam(':id_cita', $id_cita, PDO::PARAM_INT);
 $consulta->execute();
 $fila = $consulta->fetch(PDO::FETCH_ASSOC);
 
 if ($fila) {
+    $medicamentos = json_decode($fila["medicamento"], true);
+
     $html = '<style>
     table {
         border-collapse: collapse;
@@ -91,10 +93,10 @@ if ($fila) {
     $html .= '<div class="seccion">
     <h3>Datos de la Autorización</h3>
     <table>
+        <tr><th>Código de la Autorización</th><td>' . htmlspecialchars($fila['cod_auto']) . '</td></tr>
         <tr><th>Fecha</th><td>' . htmlspecialchars($fila['fecha']) . '</td></tr>
-        <tr><th>Medicamento</th><td>' . htmlspecialchars($fila['nombre_medicamento']) . '</td></tr>
-        <tr><th>Presentación</th><td>' . htmlspecialchars($fila['presentacion']) . '</td></tr>
-        <tr><th>Cantidad</th><td>' . htmlspecialchars($fila['cantidad']) . '</td></tr>
+        <tr><th>Medicamento</th><td>' . generarTablaMedicamentos($medicamentos) . '</td></tr>
+        <tr><th>Fecha de Vencimiento</th><td>' . htmlspecialchars($fila['fecha_venc']) . '</td></tr>
     </table>
     </div>';
 
@@ -103,18 +105,32 @@ if ($fila) {
     <table>
         <tr><th>Documento</th><td>' . htmlspecialchars($fila['docu_medico']) . '</td></tr>
         <tr><th>Nombre</th><td>' . htmlspecialchars($fila['nombre_medico']) . '</td></tr>
+        <tr><th>Especialización</th><td>' . htmlspecialchars($fila['especializacion']) . '</td></tr>
     </table>
     </div>';
 
-    // Si se solicita la versión PDF, generamos el PDF y lo descargamos
     $pdf->writeHTML($html, true, false, true, false, '');
 } else {
     $pdf->SetFont('helvetica', 'B', 12);
-    $pdf->Cell(0, 10, 'No se encontraron datos para el documento especificado.', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'No se encontraron datos para el ID de cita especificado.', 0, 1, 'C');
 }
 
 // Cerrar y generar el PDF
 $pdf->lastPage();
 $pdf->Output('autorizacion_medica.pdf', 'D');
+
+function generarTablaMedicamentos($medicamentos) {
+    $html = '<table>';
+    $html .= '<tr><th>Nombre</th><th>Presentación</th><th>Cantidad</th></tr>';
+    foreach ($medicamentos as $med) {
+        $html .= '<tr>';
+        $html .= '<td>' . htmlspecialchars($med['name']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($med['presentacion']) . '</td>';
+        $html .= '<td>' . htmlspecialchars($med['cantidad']) . '</td>';
+        $html .= '</tr>';
+    }
+    $html .= '</table>';
+    return $html;
+}
 ?>
-``
+

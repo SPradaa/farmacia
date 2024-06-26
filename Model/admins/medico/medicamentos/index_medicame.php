@@ -1,10 +1,13 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 ?>
-
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
 <?php
 $sentencia_select = $con->prepare("SELECT * FROM medicamentos ORDER BY nombre ASC");
 $sentencia_select->execute();
@@ -90,7 +93,7 @@ if (isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                        <img src="<?= $fila["codigo_barras"] ?>.png">
+                         <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>
@@ -114,7 +117,7 @@ if (isset($_GET['btn_buscar'])) {
                         <td><?php echo $fila['laboratorio']; ?></td>
                         <td><?php echo $fila['f_vencimiento']; ?></td>
                         <td class="codigo-barras-container">
-                        <img src="images/<?= $fila["codigo_barras"] ?>.png">
+                        <img src="../../images/<?= $fila["codigo_barras"] ?>.png">
                             <span class="codigo-barras"><?php echo $fila['codigo_barras']; ?></span>
                         </td>
                         <td><?php echo $fila['estado']; ?></td>

@@ -1,8 +1,12 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php"); 
 $conexion = new Database();
 $con = $conexion->conectar();
+
+
+require_once("../../../../controller/seg.php");
+validarSesion();
 
 if (!isset($_GET['nit'])) {
     echo '<script>alert("No se ha proporcionado ningún ID.");</script>';
@@ -102,16 +106,24 @@ if (isset($_POST["update"])) {
                 <input type="button" onclick="generate()" value="Nueva Licencia" class="generate"></button>
             </div>
             <div class="row">
-                <label for="nombre">Fecha inicio licencia </label>
-                <input type="date" name="inicio" id="nombre" placeholder="Ingrese la fecha de inicio de la licencia" value="<?php echo date('Y-m-d'); ?>">  
-            
-                <label for="nombre">Fecha expiracion licencia </label>
-                <?php
-                $fechaInicio = date('Y-m-d');
-                $fechaFin = date('Y-m-d', strtotime('+1 year', strtotime($fechaInicio)));
-                echo '<input type="date" name="fin" id="nombre" value="' . $fechaFin . '">';
-                ?>
-            </div>
+            <label for="inicio">Fecha inicio licencia:</label>
+<input type="date" name="inicio" id="inicio" value="<?php echo date('Y-m-d'); ?>" required readonly>
+
+<script>
+// Obtener la fecha del sistema en formato YYYY-MM-DD
+var fechaSistema = new Date().toISOString().slice(0, 10);
+
+// Establecer el atributo min del campo de fecha
+document.getElementById("inicio").setAttribute("min", fechaSistema);
+</script>
+
+                    <label for="fin" class="fin">Fecha fin licencia:</label>
+                    <?php
+                        $fechaInicio = date('Y-m-d');
+                        $fechaFin = date('Y-m-d', strtotime('+1 year', strtotime($fechaInicio)));
+                        echo '<input type="date" name="fin" id="fin" value="' . $fechaFin . '" required readonly>';
+                    ?>
+                    </div>
             <div class="row">
             <select name="id_estado">
                     <option value="<?php echo $usua['id_estado']?>"><?php echo $usua['estado']?></option>

@@ -1,8 +1,12 @@
 <?php
-    session_start();
+    // session_start();
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
+    
+    
+require_once("../../../../controller/seg.php");
+validarSesion();
 
     $sql = $con -> prepare ("SELECT * FROM medicos, roles, estados, especializacion, t_documento
     WHERE medicos.id_rol = roles.id_rol AND medicos.id_estado = estados.id_estado 

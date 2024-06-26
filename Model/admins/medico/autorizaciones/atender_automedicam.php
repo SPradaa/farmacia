@@ -1,8 +1,12 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php"); 
 $conexion = new Database();
 $con = $conexion->conectar();
+
+require_once("../../../../controller/seg.php");
+validarSesion();
+
 
 // Suponiendo que el documento del paciente está guardado en la sesión
 if (isset($_SESSION['documento'])) {

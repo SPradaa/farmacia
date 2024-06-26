@@ -88,7 +88,7 @@ if (isset($_POST['update'])) {
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/log.png">
     <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="../desarrollador/css/perfil.css" rel="stylesheet">
+    <link href="../medico/css/perfilmedico.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
 
 </head>

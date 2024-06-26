@@ -10,6 +10,7 @@ validarSesion();
 
 
 ?>
+
 <?php
 $sql = $con->prepare("SELECT * FROM usuarios WHERE documento = :documento");
 $sql->bindParam(':documento', $_SESSION['documento']);
@@ -209,7 +210,7 @@ if (!$fila) {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="space">
+                            <div class="card-container">
 
                                     
                                     <!-- modulo medicamentos  -->

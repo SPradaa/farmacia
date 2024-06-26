@@ -2,10 +2,14 @@
 
 date_default_timezone_set('America/Bogota'); // Ajusta la zona horaria según tu ubicación
 
-session_start();
+// session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
+
+
+require_once("../../../../controller/seg.php");
+validarSesion();
 
 // Verificar si el documento del médico está presente en la URL
 if (isset($_GET['docu_medico'])) {

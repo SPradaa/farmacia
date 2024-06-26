@@ -68,13 +68,13 @@ if ($_POST["inicio"]) {
 
         // Redirigir según el tipo de usuario
         if (in_array($_SESSION['tipo'], [1, 2, 4])) {
-            header("Location: ../model/admins/insertar_codigo_seguridad.php");
+            header("Location:../Model/admins/insertar_codigo_seguridad.php");
             exit();
         } elseif ($_SESSION['tipo'] == 5) {
-            header("Location: ../model/pacientes/index.php");
+            header("Location: ../Model/pacientes/index.php");
             exit();
         }elseif ($_SESSION['tipo'] == 3) {
-            header("Location: ../model/admins/insertar_codigo_seguridad.php");
+            header("Location: ../Model/admins/insertar_codigo_seguridad.php");
             exit();}
     } else {
         // Si no se encontraron resultados o la contraseña no coincide, redirigir a la página de error
@@ -83,3 +83,4 @@ if ($_POST["inicio"]) {
     }
 }
 ?>
+

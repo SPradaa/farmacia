@@ -1,8 +1,12 @@
 <?php
-    session_start();
+    // session_start();
     require_once("../../../../db/connection.php"); 
     $conexion = new Database();
     $con = $conexion->conectar();
+
+
+require_once("../../../../controller/seg.php");
+validarSesion();
 
     $sql = $con -> prepare ("SELECT * FROM usuarios, roles, t_documento, municipios, departamentos, empresas, rh, estados
     WHERE usuarios.id_doc = t_documento.id_doc AND usuarios.id_municipio = municipios.id_municipio

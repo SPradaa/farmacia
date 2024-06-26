@@ -1,10 +1,13 @@
 <?php
-session_start();
+// session_start();
 require_once("../../../../db/connection.php");
 $conexion = new Database();
 $con = $conexion->conectar();
 ?>
-
+<?php
+require_once("../../../../controller/seg.php");
+validarSesion();
+?>
 <?php
 $sentencia_select = $con->prepare("SELECT * FROM medicamentos ORDER BY nombre ASC");
 $sentencia_select->execute();
